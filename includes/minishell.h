@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/22 16:19:01 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/22 17:54:45 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	size_of_val(char *str);
 int	strstr_index(char *s, char *tofind);
 
 char	*get_env_value(t_env **env, char *key);
+
+char	**mini_split(char *s);
 
 void	pwd(t_env **env);
 void	echo_doc(char *end);

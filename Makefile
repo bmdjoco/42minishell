@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+         #
+#    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/08/22 16:38:28 by bdjoco           ###   ########.fr        #
+#    Updated: 2025/08/22 17:54:07 by miltavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,9 @@ MAKE = make -s -C
 
 SRCS = test.c \
 		srcs/env.c \
-		srcs/env_utils.c
+		srcs/env_utils.c \
+		srcs/split_minishell.c \
+		srcs/split_utils.c
 
 BOLD = \e[1m
 GREEN = \e[32m

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:46:13 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/22 12:45:07 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/08/22 13:23:13 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,10 @@ int	redirection_check(char *s)
 	i = strstr_index(s, "<<");
 	if (i > 0)
 	{
-		eof = malloc(ft_strlen(s + i));
+		eof = parse_eof(s + i);
 		if (!eof)
-			return (perror("minishell: alloc failed\n"), -1);
-		ft_strlcpy(eof, s + i, )
-		echo_doc()
+			return (-1);
+		echo_doc(eof);
 	}
 }
 
@@ -54,11 +53,20 @@ char	*parse_eof(char *s)
 {
 	char	*eof;
 	int			i;
+	int			j;
 
 	i = 0;
 	while (s[i] && s[i] != ' ')
 		i++;
-	i = ft_strlen(s) - i;
-	eof = malloc(i + 1);
+	eof = malloc((ft_strlen(s) - i + 1));
 	if (!eof)
+		return (perror("minishell: alloc failed\n"), NULL);
+	j = 0;
+	while (j < i)
+	{
+		eof[j] = s[j];
+		j++;
+	}
+	eof[j] = '\0';
+	return (eof);
 }
