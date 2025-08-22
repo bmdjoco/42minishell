@@ -6,7 +6,7 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:49:20 by milo              #+#    #+#             */
-/*   Updated: 2025/08/22 11:14:20 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/22 11:54:43 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,6 @@ static int	check_char(char c)
 		|| c == '%')
 		return (1);
 	return (0);
-}
-
-int	print_str_fd(int fd, const char *format, va_list params)
-{
-	int	i;
-	int	res;
-
-	i = 0;
-	res = i;
-	while (format[i])
-	{
-		if (format[i] == '%' && format[i + 1] && check_char(format[i + 1]))
-		{
-			res = res + distrib(format[i + 1], params, fd);
-			i = i + 2;
-		}
-		else
-		{
-			ft_putchar_fd(format[i], fd);
-			res++;
-			i++;
-		}
-	}
-	return (res);
 }
 
 static int	distrib(char type, va_list params, int fd)
@@ -67,6 +43,30 @@ static int	distrib(char type, va_list params, int fd)
 	if (type == '%')
 		i = type_percent(fd);
 	return (i);
+}
+
+int	print_str_fd(int fd, const char *format, va_list params)
+{
+	int	i;
+	int	res;
+
+	i = 0;
+	res = i;
+	while (format[i])
+	{
+		if (format[i] == '%' && format[i + 1] && check_char(format[i + 1]))
+		{
+			res = res + distrib(format[i + 1], params, fd);
+			i = i + 2;
+		}
+		else
+		{
+			ft_putchar_fd(format[i], fd);
+			res++;
+			i++;
+		}
+	}
+	return (res);
 }
 
 static int	check_format(const char *format)
@@ -97,7 +97,7 @@ int	ft_fprintf(int fd, const char *format, ...)
 		va_end(params);
 		return (0);
 	}
-	count = print_str(fd, format, params);
+	count = print_str_fd(fd, format, params);
 	va_end(params);
 	return (count);
 }

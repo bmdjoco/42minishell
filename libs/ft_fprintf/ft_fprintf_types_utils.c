@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_types_utils.c                            :+:      :+:    :+:   */
+/*   ft_fprintf_types_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:23:10 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/22 11:29:34 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/22 12:00:44 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./ft_fprintf.h"
 
-int	ft_putnbr_hex_adr(unsigned long nbr, int fd)
+int	ft_putnbr_hex_adr_fd(unsigned long nbr, int fd)
 {
 	char	hex[17];
 	char	buffer[16];
@@ -22,7 +22,7 @@ int	ft_putnbr_hex_adr(unsigned long nbr, int fd)
 	fill_hex(hex, "0123456789abcdef");
 	if (nbr == 0)
 	{
-		ft_putchar_fd('0', 1);
+		ft_putchar_fd('0', fd);
 		return (1);
 	}
 	i = 0;
@@ -33,7 +33,7 @@ int	ft_putnbr_hex_adr(unsigned long nbr, int fd)
 	}
 	count = i;
 	while (--i >= 0)
-		ft_putchar_fd(buffer[i], 1);
+		ft_putchar_fd(buffer[i], fd);
 	return (count);
 }
 
@@ -43,7 +43,7 @@ int	type_x(va_list params, int fd)
 	int				j;
 
 	i = va_arg(params, int);
-	j = ft_putnbr_hex_low(i, fd);
+	j = ft_putnbr_hex_low_fd(i, fd);
 	return (j);
 }
 
@@ -53,7 +53,7 @@ int	type_xx(va_list params, int fd)
 	int				j;
 
 	i = va_arg(params, int);
-	j = ft_putnbr_hex_up(i, fd);
+	j = ft_putnbr_hex_up_fd(i, fd);
 	return (j);
 }
 
