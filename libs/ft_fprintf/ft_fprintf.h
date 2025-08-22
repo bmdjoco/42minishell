@@ -6,7 +6,7 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:07:23 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/08/22 14:50:42 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/22 16:40:30 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	ft_putnbr_hex_low_fd(unsigned int nbr, int fd);
 int	ft_putnbr_hex_adr_fd(unsigned long nbr, int fd);
 int	ft_fprintf(int fd, const char *format, ...);
 
-size_t	ft_strlen(const char *str);
+size_t	ft_strlens(const char *str);
 
-void	ft_putstr_fd(char *s, int fd);
+void	ft_putstrs_fd(char *s, int fd);
 void	ft_putnbr_fd(int nb, int fd);
 void	ft_putchar_fd(char c, int fd);
 void	fill_hex(char *dest, char *str);

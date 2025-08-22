@@ -6,13 +6,13 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:56:33 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/08/22 11:58:13 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/22 16:43:32 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./ft_fprintf.h"
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlens(const char *str)
 {
 	size_t	i;
 
@@ -24,11 +24,11 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-void	ft_putstr_fd(char *s, int fd)
+void	ft_putstrs_fd(char *s, int fd)
 {
 	if (!s)
 		return ;
-	write(fd, s, ft_strlen(s));
+	write(fd, s, ft_strlens(s));
 }
 
 void	ft_putnbr_fd(int nb, int fd)

@@ -6,7 +6,7 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:51:01 by milo              #+#    #+#             */
-/*   Updated: 2025/08/22 14:48:26 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/22 16:43:02 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ int	type_s_fd(va_list params, int fd)
 	dup = va_arg(params, char *);
 	if (!dup)
 	{
-		ft_putstr_fd("(null)", fd);
+		ft_putstrs_fd("(null)", fd);
 		return (6);
 	}
-	i = ft_strlen(dup);
-	ft_putstr_fd(dup, fd);
+	i = ft_strlens(dup);
+	ft_putstrs_fd(dup, fd);
 	return (i);
 }
 
@@ -68,11 +68,11 @@ int	type_p_fd(va_list params, int fd)
 	arg = va_arg(params, void *);
 	if (arg == 0)
 	{
-		ft_putstr_fd("(nil)", fd);
+		ft_putstrs_fd("(nil)", fd);
 		return (5);
 	}
 	ptr = (unsigned long)arg;
-	ft_putstr_fd("0x", fd);
+	ft_putstrs_fd("0x", fd);
 	i = 2;
 	i = i + ft_putnbr_hex_adr_fd(ptr, fd);
 	return (i);

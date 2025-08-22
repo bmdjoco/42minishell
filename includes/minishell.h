@@ -6,7 +6,7 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/22 14:52:32 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/22 16:19:01 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ int	size_of_key(char *str);
 int	size_of_val(char *str);
 int	strstr_index(char *s, char *tofind);
 
+char	*get_env_value(t_env **env, char *key);
+
+void	pwd(t_env **env);
 void	echo_doc(char *end);
 void	put_env(t_env **env);
 void	free_env(t_env **env, int i, int f);

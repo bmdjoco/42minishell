@@ -6,11 +6,24 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:03:49 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/22 14:48:51 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/22 16:34:04 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./ft_fprintf.h"
+
+void	fill_hex(char *dest, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (i < 16)
+	{
+		dest[i] = str[i];
+		i++;
+	}
+	dest[i] = '\0';
+}
 
 int	size_calcu(long n)
 {
@@ -33,19 +46,6 @@ int	size_calcu(long n)
 		size++;
 	}
 	return (size);
-}
-
-static void	fill_hex(char *dest, char *str)
-{
-	int	i;
-
-	i = 0;
-	while (i < 16)
-	{
-		dest[i] = str[i];
-		i++;
-	}
-	dest[i] = '\0';
 }
 
 void	ft_put_unsigned_nbr_fd(unsigned int nbr, int fd)

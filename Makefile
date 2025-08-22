@@ -6,7 +6,7 @@
 #    By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/08/22 14:46:26 by bdjoco           ###   ########.fr        #
+#    Updated: 2025/08/22 16:38:28 by bdjoco           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS		= -Wall -Wextra -Werror -Ilibs/libft/includes -Ilibs/ft_fprintf -Iinclud
 MAKE = make -s -C
 
 SRCS = test.c \
-		srcs/environnement.c \
+		srcs/env.c \
 		srcs/env_utils.c
 
 BOLD = \e[1m
@@ -35,8 +35,8 @@ FT_FPRINTF		= $(FT_FPRINTF_PATH)/ft_fprintf.a
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+$(NAME): $(OBJS) $(LIBFT) $(FT_FPRINTF)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(FT_FPRINTF) -o $(NAME)
 
 $(LIBFT):
 	@$(MAKE) $(LIBFT_PATH)
