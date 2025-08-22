@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/22 12:34:17 by miltavar         ###   ########.fr       */
+/*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
+/*   Updated: 2025/08/22 11:44:37 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../includes/minishell.h"
 
-#include "../libs/libft/libft.h"
-
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-int	strstr_index(char *s, char *tofind);
-void	echo_doc(char *end);
-
-#endif
+int	read_line(char **envp)
+{
+	char	*line;
+	while (1)
+	{
+		line = readline(NULL);
+		if (!line)
+			return (perror("minishell: failed to read\n"), 127);
+		// parse line
+		free(line);
+	}
+}
