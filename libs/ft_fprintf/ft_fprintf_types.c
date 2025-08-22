@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_types.c                                  :+:      :+:    :+:   */
+/*   ft_fprintf_types.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:51:01 by milo              #+#    #+#             */
-/*   Updated: 2025/08/22 11:15:22 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/22 14:48:26 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./ft_fprintf.h"
 
-int	type_c(va_list params, int fd)
+int	type_c_fd(va_list params, int fd)
 {
 	char	c;
 
@@ -21,7 +21,7 @@ int	type_c(va_list params, int fd)
 	return (1);
 }
 
-int	type_di(va_list params, int fd)
+int	type_di_fd(va_list params, int fd)
 {
 	int	i;
 	int	j;
@@ -32,7 +32,7 @@ int	type_di(va_list params, int fd)
 	return (j);
 }
 
-int	type_s(va_list params, int fd)
+int	type_s_fd(va_list params, int fd)
 {
 	char	*dup;
 	int		i;
@@ -48,7 +48,7 @@ int	type_s(va_list params, int fd)
 	return (i);
 }
 
-int	type_u(va_list params, int fd)
+int	type_u_fd(va_list params, int fd)
 {
 	unsigned int	i;
 	int				j;
@@ -59,7 +59,7 @@ int	type_u(va_list params, int fd)
 	return (j);
 }
 
-int	type_p(va_list params, int fd)
+int	type_p_fd(va_list params, int fd)
 {
 	void			*arg;
 	unsigned long	ptr;

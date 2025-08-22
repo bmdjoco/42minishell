@@ -6,7 +6,7 @@
 #    By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/08/22 12:06:56 by bdjoco           ###   ########.fr        #
+#    Updated: 2025/08/22 14:46:26 by bdjoco           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,14 @@ CFLAGS		= -Wall -Wextra -Werror -Ilibs/libft/includes -Ilibs/ft_fprintf -Iinclud
 
 MAKE = make -s -C
 
-SRCS		= srcs/main.c
+SRCS = test.c \
+		srcs/environnement.c \
+		srcs/env_utils.c
+
+BOLD = \e[1m
+GREEN = \e[32m
+PURPLE = \e[35m
+RESET = \e[0m
 
 OBJS		= $(SRCS:.c=.o)
 
@@ -49,6 +56,11 @@ fclean: clean
 	@rm -f $(NAME)
 	@$(MAKE) $(LIBFT_PATH) fclean
 	@$(MAKE) $(FT_FPRINTF_PATH) fclean
+
+#--------------------------------------------#
+cook: all clean
+	@echo "🍴 $(BOLD)$(PURPLE)On cook$(RESET)"
+#--------------------------------------------#
 
 re: fclean all
 

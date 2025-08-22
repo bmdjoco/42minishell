@@ -6,7 +6,7 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:23:10 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/22 12:00:44 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/22 14:47:56 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_putnbr_hex_adr_fd(unsigned long nbr, int fd)
 	return (count);
 }
 
-int	type_x(va_list params, int fd)
+int	type_x_fd(va_list params, int fd)
 {
 	unsigned int	i;
 	int				j;
@@ -47,7 +47,7 @@ int	type_x(va_list params, int fd)
 	return (j);
 }
 
-int	type_xx(va_list params, int fd)
+int	type_xx_fd(va_list params, int fd)
 {
 	unsigned int	i;
 	int				j;
@@ -57,7 +57,7 @@ int	type_xx(va_list params, int fd)
 	return (j);
 }
 
-int	type_percent(int fd)
+int	type_percent_fd(int fd)
 {
 	ft_putchar_fd('%', fd);
 	return (1);

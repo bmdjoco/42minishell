@@ -6,7 +6,7 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:07:23 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/08/22 11:58:36 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/22 14:50:42 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@
 # include <fcntl.h>
 
 int	size_calcu(long n);
-int	type_percent(int fd);
-int	type_c(va_list params, int fd);
-int	type_s(va_list params, int fd);
-int	type_u(va_list params, int fd);
-int	type_p(va_list params, int fd);
-int	type_x(va_list params, int fd);
-int	type_di(va_list params, int fd);
-int	type_xx(va_list params, int fd);
+int	type_percent_fd(int fd);
+int	type_c_fd(va_list params, int fd);
+int	type_s_fd(va_list params, int fd);
+int	type_u_fd(va_list params, int fd);
+int	type_p_fd(va_list params, int fd);
+int	type_x_fd(va_list params, int fd);
+int	type_di_fd(va_list params, int fd);
+int	type_xx_fd(va_list params, int fd);
 int	ft_putnbr_hex_up_fd(unsigned int nbr, int fd);
 int	ft_putnbr_hex_low_fd(unsigned int nbr, int fd);
 int	ft_putnbr_hex_adr_fd(unsigned long nbr, int fd);

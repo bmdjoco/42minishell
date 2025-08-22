@@ -6,7 +6,7 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 17:37:37 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/22 11:06:20 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/22 14:13:28 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	ft_put_unsigned_nbr(unsigned int nbr);
 
 char	*ft_strnstr(const char *str, const char *to_find, size_t n);
 char	*ft_strdup(const char *s);
+char	*ft_strndup(const char *s, int n);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);

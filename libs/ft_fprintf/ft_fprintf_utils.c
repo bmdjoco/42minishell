@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
+/*   ft_fprintf_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:03:49 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/22 11:24:09 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/22 14:48:51 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	size_calcu(long n)
 	return (size);
 }
 
-void	fill_hex(char *dest, char *str)
+static void	fill_hex(char *dest, char *str)
 {
 	int	i;
 

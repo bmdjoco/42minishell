@@ -6,7 +6,7 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:49:20 by milo              #+#    #+#             */
-/*   Updated: 2025/08/22 11:54:43 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/22 14:50:10 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,27 @@ static int	check_char(char c)
 	return (0);
 }
 
-static int	distrib(char type, va_list params, int fd)
+static int	distrib_fd(char type, va_list params, int fd)
 {
 	int	i;
 
 	i = 0;
 	if (type == 'c')
-		i = type_c(params, fd);
+		i = type_c_fd(params, fd);
 	if (type == 'd' || type == 'i')
-		i = type_di(params, fd);
+		i = type_di_fd(params, fd);
 	if (type == 'u')
-		i = type_u(params, fd);
+		i = type_u_fd(params, fd);
 	if (type == 's')
-		i = type_s(params, fd);
+		i = type_s_fd(params, fd);
 	if (type == 'p')
-		i = type_p(params, fd);
+		i = type_p_fd(params, fd);
 	if (type == 'x')
-		i = type_x(params, fd);
+		i = type_x_fd(params, fd);
 	if (type == 'X')
-		i = type_xx(params, fd);
+		i = type_xx_fd(params, fd);
 	if (type == '%')
-		i = type_percent(fd);
+		i = type_percent_fd(fd);
 	return (i);
 }
 
@@ -56,7 +56,7 @@ int	print_str_fd(int fd, const char *format, va_list params)
 	{
 		if (format[i] == '%' && format[i + 1] && check_char(format[i + 1]))
 		{
-			res = res + distrib(format[i + 1], params, fd);
+			res = res + distrib_fd(format[i + 1], params, fd);
 			i = i + 2;
 		}
 		else
