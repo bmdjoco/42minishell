@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:24:59 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/20 13:06:49 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/08/22 10:28:58 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	
+
 	if (argc != 2)
 		return (1);
 }

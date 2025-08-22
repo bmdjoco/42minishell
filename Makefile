@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
+#    By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/08/20 12:06:03 by miltavar         ###   ########.fr        #
+#    Updated: 2025/08/22 10:29:14 by bdjoco           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS		= srcs/main.c
 
 OBJS		= $(SRCS:.c=.o)
 
-LIBFT_PATH	= ./libft
+LIBFT_PATH	= libs/libft
 LIBFT		= $(LIBFT_PATH)/libft.a
 
 all: $(NAME)
