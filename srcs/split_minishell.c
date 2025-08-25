@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:37:31 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/22 18:01:47 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:50:26 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int	count_words(char *s)
 	int	words;
 	int	len;
 
+	if (!s)
+		return (printf("\n"), 0);
 	words = check_dup(s);
 	if (words == -1)
 		return (0);
@@ -111,7 +113,7 @@ char	**mini_split(char *s)
 	words = count_words(s);
 	if (words == 0)
 		return (NULL);
-	res = malloc(sizeof(char *) * (words + 1));
+	res = ft_calloc(words + 1, 8);
 	if (!res)
 		return (NULL);
 	i = 0;
@@ -120,7 +122,7 @@ char	**mini_split(char *s)
 		len = get_len(s, i + 1);
 		if (len < 0)
 			return (free_split(res), NULL);
-		res[i] = malloc(len + 1);
+		res[i] = ft_calloc(len + 1, 1);
 		if (!res[i])
 			return (free_split(res), NULL);
 		fill_str(res[i], s, i + 1);
