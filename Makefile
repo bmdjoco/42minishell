@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+         #
+#    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/08/25 16:14:27 by bdjoco           ###   ########.fr        #
+#    Updated: 2025/08/25 16:41:39 by miltavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRCS = test.c \
 		srcs/environement/env.c \
 		srcs/environement/env_utils.c \
 		srcs/minisplit/split_minishell.c \
-		srcs/minisplit/split_utils.c
+		srcs/minisplit/split_utils.c \
+		srcs/minisplit/split_quotes.c
 
 BOLD = \e[1m
 GRAY = \e[30m

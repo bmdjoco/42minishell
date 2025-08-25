@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:37:31 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/25 15:55:00 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/25 17:01:07 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ int	check_redir(char *s)
 	int	i;
 
 	i = 0;
-	if (s[i] == '<' && s[i + 1] && s[i + 1] == '<')
+	if (s[i] == '"' || s[i] == '\'')
+		return (match_quotes(s));
+	else if (s[i] == '<' && s[i + 1] && s[i + 1] == '<')
 		return (2);
 	else if (s[i] == '>' && s[i + 1] && s[i + 1] == '>')
 		return (2);

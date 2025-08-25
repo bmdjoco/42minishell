@@ -1,37 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   readline.c                                         :+:      :+:    :+:   */
+/*   split_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/25 16:21:24 by miltavar         ###   ########.fr       */
+/*   Created: 2025/08/25 16:35:01 by miltavar          #+#    #+#             */
+/*   Updated: 2025/08/25 17:13:14 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int	read_lines(char **envp)
+int	match_quotes(char *s)
 {
-	char	*line;
-	char	**split;
-	t_env	**env;
+	int	i;
 
-	env = init_environnement(envp);
-	if (!env)
-		return (-1);
-	while (1)
+	if (!s)
+		return (0);
+	i = 0;
+	if (s[i] == '"')
 	{
-		line = readline("minishell");
-		if (!line)
-			return (perror("minishell: failed to read\n"), 127);
-		split = mini_split(line);
-		if (!split)
-			return (-1);
-		// exec
-		free(line);
-		free_split(split);
+		i++;
+		while (s[i] && s[i] != '"')
+			i++;
+		if (s[i] == '"')
+			i++;
+		return (i);
 	}
-	free_env(env, -9, 2);
+	else if (s[i] == '\'')
+	{
+		i++;
+		while (s[i] && s[i] != '\'')
+			i++;
+		if (s[i] == '\'')
+			i++;
+		return (i);
+	}
+	return (i);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/25 16:03:44 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/25 16:41:15 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	pwd(t_env **env);
 /* minisplit */
 int	check_redir(char *s);
 int	get_len(char *s, int index);
+int	match_quotes(char *s);
 
 char	**mini_split(char *s);
 
