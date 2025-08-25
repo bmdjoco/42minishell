@@ -6,7 +6,7 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/25 16:03:44 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/25 19:48:47 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ void	free_env(t_env **env, int i, int f);
 
 t_env	**init_environnement(char **envp);
 
+
+/* CD */
+int	nb_parent(char	*path);
 
 /* pwd */
 void	pwd(t_env **env);
