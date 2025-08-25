@@ -6,11 +6,11 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:49:44 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/08/22 15:07:45 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/25 15:35:52 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /**
  * @return renvoie la longueur de la cle
@@ -95,25 +95,4 @@ void	put_env(t_env **env)
 		printf("%s=%s\n", env[i]->key, env[i]->val);
 		i++;
 	}
-}
-
-/**
- * @brief renvoie la valeur correspondant a la cle passer en argument
- *
- * @param env liste de variable environnemental sous forme de structure s_env
- * @param key cle correspondant a la valeur rechercher
- * @return renvoie une chaine de charactere correspondant a la valleur ou NULL en cas d'erreur
- */
-char	*get_env_value(t_env **env, char *key)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-	{
-		if (strcmp(key, env[i]->key) == 0)
-			return (ft_strdup(env[i]->val));
-		i++;
-	}
-	return (NULL);
 }

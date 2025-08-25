@@ -3,26 +3,27 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
+#    By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/08/25 15:17:16 by miltavar         ###   ########.fr        #
+#    Updated: 2025/08/25 16:14:27 by bdjoco           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -Ilibs/libft/includes -Ilibs/ft_fprintf -Iincludes -lreadline
+CFLAGS		= -Wall -Wextra -Werror -Ilibs/libft/includes -Ilibs/ft_fprintf -Iincludes
 
 MAKE = make -s -C
 
 SRCS = test.c \
-		srcs/env.c \
-		srcs/env_utils.c \
-		srcs/split_minishell.c \
-		srcs/split_utils.c
+		srcs/environement/env.c \
+		srcs/environement/env_utils.c \
+		srcs/minisplit/split_minishell.c \
+		srcs/minisplit/split_utils.c
 
 BOLD = \e[1m
+GRAY = \e[30m
 GREEN = \e[32m
 PURPLE = \e[35m
 RESET = \e[0m
@@ -38,7 +39,8 @@ FT_FPRINTF		= $(FT_FPRINTF_PATH)/ft_fprintf.a
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT) $(FT_FPRINTF)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(FT_FPRINTF) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(FT_FPRINTF) -o $(NAME)
+	@echo "⚜️​   $(BOLD)$(PURPLE)$(NAME)$(RESET) $(GREEN)est compilé$(RESET) ​⚜️​​"
 
 $(LIBFT):
 	@$(MAKE) $(LIBFT_PATH)
@@ -47,21 +49,23 @@ $(FT_FPRINTF):
 	@$(MAKE) $(FT_FPRINTF_PATH)
 
 %.o: %.c includes/minishell.h
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@rm -f $(OBJS)
 	@$(MAKE) $(LIBFT_PATH) clean
 	@$(MAKE) $(FT_FPRINTF_PATH) clean
+	@echo "$(GRAY)Nettoyage des$(RESET) $(BOLD)fichiers source de minishell$(RESET) $(GRAY)terminé$(RESET) 🚮"
 
 fclean: clean
 	@rm -f $(NAME)
 	@$(MAKE) $(LIBFT_PATH) fclean
 	@$(MAKE) $(FT_FPRINTF_PATH) fclean
+	@echo "$(GRAY)Nettoyage de$(RESET) $(BOLD)$(NAME)$(RESET) $(GRAY)terminé$(RESET) 🚮"
 
 #--------------------------------------------#
 cook: all clean
-	@echo "🍴 $(BOLD)$(PURPLE)On cook$(RESET)"
+	@echo "🍴 $(BOLD)$(PURPLE)On cook$(RESET) 🍴"
 #--------------------------------------------#
 
 re: fclean all

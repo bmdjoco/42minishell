@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/25 13:57:56 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:03:44 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,39 @@ typedef struct s_env
 	char	*val;
 }		t_env;
 
-int	check_redir(char *s);
+/* Environnement */
 int	size_of_key(char *str);
 int	size_of_val(char *str);
-int	get_len(char *s, int index);
-int	strstr_index(char *s, char *tofind);
 
 char	*get_env_value(t_env **env, char *key);
 
+void	put_env(t_env **env);
+void	free_env(t_env **env, int i, int f);
+
+t_env	**init_environnement(char **envp);
+
+
+/* pwd */
+void	pwd(t_env **env);
+
+
+/* minisplit */
+int	check_redir(char *s);
+int	get_len(char *s, int index);
+
 char	**mini_split(char *s);
 
-void	pwd(t_env **env);
-void	echo_doc(char *end);
-void	put_env(t_env **env);
-void	free_split(char **split);
-void	free_env(t_env **env, int i, int f);
 void	fill_str(char *dst, char *s, int index);
 
 
-t_env	**init_environnement(char **envp);
+/* echo */
+int	strstr_index(char *s, char *tofind);
+
+void	echo_doc(char *end);
+
+
+/* utils */
+void	free_split(char **split);
+
 
 #endif

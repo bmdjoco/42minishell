@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   libs_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:25:00 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/22 12:32:22 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/08/25 15:55:15 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	strstr_index(char *s, char *tofind) //ft_strstr to find qui return l'index
 {

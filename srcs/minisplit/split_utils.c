@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 17:52:21 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/22 17:55:22 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:02:03 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static int	skip_spaces(char *s, int i)
 {
@@ -32,7 +32,15 @@ static int	redir_or_word_len(char *s, int i)
 	return (len);
 }
 
-int	get_len(char *s, int index)
+/**
+ * @brief Renvoie la taille d'un mots positione a l'index 'i'
+ *
+ * @param sentence Chaine de charatere representant la phrase
+ * @param index index du mot
+ *
+ * @return taille du mot ou -1 en cas erreur
+ */
+int	get_len(char *sentence, int index)
 {
 	int	i;
 	int	words;
@@ -40,12 +48,12 @@ int	get_len(char *s, int index)
 
 	i = 0;
 	words = 0;
-	while (s[i])
+	while (sentence[i])
 	{
-		i = skip_spaces(s, i);
-		if (!s[i])
+		i = skip_spaces(sentence, i);
+		if (!sentence[i])
 			break ;
-		len = redir_or_word_len(s, i);
+		len = redir_or_word_len(sentence, i);
 		words++;
 		if (words == index)
 			return (len);

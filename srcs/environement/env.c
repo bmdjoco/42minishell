@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:11:41 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/08/25 13:06:15 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:04:55 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /**
  * @brief Initialiser la structure de variable environnemental
@@ -43,4 +43,54 @@ t_env	**init_environnement(char **envp)
 	}
 	env[i] = NULL;
 	return (env);
+}
+
+/**
+ * @brief renvoie la valeur correspondant a la cle passer en argument
+ *
+ * @param env liste de variable environnemental sous forme de structure s_env
+ * @param key cle correspondant a la valeur rechercher
+ * @return renvoie une chaine de charactere correspondant a la valleur ou NULL en cas d'erreur
+ */
+char	*get_env_value(t_env **env, char *key)
+{
+	int	i;
+
+	if (!key)
+		return (NULL);
+	i = 0;
+	while (env[i])
+	{
+		if (strcmp(key, env[i]->key) == 0)
+			return (ft_strdup(env[i]->val));
+		i++;
+	}
+	return (NULL);
+}
+
+int	set_env_value(t_env **env, char *key, char *val)
+{
+	int	i;
+	char	*tmp;
+
+	i = 0;
+	if (!key || !val)
+		return (0);
+	while (env[i])
+	{
+		if (strcmp(key, env[i]->key) == 0)
+		{
+			tmp = env[i]->val;
+			env[i]->val = NULL;
+			env[i]->val = ft_strdup(env[i]->val);
+			if(!env[i]->val)
+				{
+
+				}
+			free(tmp);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }

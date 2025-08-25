@@ -6,7 +6,7 @@
 #    By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/02 13:23:14 by bdjoco            #+#    #+#              #
-#    Updated: 2025/08/22 11:58:49 by bdjoco           ###   ########.fr        #
+#    Updated: 2025/08/25 16:10:22 by bdjoco           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,18 +35,18 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@$(AR) $(NAME) $(OBJ)
-	@echo "$(BOLD)$(PURPLE)$(NAME)$(RESET) $(GREEN)est compilé $(RESET)​🔰​"
+	@echo "$(BOLD)$(NAME)$(RESET) $(GREEN)est compilé $(RESET)​🔰​"
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@$(RM) $(OBJ)
-	@echo "$(GREEN)Nettoyage des$(RESET) $(BOLD)fichiers source de libft$(RESET) $(GREEN)terminé$(RESET) 🚮"
+	@echo "$(GREEN)Nettoyage des$(RESET) $(BOLD)fichiers source de ft_fprintf$(RESET) $(GREEN)terminé$(RESET) 🚮"
 
 fclean: clean
 	@$(RM) $(NAME)
-	@echo "$(GREEN)Nettoyage de$(RESET) $(BOLD)libft.a$(RESET) $(GREEN)terminé$(RESET) 🚮"
+	@echo "$(GREEN)Nettoyage de$(RESET) $(BOLD)$(NAME)$(RESET) $(GREEN)terminé$(RESET) 🚮"
 
 re: fclean all
 

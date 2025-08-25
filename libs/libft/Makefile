@@ -6,13 +6,18 @@
 #    By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/24 16:57:49 by miltavar          #+#    #+#              #
-#    Updated: 2025/08/22 14:16:00 by bdjoco           ###   ########.fr        #
+#    Updated: 2025/08/25 16:10:31 by bdjoco           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= libft.a
 CC		= cc -g
 CFLAGS	= -Wall -Wextra -Werror
+
+BOLD = \e[1m
+GREEN = \e[32m
+PURPLE = \e[35m
+RESET = \e[0m
 
 SRCS	= ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strlen.c \
 		ft_toupper.c ft_tolower.c ft_printf.c ft_strlcpy.c\
@@ -31,14 +36,17 @@ all: ${NAME}
 
 $(NAME): $(OBJS)
 	@ar rcs $(NAME) $^
+	@echo "$(BOLD)$(NAME)$(RESET) $(GREEN)est compilé $(RESET)​🔰​"
 
 %.o: %.c ${HEADERS}
-	${CC} ${CFLAGS} -c $< -o $@
+	@${CC} ${CFLAGS} -c $< -o $@
 
 clean:
-	rm -f ${OBJS}
+	@rm -f ${OBJS}
+	@echo "$(GREEN)Nettoyage des$(RESET) $(BOLD)fichiers source de libft$(RESET) $(GREEN)terminé$(RESET) 🚮"
 
 fclean: clean
-	rm -f ${NAME}
+	@rm -f ${NAME}
+	@echo "$(GREEN)Nettoyage de$(RESET) $(BOLD)$(NAME)$(RESET) $(GREEN)terminé$(RESET) 🚮"
 
 re:	fclean all
