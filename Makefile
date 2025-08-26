@@ -6,13 +6,14 @@
 #    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/08/25 16:41:39 by miltavar         ###   ########.fr        #
+#    Updated: 2025/08/26 14:37:37 by miltavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -Ilibs/libft/includes -Ilibs/ft_fprintf -Iincludes
+LDFLAGS		= -lreadline
 
 MAKE = make -s -C
 
@@ -21,7 +22,11 @@ SRCS = test.c \
 		srcs/environement/env_utils.c \
 		srcs/minisplit/split_minishell.c \
 		srcs/minisplit/split_utils.c \
-		srcs/minisplit/split_quotes.c
+		srcs/minisplit/split_commons.c \
+		srcs/echo/echo.c \
+		srcs/readline/readline.c \
+		srcs/utils/lib_utils.c
+
 
 BOLD = \e[1m
 GRAY = \e[30m
@@ -40,7 +45,7 @@ FT_FPRINTF		= $(FT_FPRINTF_PATH)/ft_fprintf.a
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT) $(FT_FPRINTF)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(FT_FPRINTF) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(FT_FPRINTF) $(LDFLAGS) -o $(NAME)
 	@echo "⚜️​   $(BOLD)$(PURPLE)$(NAME)$(RESET) $(GREEN)est compilé$(RESET) ​⚜️​​"
 
 $(LIBFT):

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 17:52:21 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/25 16:02:03 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/26 14:28:34 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	skip_spaces(char *s, int i)
 {
-	while (s[i] == ' ')
+	while (is_whitespace(s[i]))
 		i++;
 	return (i);
 }
@@ -32,14 +32,6 @@ static int	redir_or_word_len(char *s, int i)
 	return (len);
 }
 
-/**
- * @brief Renvoie la taille d'un mots positione a l'index 'i'
- *
- * @param sentence Chaine de charatere representant la phrase
- * @param index index du mot
- *
- * @return taille du mot ou -1 en cas erreur
- */
 int	get_len(char *sentence, int index)
 {
 	int	i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fprintf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:49:20 by milo              #+#    #+#             */
-/*   Updated: 2025/08/22 16:42:27 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/26 16:26:06 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	check_format(const char *format)
 	i = 0;
 	while (format[i])
 	{
-		if (format[i] == '%' && format[i + 1] && check_char(format[i + 1] == 0))
+		if (format[i] == '%' && format[i + 1] && check_char(format[i + 1]) == 0)
 			return (1);
 		i++;
 	}

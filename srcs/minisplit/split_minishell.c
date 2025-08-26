@@ -6,26 +6,11 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:37:31 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/25 17:01:07 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/08/26 16:32:09 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	free_split(char **split)
-{
-	int	i;
-
-	if (!split)
-		return ;
-	i = 0;
-	while (split[i])
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
-}
 
 int	check_redir(char *s)
 {
@@ -59,10 +44,14 @@ int	check_dup(char *s)
 
 	if (!s)
 		return (-1);
-	i = 0;
+	i = check_quotes(s);
+	if (i == -1)
+		return (ft_fprintf(2, "minishell: syntax error at '%c'", s[i]), -1);
 	while (s[i])
 	{
-		if (s[i] == '>' && s[i + 1] && s[i + 2]
+		if (s[i] == ';')
+			return (ft_fprintf(2, "minishell: syntax error at '%c'", s[i]), -1);
+		else if (s[i] == '>' && s[i + 1] && s[i + 2]
 			&& s[i + 1] == '>' && s[i + 2] == '>')
 			return (ft_fprintf(2, "minishell: syntax error at '%c'", s[i]), -1);
 		else if (s[i] == '|' && s[i + 1] && s[i + 2]
@@ -85,7 +74,7 @@ int	count_words(char *s)
 		return (0);
 	while (*s)
 	{
-		while (*s == ' ')
+		while (is_whitespace(*s))
 			s++;
 		if (!*s)
 			break ;
@@ -94,7 +83,7 @@ int	count_words(char *s)
 		if (len)
 			s += len;
 		else
-			while (*s && *s != ' ' && !check_redir(s))
+			while (*s && !is_whitespace(*s) && !check_redir(s))
 				s++;
 	}
 	return (words);

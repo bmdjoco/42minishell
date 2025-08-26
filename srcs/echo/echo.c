@@ -3,70 +3,118 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:46:13 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/25 15:55:13 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/26 15:02:24 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	echo(char *s)
+int	check_backslash(char *s)
 {
 	int	i;
-
-	i = strstr_index(s, "echo -n");
-	if (i > 0)
-	{
-		redirection_check(s + i);
-		return (1);
-	}
-	else
-	{
-		i = strstr_index(s, "echo");
-		if (i > 0)
-		{
-			redirection_check(s + i);
-			return (1);
-		}
-	}
-	return (-1);
-}
-
-int	redirection_check(char *s)
-{
-	int	i;
-	char	*eof;
-
-	i = strstr_index(s, "<<");
-	if (i > 0)
-	{
-		eof = parse_eof(s + i);
-		if (!eof)
-			return (-1);
-		echo_doc(eof);
-	}
-}
-
-char	*parse_eof(char *s)
-{
-	char	*eof;
-	int			i;
-	int			j;
 
 	i = 0;
-	while (s[i] && s[i] != ' ')
+	if (s[i] != '-')
+		return (0);
+	i++;
+	while (s[i] == 'n')
 		i++;
-	eof = malloc((ft_strlen(s) - i + 1));
-	if (!eof)
-		return (perror("minishell: alloc failed\n"), NULL);
-	j = 0;
-	while (j < i)
+	if (s[i])
+		return (0);
+	return (1);
+}
+
+int	check_dollar(char *s, t_env **env)
+{
+	int	i;
+	char	*check;
+	char	*temp;
+
+	i = 0;
+	check = ft_calloc(500, 1);
+	if (!check)
+		return (ft_fprintf(2, "minishell: failed to alloc\n") , -1);
+	while (s[i] && !is_whitespace(s[i]) && s[i] != 92)
 	{
-		eof[j] = s[j];
-		j++;
+		check[i] = s[i];
+		i++;
 	}
-	eof[j] = '\0';
-	return (eof);
+	check[i] = '\0';
+	temp = get_env_value(env, check);
+	if (!temp)
+		return (free(check), 0);
+	free(check);
+	printf("%s", temp);
+	free(temp);
+	return (i);
+}
+
+void	replace_and_print(char *s, t_env **env)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '$')
+		{
+			j = check_dollar(s + i + 1, env) + 1;
+			if (j == -1)
+				exit (1);
+			else if (j == 0)
+			{
+				printf("%c", s[i]);
+				i++;
+			}
+			else
+				i += j;
+		}
+		else
+		{
+			printf("%c", s[i]);
+			i++;
+		}
+	}
+}
+
+void	print(char **split, int bs, t_env **env)
+{
+	int	i;
+
+	if (bs == 1)
+		i = 2;
+	else
+		i = 1;
+	while (split[i])
+	{
+		replace_and_print(split[i], env);
+		if (split[i + 1])
+			printf(" ");
+		i++;
+	}
+	if (bs == 1)
+		printf("\n");
+}
+
+/**
+ * @brief Reproduit le comportement de echo
+ * @param split tableau de chaines avec la premiere etant echo
+ * @param env l'environnement actuel
+ * @return -1 en cas d'echec, 0 si succes
+ */
+int	echo(char **split, t_env **env)
+{
+	int	bs;
+
+	if (ft_strcmp(split[0], "echo") != 0)
+		return (-1);
+	if (!split[1])
+		return (printf("\n"), 1);
+	bs = check_backslash(split[1]);
+	print(split, bs, env);
+	return (0);
 }
