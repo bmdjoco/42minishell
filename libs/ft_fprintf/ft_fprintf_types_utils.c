@@ -6,7 +6,7 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:23:10 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/22 14:47:56 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/26 16:39:26 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,5 @@ int	type_percent_fd(int fd)
 
 void	ft_putchar_fd(char c, int fd)
 {
-	write(1, &c, fd);
+	write(fd, &c, 1);
 }

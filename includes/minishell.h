@@ -6,7 +6,7 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/25 19:48:47 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/26 17:24:34 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ typedef struct s_env
 }		t_env;
 
 /* Environnement */
-int	size_of_key(char *str);
-int	size_of_val(char *str);
+int		size_of_key(char *str);
+int		size_of_val(char *str);
 
 char	*get_env_value(t_env **env, char *key);
 
@@ -41,16 +41,18 @@ void	free_env(t_env **env, int i, int f);
 t_env	**init_environnement(char **envp);
 
 
-/* CD */
-int	nb_parent(char	*path);
+/* CD && pwd */
+int		nb_parent(char	*path);
+int		nb_of_move_up(char *path);
+int		nb_of_move_down(char *path);
+int		nb_of_move(char *path);
 
-/* pwd */
 void	pwd(t_env **env);
 
 
 /* minisplit */
-int	check_redir(char *s);
-int	get_len(char *s, int index);
+int		check_redir(char *s);
+int		get_len(char *s, int index);
 
 char	**mini_split(char *s);
 
@@ -58,13 +60,14 @@ void	fill_str(char *dst, char *s, int index);
 
 
 /* echo */
-int	strstr_index(char *s, char *tofind);
+int		strstr_index(char *s, char *tofind);
 
 void	echo_doc(char *end);
 
 
 /* utils */
 void	free_split(char **split);
+char	*ft_strjoin_w_sep(char const *s1, char const *s2, char const sep);
 
 
 #endif

@@ -6,7 +6,7 @@
 #    By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/08/25 16:14:27 by bdjoco           ###   ########.fr        #
+#    Updated: 2025/08/26 17:25:57 by bdjoco           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ SRCS = test.c \
 		srcs/environement/env.c \
 		srcs/environement/env_utils.c \
 		srcs/minisplit/split_minishell.c \
-		srcs/minisplit/split_utils.c
+		srcs/minisplit/split_utils.c \
+		srcs/cd/path_utils.c \
+		srcs/utils/string_utils.c
 
 BOLD = \e[1m
 GRAY = \e[30m
