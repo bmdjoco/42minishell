@@ -6,7 +6,7 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 19:33:14 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/08/26 20:39:15 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/28 12:22:28 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,18 @@ int	nb_of_move_down(char *path)
 	int	nb;
 	int	s;
 
-	i = 0;
+	i = -1;
 	nb = 0;
 	s = (int) strlen(path);
-	while (i < s)
+	while (++i < s)
 	{
-		if (i == 0 && path[i] == '/')
-			;
-		else if (i + 1 < s && !ft_strncmp("./", &path[i], 2))
+		if (i + 1 < s && !ft_strncmp("./", &path[i], 2))
 			i += 1;
 		else if (i + 2 < s && !ft_strncmp("../", &path[i], 3))
 			i += 2;
-		else if (i == s - 1 && path[i] == '.')
-			;
-		else if (i + 1 == s - 1 && !ft_strncmp("..", &path[i], 2))
+		else if ((i == s - 1 && path[i] == '.')
+			|| (i + 1 == s - 1 && !ft_strncmp("..", &path[i], 2))
+			|| (i == 0 && path[i] == '/'))
 			;
 		else
 		{
@@ -98,13 +96,14 @@ int	nb_of_move_down(char *path)
 			while (i < s && path[i] != '/')
 				i++;
 		}
-		i++;
 	}
 	return (nb);
 }
 
 /**
- * @return la difference d'appelle de repertoire parent et enfant
+ * @brief la difference d'appelle de repertoire parent et enfant
+ *
+ * @return positif si plus de ../ que de repertoire
  */
 int	nb_of_move(char *path)
 {

@@ -6,7 +6,7 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/26 17:24:34 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/08/28 13:16:18 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,11 @@ void	echo_doc(char *end);
 
 
 /* utils */
+int		ft_strfind(char *str, char *tofind);
+
 void	free_split(char **split);
+
+char	*ft_strchr_and_cut(char const *str, char *to_cut);
 char	*ft_strjoin_w_sep(char const *s1, char const *s2, char const sep);
 
 
