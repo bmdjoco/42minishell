@@ -3,46 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:11:41 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/08/25 16:04:55 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/01 15:01:50 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+t_env *new_env_node(char *key, char *val)
+{
+	t_env *node;
+
+	node = malloc(sizeof(t_env));
+	if (!node)
+		return (NULL);
+	node->key = key;
+	node->val = val;
+	node->next = NULL;
+	return (node);
+}
 
 /**
  * @brief Initialiser la structure de variable environnemental
  *
  * @return renvoie le pointeur vers la structure ou NULL en cas s'erreur
  */
-t_env	**init_environnement(char **envp)
+t_env *init_environnement(char **envp)
 {
-	int		i;
-	t_env	**env;
+	t_env *head;
+	t_env *tmp;
+	t_env *new;
+	int i;
 
 	i = 0;
+	head = NULL;
 	while (envp[i])
-		i++;
-	env = malloc(sizeof(t_env *) * (i + 1));
-	if (!env)
-		return (ft_putstr_fd("Error: 1\n", 2), NULL);
-	i = -1;
-	while (envp[++i])
 	{
-		env[i] = malloc(sizeof(t_env));
-		if(!env[i])
-			return (free_env(env, i - 1, 2), ft_putstr_fd("Error: 2\n", 2), NULL);
-		env[i]->key = ft_strndup(envp[i], size_of_key(envp[i]));
-		if(!env[i]->key)
-			return (free_env(env, i, 0), ft_putstr_fd("Error: 3\n", 2), NULL);
-		env[i]->val = ft_strndup(&envp[i][size_of_key(envp[i]) + 1], size_of_val(envp[i]));
-		if(!env[i]->val)
-			return (free_env(env, i, 1), ft_putstr_fd("Error: 4\n", 2), NULL);
+		char *key = ft_strndup(envp[i], size_of_key(envp[i]));
+		char *val = ft_strndup(envp[i] + size_of_key(envp[i]) + 1,
+				size_of_val(envp[i]));
+		if (!key || !val)
+			return (NULL);
+		new = new_env_node(key, val);
+		if (!new)
+			return (NULL);
+		if (!head)
+			head = new;
+		else
+		{
+			tmp = head;
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = new;
+		}
+		i++;
 	}
-	env[i] = NULL;
-	return (env);
+	return (head);
 }
 
 /**
@@ -52,45 +70,23 @@ t_env	**init_environnement(char **envp)
  * @param key cle correspondant a la valeur rechercher
  * @return renvoie une chaine de charactere correspondant a la valleur ou NULL en cas d'erreur
  */
-char	*get_env_value(t_env **env, char *key)
+char	*get_env_value(t_env *env, char *key)
 {
-	int	i;
+	t_env	*tmp;
 
 	if (!key)
 		return (NULL);
-	i = 0;
-	while (env[i])
+	tmp = env;
+	while (tmp)
 	{
-		if (strcmp(key, env[i]->key) == 0)
-			return (ft_strdup(env[i]->val));
-		i++;
+		if (strcmp(key, tmp->key) == 0)
+		{
+			if (tmp->val)
+				return (ft_strdup(tmp->val));
+			else
+				return (NULL);
+		}
+		tmp = tmp->next;
 	}
 	return (NULL);
-}
-
-int	set_env_value(t_env **env, char *key, char *val)
-{
-	int	i;
-	char	*tmp;
-
-	i = 0;
-	if (!key || !val)
-		return (0);
-	while (env[i])
-	{
-		if (strcmp(key, env[i]->key) == 0)
-		{
-			tmp = env[i]->val;
-			env[i]->val = NULL;
-			env[i]->val = ft_strdup(env[i]->val);
-			if(!env[i]->val)
-				{
-
-				}
-			free(tmp);
-			return (1);
-		}
-		i++;
-	}
-	return (0);
 }

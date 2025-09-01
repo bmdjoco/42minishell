@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:46:13 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/26 15:02:24 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/01 14:56:05 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	check_backslash(char *s)
 	return (1);
 }
 
-int	check_dollar(char *s, t_env **env)
+int	check_dollar(char *s, t_env *env)
 {
 	int	i;
 	char	*check;
@@ -52,7 +52,7 @@ int	check_dollar(char *s, t_env **env)
 	return (i);
 }
 
-void	replace_and_print(char *s, t_env **env)
+void	replace_and_print(char *s, t_env *env)
 {
 	int	i;
 	int	j;
@@ -81,7 +81,7 @@ void	replace_and_print(char *s, t_env **env)
 	}
 }
 
-void	print(char **split, int bs, t_env **env)
+void	print(char **split, int bs, t_env *env)
 {
 	int	i;
 
@@ -106,15 +106,7 @@ void	print(char **split, int bs, t_env **env)
  * @param env l'environnement actuel
  * @return -1 en cas d'echec, 0 si succes
  */
-int	echo(char **split, t_env **env)
-{
-	int	bs;
-
-	if (ft_strcmp(split[0], "echo") != 0)
-		return (-1);
-	if (!split[1])
-		return (printf("\n"), 1);
-	bs = check_backslash(split[1]);
-	print(split, bs, env);
-	return (0);
-}
+// int	echo(char **split, t_env **env)
+// {
+// 	return (0);
+// }

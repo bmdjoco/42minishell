@@ -6,43 +6,60 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/26 16:48:35 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/01 15:32:48 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	process_line(char *line, t_env **env)
+int	parse_line(char **split, t_env *env)
+{
+	if (!split[0])
+		return (0);
+	if (!ft_strcmp(split[0], "unset"))
+		unset(&env, split + 1);
+	else if (!ft_strcmp(split[0], "pwd"))
+		pwd(env);
+	else if (!ft_strcmp(split[0], "env"))
+		builtin_env(env);
+	return (0);
+}
+
+int	process_line(char *line, t_env *env)
 {
 	char	**split;
+	int			ret;
 
+	ret = 0;
 	if (*line)
 		add_history(line);
 	if (ft_strlen(line) == 0)
 	{
 		free(line);
-		return ;
+		return (ret);
 	}
 	split = mini_split(line);
 	if (!split)
 	{
 		free(line);
-		return ;
+		return (0);
 	}
-	echo(split, env);
+	ret = parse_line(split, env);
 	free(line);
 	free_split(split);
+	return (ret);
 }
 
 /**
  * @brief Lit sur l'entree standard et redirige l'input vers les fonctions
  * @param envp environnement de la machine
- * @return -1 en cas d'echec, 0 si succes
+ * @return code != 0 en cas d'echec, 0 si succes
  */
 int	read_lines(char **envp)
 {
 	char	*line;
-	t_env	**env;
+	t_env	*env;
+	int		ret;
 
 	env = init_environnement(envp);
 	if (!env)
@@ -55,9 +72,11 @@ int	read_lines(char **envp)
 			printf("exit\n");
 			break ;
 		}
-		process_line(line, env);
+		ret = process_line(line, env);
+		if (ret != 0)
+			return (ret);
 	}
 	rl_clear_history();
-	free_env(env, -9, 2);
+	free_env(env);
 	return (0);
 }

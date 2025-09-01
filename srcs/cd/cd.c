@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 16:19:37 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/08/25 15:55:20 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/01 14:57:46 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	move_pwd(char *dest)
 
 }
 
-int	cd(t_env **env, char *path)
+int	cd(t_env *env, char *path)
 {
 	char	*clean_path;
 

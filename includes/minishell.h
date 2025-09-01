@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/08/26 14:59:23 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/01 15:37:05 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,36 @@
 
 typedef struct s_env
 {
-	char	*key;
-	char	*val;
-}		t_env;
+	char			*key;
+	char			*val;
+
+	struct s_env	*next;
+}					t_env;
 
 /* Environnement */
+
 int		size_of_key(char *str);
 int		size_of_val(char *str);
 
-char	*get_env_value(t_env **env, char *key);
+char	*get_env_value(t_env *env, char *key);
 
-void	put_env(t_env **env);
-void	free_env(t_env **env, int i, int f);
+void	put_env(t_env *env);
+void	free_env(t_env *env);
 
-t_env	**init_environnement(char **envp);
+t_env	*init_environnement(char **envp);
 
 
 /* Readline */
+
 int		read_lines(char **envp);
 
 /* pwd */
-void	pwd(t_env **env);
+
+void	pwd(t_env *env);
 
 
 /* minisplit */
+
 int		check_redir(char *s);
 int		get_len(char *s, int index);
 int		match_quotes(char *s);
@@ -60,13 +66,22 @@ void	fill_str(char *dst, char *s, int index);
 
 
 /* echo */
-int		echo(char **split, t_env **env);
+
+void	replace_and_print(char *s, t_env *env);
 
 
 /* utils */
+
 void	free_split(char **split);
 int		is_whitespace(char c);
 int		ft_strcmp(char *s1, char *s2);
 
+/* unset */
+
+void	unset(t_env	**env, char **split);
+
+/* env */
+
+void	builtin_env(t_env *env);
 
 #endif

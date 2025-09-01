@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:49:44 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/08/25 15:35:52 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/01 14:48:09 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,32 +52,19 @@ int	size_of_val(char *str)
  * @brief free en integraliter ou en partis la structure s_env
  *
  * @param env liste de variable environnemental sous forme de structure s_env
- * @param i indice de depart de liberage de la liste (-9 si toute la liste)
- * @param f indice d'erreur (2 pour key val ainsi que le pointeur, 1 pour key ainsi que le pointeur et 0 pour le pointeur uniquement)
  */
-void	free_env(t_env **env, int i, int f)
+void	free_env(t_env *env)
 {
-	if (i == -9)
+	t_env	*tmp;
+
+	while (env)
 	{
-		i = -1;
-		while (env[++i])
-		{
-			free(env[i]->val);
-			free(env[i]->key);
-			free(env[i]);
-		}
+		tmp = env->next;
+		free(env->key);
+		free(env->val);
+		free(env);
+		env = tmp;
 	}
-	else
-		while (i >= 0)
-		{
-			if (f >= 2)
-				free(env[i]->val);
-			if (f >= 1)
-				free(env[i]->key);
-			free(env[i]);
-			i--;
-		}
-	free(env);
 }
 
 /**
@@ -85,14 +72,11 @@ void	free_env(t_env **env, int i, int f)
  *
  * @param env liste de variable environnemental sous forme de structure s_env
  */
-void	put_env(t_env **env)
+void	put_env(t_env *env)
 {
-	int	i;
-
-	i = 0;
-	while (env[i])
+	while (env)
 	{
-		printf("%s=%s\n", env[i]->key, env[i]->val);
-		i++;
+		printf("%s=%s\n", env->key, env->val);
+		env = env->next;
 	}
 }
