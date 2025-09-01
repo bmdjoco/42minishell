@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 12:24:59 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/01 23:31:19 by bdjoco           ###   ########.fr       */
+/*   Created: 2025/09/01 23:37:51 by bdjoco            #+#    #+#             */
+/*   Updated: 2025/09/01 23:38:22 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
-int	main(int ac, char **av, char **envp)
+
+int builtin_pwd(void)
 {
-char *line;
-	char *argv[2];
+	char	*cwd;
 
-	while (1)
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
 	{
-		line = readline("minishell> ");
-		if (!line)
-		{
-			printf("exit\n");
-			break;
-		}
-		if (*line)
-			add_history(line);
-		if (ft_strncmp(line, "cd", 2) == 0)
-			cd(line);
-		else if (ft_strncmp(line, "pwd", 3) == 0)
-			pwd();
-		free(line);
+		perror("pwd");
+		return (1);
 	}
-	return 0;
+	printf("%s\n", cwd);
+	free(cwd);
+	return (0);
 }
