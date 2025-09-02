@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/02 11:46:39 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/02 13:01:05 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ int		size_of_val(char *str);
 
 char	*get_env_value(t_env *env, char *key);
 
-void	put_env(t_env *env);
 void	free_env(t_env *env);
 
 t_env	*init_environnement(char **envp);
+void	set_env_value(t_env **env, char *key, char *val);
 
 
 /* Readline */
@@ -87,6 +87,6 @@ char	**get_args(char *s);
 
 /* env */
 
-void	builtin_env(t_env *env);
+void	builtin_env(t_env *env, int export);
 
 #endif

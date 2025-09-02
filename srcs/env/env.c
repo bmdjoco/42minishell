@@ -6,26 +6,34 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 13:38:19 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/01 14:57:29 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/02 13:27:48 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 /**
- * @brief Affoiche les variables environementales ou une erreur si PATH = NULL
+ * @brief Affiche les variables environementales ou une erreur si PATH = NULL
  * @param env Listes des variables environementales
  */
-void	builtin_env(t_env *env)
+void	builtin_env(t_env *env, int export)
 {
-	char	*temp;
-
-	temp = get_env_value(env, "PATH");
-	if (!temp)
-	{
-		ft_putstr_fd("minishell: env: No such file or directory\n", 2);
+	if (!env)
 		return ;
+	if (export == 0)
+	{
+		while (env)
+		{
+			printf("%s=%s\n", env->key, env->val);
+			env = env->next;
+		}
 	}
-	free(temp);
-	put_env(env);
+	else
+	{
+		while (env)
+		{
+			printf("export %s=%s\n", env->key, env->val);
+			env = env->next;
+		}
+	}
 }

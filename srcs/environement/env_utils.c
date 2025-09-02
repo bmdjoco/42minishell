@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:49:44 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/02 12:26:08 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/02 12:51:55 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,4 @@ void	free_env(t_env *env)
 		free(env);
 		env = tmp;
 	}
-}
-
-/**
- * @brief affiche les variables environnemental
- *
- * @param env liste de variable environnemental sous forme de structure s_env
- */
-void	put_env(t_env *env)
-{
-	while (env)
-	{
-		printf("%s=%s\n", env->key, env->val);
-		env = env->next;
-	}
-}
-
-void	replace(t_env **env, char *key)
-{
-	
 }

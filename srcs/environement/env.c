@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:11:41 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/02 12:26:41 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/02 13:34:30 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@ t_env *new_env_node(char *key, char *val)
 	node = malloc(sizeof(t_env));
 	if (!node)
 		return (NULL);
-	node->key = key;
-	node->val = val;
+	node->key = ft_strdup(key);
+	if (!node->key)
+		return (perror("minishell: "), free(node), NULL);
+	node->val = ft_strdup(val);
+	if (!node->val)
+		return (perror("minishell: "), free(node->key), free(node), NULL);
 	node->next = NULL;
 	return (node);
 }
@@ -79,7 +83,7 @@ char	*get_env_value(t_env *env, char *key)
 	tmp = env;
 	while (tmp)
 	{
-		if (strcmp(key, tmp->key) == 0)
+		if (ft_strcmp(key, tmp->key) == 0)
 		{
 			if (tmp->val)
 				return (ft_strdup(tmp->val));
@@ -91,15 +95,45 @@ char	*get_env_value(t_env *env, char *key)
 	return (NULL);
 }
 
-void	set_env_value(t_env **env, char *key)
+static void	update_existing_env(t_env *env, char *key, char *val)
 {
 	t_env	*tmp;
 
-	tmp = *env;
+	tmp = env;
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->key, key))
-			
+		{
+			free(tmp->val);
+			tmp->val = ft_strdup(val);
+			if (!tmp->val)
+				return (perror("minishell: "));
+			return ;
+		}
 		tmp = tmp->next;
 	}
+}
+
+void	set_env_value(t_env **env, char *key, char *val)
+{
+	t_env	*tmp;
+	t_env	*new;
+	char	*value;
+
+	if (!*env)
+		return ;
+	tmp = *env;
+	value = get_env_value(*env, key);
+	if (!value)
+	{
+		while (tmp->next)
+			tmp = tmp->next;
+		new = new_env_node(key, val);
+		if (!new)
+			return (perror("minishell: "));
+		tmp->next = new;
+		return ;
+	}
+	free(value);
+	update_existing_env(*env, key, val);
 }
