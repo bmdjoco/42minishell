@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/02 13:03:03 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/02 15:12:00 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,23 @@ int	parse_line(char **split, t_env *env)
 		builtin_env(env, 0);
 	else if (!ft_strcmp(split[0], "export"))
 		builtin_export(&env, split + 1);
+	else if (!ft_strcmp(split[0], "exit"))
+		return (exit_builtin(split + 1));
 	return (0);
 }
 
 int	process_line(char *line, t_env *env)
 {
 	char	**split;
-	int			ret;
+	int			exit;
 
-	ret = 0;
+	exit = 0;
 	if (*line)
 		add_history(line);
 	if (ft_strlen(line) == 0)
 	{
 		free(line);
-		return (ret);
+		return (exit);
 	}
 	split = mini_split(line);
 	if (!split)
@@ -46,10 +48,9 @@ int	process_line(char *line, t_env *env)
 		free(line);
 		return (0);
 	}
-	ret = parse_line(split, env);
 	free(line);
-	free_split(split);
-	return (ret);
+	exit = parse_line(split, env);
+	return (exit);
 }
 
 /**
@@ -76,7 +77,7 @@ int	read_lines(char **envp)
 		}
 		ret = process_line(line, env);
 		if (ret != 0)
-			return (ret);
+			return (rl_clear_history(), free_env(env), ret);
 	}
 	rl_clear_history();
 	free_env(env);
