@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:11:41 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/02 12:03:09 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/02 12:26:41 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ void	set_env_value(t_env **env, char *key)
 	tmp = *env;
 	while (tmp)
 	{
+		if (!ft_strcmp(tmp->key, key))
+			
 		tmp = tmp->next;
 	}
 }

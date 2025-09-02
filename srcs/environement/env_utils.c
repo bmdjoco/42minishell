@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:49:44 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/01 14:48:09 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/02 12:26:08 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,9 @@ void	put_env(t_env *env)
 		printf("%s=%s\n", env->key, env->val);
 		env = env->next;
 	}
+}
+
+void	replace(t_env **env, char *key)
+{
+	
 }
