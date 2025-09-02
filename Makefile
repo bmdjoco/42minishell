@@ -6,7 +6,7 @@
 #    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/09/01 15:09:05 by miltavar         ###   ########.fr        #
+#    Updated: 2025/09/02 11:47:02 by miltavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ SRCS = test.c \
 		srcs/unset/unset.c \
 		srcs/pwd/pwd.c \
 		srcs/env/env.c \
+		srcs/export/export.c \
+		srcs/export/export_utils.c \
 		srcs/readline/readline.c \
 		srcs/utils/lib_utils.c
 

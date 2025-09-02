@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/01 15:37:05 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/02 11:46:39 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ int		ft_strcmp(char *s1, char *s2);
 /* unset */
 
 void	unset(t_env	**env, char **split);
+
+/* export */
+
+void	builtin_export(t_env **env, char **split);
+char	**get_args(char *s);
 
 /* env */
 
