@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
+#    By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/09/02 11:47:02 by miltavar         ###   ########.fr        #
+#    Updated: 2025/09/02 14:53:25 by bdjoco           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,12 @@ SRCS = test.c \
 		srcs/minisplit/split_minishell.c \
 		srcs/minisplit/split_utils.c \
 		srcs/minisplit/split_commons.c \
-		srcs/echo/echo.c \
-		srcs/unset/unset.c \
-		srcs/pwd/pwd.c \
-		srcs/env/env.c \
-		srcs/export/export.c \
-		srcs/export/export_utils.c \
+		srcs/built-in/echo/echo.c \
+		srcs/built-in/unset/unset.c \
+		srcs/built-in/pwd/pwd.c \
+		srcs/built-in/env/env.c \
+		srcs/built-in/export/export.c \
+		srcs/built-in/export/export_utils.c \
 		srcs/readline/readline.c \
 		srcs/utils/lib_utils.c
 
