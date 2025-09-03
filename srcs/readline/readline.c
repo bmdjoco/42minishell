@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/03 14:20:27 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/03 16:00:24 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	parse_line(char **split, t_env *env)
 		return (exit_builtin(split + 1));
 	else if (!ft_strcmp(split[0], "cd"))
 		return (builtin_cd(split + 1, env));
+	else
+		return (exec_cmd(env, split + 1));
 	// else if (!ft_strcmp(split[0], "echo"))
 	// 	echo();
-	// else
-	// 	return (do_exec());
 	return (0);
 }
 
@@ -59,9 +59,6 @@ int	process_line(char *line, t_env *env)
 		free(line);
 		return (0);
 	}
-	int i = -1;
-	while (split[++i])
-		printf("split %i |%s\n", i, split[i]);
 	free(line);
 	exit = parse_line(split, env);
 	free_split(split);

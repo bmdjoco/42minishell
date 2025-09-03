@@ -6,7 +6,7 @@
 #    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/09/03 14:13:34 by miltavar         ###   ########.fr        #
+#    Updated: 2025/09/03 15:45:44 by miltavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,8 @@ SRCS = test.c \
 		srcs/minisplit/split_minishell.c \
 		srcs/minisplit/split_utils.c \
 		srcs/minisplit/split_commons.c \
+		srcs/exec/exec.c \
+		srcs/exec/exec_utils.c \
 		srcs/built-in/echo/echo.c \
 		srcs/built-in/unset/unset.c \
 		srcs/built-in/pwd/pwd.c \
