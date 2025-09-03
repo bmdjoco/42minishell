@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/03 12:41:00 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/03 14:12:37 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,13 @@ void	fill_str(char *dst, char *s, int index);
 /* echo */
 
 void	replace_and_print(char *s, t_env *env);
+
+/* exec */
+
+int		nb_ofredir(char **split);
+int		reddir_type(char **split, int red);
+
+char	*reddir_file(char **split, int red);
 
 /* utils */
 
