@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/03 12:07:52 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/03 12:31:55 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		read_lines(char **envp);
 
 /* pwd */
 
-void	pwd(void);
+void	builtin_pwd(void);
 
 /* minisplit */
 
