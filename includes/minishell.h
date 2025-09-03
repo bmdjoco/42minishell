@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/03 12:31:55 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/03 12:41:00 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,15 @@ void	free_env(t_env *env);
 void	set_env_value(t_env **env, char *key, char *val);
 
 t_env	*init_environnement(char **envp);
+t_env	*new_env_node(char *key, char *val);
 
 /* Readline */
 
 int		read_lines(char **envp);
+
+/* cd */
+
+int		builtin_cd(char **argv, t_env *env);
 
 /* pwd */
 

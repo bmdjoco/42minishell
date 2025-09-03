@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/03 11:13:28 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/03 13:33:47 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	parse_line(char **split, t_env *env)
 	if (!ft_strcmp(split[0], "unset"))
 		unset(&env, split + 1);
 	else if (!ft_strcmp(split[0], "pwd"))
-		pwd();
+		builtin_pwd();
 	else if (!ft_strcmp(split[0], "env"))
 		builtin_env(env, 0);
 	else if (!ft_strcmp(split[0], "export"))
@@ -27,11 +27,11 @@ int	parse_line(char **split, t_env *env)
 	else if (!ft_strcmp(split[0], "exit"))
 		return (exit_builtin(split + 1));
 	else if (!ft_strcmp(split[0], "cd"))
-		cd();
-	else if (!ft_strcmp(split[0], "echo"))
-		echo();
-	else
-		return (do_exec());
+		return (builtin_cd(split + 1, env));
+	// else if (!ft_strcmp(split[0], "echo"))
+	// 	echo();
+	// else
+	// 	return (do_exec());
 	return (0);
 }
 
@@ -54,8 +54,12 @@ int	process_line(char *line, t_env *env)
 		free(line);
 		return (0);
 	}
+	int i = -1;
+	while (split[++i])
+		printf("split %i |%s\n", i, split[i]);
 	free(line);
 	exit = parse_line(split, env);
+	free_split(split);
 	return (exit);
 }
 
@@ -68,7 +72,6 @@ int	read_lines(char **envp)
 {
 	char	*line;
 	t_env	*env;
-	int		ret;
 
 	env = init_environnement(envp);
 	if (!env)
@@ -81,9 +84,7 @@ int	read_lines(char **envp)
 			printf("exit\n");
 			break ;
 		}
-		ret = process_line(line, env);
-		if (ret != 0)
-			return (rl_clear_history(), free_env(env), ret);
+		process_line(line, env);
 	}
 	rl_clear_history();
 	free_env(env);

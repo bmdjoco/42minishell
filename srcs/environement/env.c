@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:11:41 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/03 11:12:39 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/03 13:34:45 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ t_env	*new_env_node(char *key, char *val)
 
 /**
  * @brief Initialiser la structure de variable environnemental
- *
  * @return renvoie le pointeur vers la structure ou NULL en cas s'erreur
  */
 t_env	*init_environnement(char **envp)
