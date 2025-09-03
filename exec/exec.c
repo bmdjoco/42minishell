@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/22 16:19:37 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/03 11:13:43 by miltavar         ###   ########.fr       */
+/*   Created: 2025/09/03 10:59:43 by miltavar          #+#    #+#             */
+/*   Updated: 2025/09/03 11:00:11 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../includes/minishell.h"
 
-int	move_pwd(char *dest)
+int	do_exec(char **split, t_env *env)
 {
-
-}
-
-/**
- * @brief imite le fonctionnement de cd
- * @param env la liste chainee des variables key value de l'environnement
- * @param path ?
- * @return ?
- */
-int	cd(t_env *env, char *path)
-{
-	char	*clean_path;
-
-	if (access(clean_path, F_OK) == -1)
-		return (free(clean_path), 0);
+	
 }

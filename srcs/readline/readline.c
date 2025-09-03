@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/02 15:12:00 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/03 11:13:28 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,26 @@ int	parse_line(char **split, t_env *env)
 	if (!ft_strcmp(split[0], "unset"))
 		unset(&env, split + 1);
 	else if (!ft_strcmp(split[0], "pwd"))
-		pwd(env);
+		pwd();
 	else if (!ft_strcmp(split[0], "env"))
 		builtin_env(env, 0);
 	else if (!ft_strcmp(split[0], "export"))
 		builtin_export(&env, split + 1);
 	else if (!ft_strcmp(split[0], "exit"))
 		return (exit_builtin(split + 1));
+	else if (!ft_strcmp(split[0], "cd"))
+		cd();
+	else if (!ft_strcmp(split[0], "echo"))
+		echo();
+	else
+		return (do_exec());
 	return (0);
 }
 
 int	process_line(char *line, t_env *env)
 {
 	char	**split;
-	int			exit;
+	int		exit;
 
 	exit = 0;
 	if (*line)
@@ -55,7 +61,7 @@ int	process_line(char *line, t_env *env)
 
 /**
  * @brief Lit sur l'entree standard et redirige l'input vers les fonctions
- * @param envp environnement de la machine
+ * @param envp environnement du terminal
  * @return code != 0 en cas d'echec, 0 si succes
  */
 int	read_lines(char **envp)

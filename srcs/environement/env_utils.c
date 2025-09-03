@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:49:44 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/02 12:51:55 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/03 11:13:08 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 /**
  * @return renvoie la longueur de la cle
- *
  * @param str variable environnemental (sous forme: USER=test1)
  */
 int	size_of_key(char *str)
@@ -26,9 +25,9 @@ int	size_of_key(char *str)
 		i++;
 	return (i);
 }
+
 /**
  * @return renvoie la longueur de la valeur associe a la cle
- *
  * @param str variable environnemental (sous forme: USER=test1)
  */
 int	size_of_val(char *str)
@@ -48,9 +47,9 @@ int	size_of_val(char *str)
 	}
 	return (l);
 }
+
 /**
  * @brief free en integraliter ou en partis la structure s_env
- *
  * @param env liste de variable environnemental sous forme de structure s_env
  */
 void	free_env(t_env *env)
@@ -65,4 +64,39 @@ void	free_env(t_env *env)
 		free(env);
 		env = tmp;
 	}
+}
+
+/**
+ * @brief Cree et ajoute un nouveau noeud a la liste d'environnement
+ * @param head pointeur vers la tete de liste
+ * @param envp_line ligne d'environnement a parser
+ * @return 0 en cas de succes, -1 en cas d'erreur
+ */
+int	add_env_node(t_env **head, char *envp_line)
+{
+	t_env	*new;
+	t_env	*tmp;
+	char	*key;
+	char	*val;
+
+	key = ft_strndup(envp_line, size_of_key(envp_line));
+	val = ft_strndup(envp_line + size_of_key(envp_line) + 1,
+			size_of_val(envp_line));
+	if (!key || !val)
+		return (free(key), free(val), -1);
+	new = new_env_node(key, val);
+	free(key);
+	free(val);
+	if (!new)
+		return (-1);
+	if (!*head)
+		*head = new;
+	else
+	{
+		tmp = *head;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
+	return (0);
 }

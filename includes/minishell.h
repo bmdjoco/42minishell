@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/02 15:00:03 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/03 11:10:21 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,14 @@ typedef struct s_env
 
 int		size_of_key(char *str);
 int		size_of_val(char *str);
+int		add_env_node(t_env **head, char *envp_line);
 
 char	*get_env_value(t_env *env, char *key);
 
 void	free_env(t_env *env);
+void	set_env_value(t_env **env, char *key, char *val);
 
 t_env	*init_environnement(char **envp);
-void	set_env_value(t_env **env, char *key, char *val);
 
 
 /* Readline */
@@ -50,7 +51,7 @@ int		read_lines(char **envp);
 
 /* pwd */
 
-void	pwd(t_env *env);
+void	pwd(void);
 
 
 /* minisplit */

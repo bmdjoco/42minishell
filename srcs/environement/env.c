@@ -6,15 +6,15 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:11:41 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/02 13:34:30 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/03 11:12:39 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_env *new_env_node(char *key, char *val)
+t_env	*new_env_node(char *key, char *val)
 {
-	t_env *node;
+	t_env	*node;
 
 	node = malloc(sizeof(t_env));
 	if (!node)
@@ -34,34 +34,17 @@ t_env *new_env_node(char *key, char *val)
  *
  * @return renvoie le pointeur vers la structure ou NULL en cas s'erreur
  */
-t_env *init_environnement(char **envp)
+t_env	*init_environnement(char **envp)
 {
-	t_env *head;
-	t_env *tmp;
-	t_env *new;
-	int i;
+	t_env	*head;
+	int		i;
 
 	i = 0;
 	head = NULL;
 	while (envp[i])
 	{
-		char *key = ft_strndup(envp[i], size_of_key(envp[i]));
-		char *val = ft_strndup(envp[i] + size_of_key(envp[i]) + 1,
-				size_of_val(envp[i]));
-		if (!key || !val)
-			return (NULL);
-		new = new_env_node(key, val);
-		if (!new)
-			return (NULL);
-		if (!head)
-			head = new;
-		else
-		{
-			tmp = head;
-			while (tmp->next)
-				tmp = tmp->next;
-			tmp->next = new;
-		}
+		if (add_env_node(&head, envp[i]) == -1)
+			return (free_env(head), NULL);
 		i++;
 	}
 	return (head);
@@ -69,10 +52,9 @@ t_env *init_environnement(char **envp)
 
 /**
  * @brief renvoie la valeur correspondant a la cle passer en argument
- *
  * @param env liste de variable environnemental sous forme de structure s_env
  * @param key cle correspondant a la valeur rechercher
- * @return renvoie une chaine de charactere correspondant a la valleur ou NULL en cas d'erreur
+ * @return renvoie une chaine de charactere ou NULL
  */
 char	*get_env_value(t_env *env, char *key)
 {

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 14:51:45 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/02 15:13:45 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/03 11:02:50 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @brief Quitte le shell avec un code erreur specifique
  * @param split tableau de chaines avec les arguments de readline
- * @return 1 si exit est appele sans option sinon return l'erreur specifiee
+ * @return 1 si exit est appele sans option sinon return le code specifie
  */
 int	exit_builtin(char **split)
 {

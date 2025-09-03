@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:46:13 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/02 14:52:22 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/03 11:14:12 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ int	check_backslash(char *s)
 
 int	check_dollar(char *s, t_env *env)
 {
-	int	i;
+	int		i;
 	char	*check;
 	char	*temp;
 
 	i = 0;
 	check = ft_calloc(500, 1);
 	if (!check)
-		return (ft_fprintf(2, "minishell: failed to alloc\n") , -1);
+		return (ft_fprintf(2, "minishell: failed to alloc\n"), -1);
 	while (s[i] && !is_whitespace(s[i]) && s[i] != 92)
 	{
 		check[i] = s[i];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 11:14:38 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/02 14:52:18 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/03 11:14:44 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	**get_args(char *s)
 {
 	char	**res;
-	int			i;
+	int		i;
 
 	if (!s)
 		return (NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 10:38:18 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/02 14:52:15 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/03 11:14:33 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ void	export_variable(t_env **env, char *s)
 	free_split(args);
 }
 
+/**
+ * @brief export une variable dans l'env
+ * @param env l'adresse vers la liste chainee des variables d'environnement
+ * @param split les chaines de caracteres a traiter
+ */
 void	builtin_export(t_env **env, char **split)
 {
 	int	i;

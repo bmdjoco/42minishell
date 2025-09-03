@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 11:43:41 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/02 14:52:08 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/03 11:04:49 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	unset_var(t_env **env, char *key)
 
 /**
  * @brief Supprime une variable de l'environnement
- *
  * @param env liste de variable environnemental sous forme de structure s_env
  * @param split ensemble de chaines de caracteres de l'input
  */
