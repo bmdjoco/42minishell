@@ -6,7 +6,11 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/09/03 14:12:37 by bdjoco           ###   ########.fr       */
+=======
+/*   Updated: 2025/09/03 14:17:49 by miltavar         ###   ########.fr       */
+>>>>>>> baab0704451c63ae0e84285373e8a88a7f3098e8
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +52,7 @@ t_env	*new_env_node(char *key, char *val);
 /* Readline */
 
 int		read_lines(char **envp);
+int		check_syntax_err(char *line);
 
 /* cd */
 
