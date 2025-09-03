@@ -6,15 +6,15 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/03 11:10:21 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/03 12:07:52 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include "../libs/libft/libft.h"
-#include "../libs/ft_fprintf/ft_fprintf.h"
+# include "../libs/libft/libft.h"
+# include "../libs/ft_fprintf/ft_fprintf.h"
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -44,7 +44,6 @@ void	set_env_value(t_env **env, char *key, char *val);
 
 t_env	*init_environnement(char **envp);
 
-
 /* Readline */
 
 int		read_lines(char **envp);
@@ -52,7 +51,6 @@ int		read_lines(char **envp);
 /* pwd */
 
 void	pwd(void);
-
 
 /* minisplit */
 
@@ -65,11 +63,9 @@ char	**mini_split(char *s);
 
 void	fill_str(char *dst, char *s, int index);
 
-
 /* echo */
 
 void	replace_and_print(char *s, t_env *env);
-
 
 /* utils */
 
