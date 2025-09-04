@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/03 16:00:24 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/04 11:43:28 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	parse_line(char **split, t_env *env)
 	else if (!ft_strcmp(split[0], "cd"))
 		return (builtin_cd(split + 1, env));
 	else
-		return (exec_cmd(env, split + 1));
+		return (exec_cmd(env, split));
 	// else if (!ft_strcmp(split[0], "echo"))
 	// 	echo();
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/03 15:57:21 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/04 12:31:34 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -48,12 +50,14 @@ t_env	*new_env_node(char *key, char *val);
 /* Exec */
 
 int		exec_cmd(t_env *env, char **split);
-int		ft_strrchrr(const char *s, int c);
+int		wait_for_child(pid_t pid);
 
-char	*correct_path(char **argv, char **envp, int j);
+char	*correct_path(char **argv, char **envp);
 char	*path_len(char *s);
+char	*final_path(char **argv, char **envp);
 
 char	**get_path(char **envp);
+char	**create_envp(t_env *env);
 
 /* Readline */
 

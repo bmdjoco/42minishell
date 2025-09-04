@@ -6,24 +6,21 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:55:36 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/03 15:58:40 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/04 12:33:02 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*build_and_check(char **paths, char **cmd)
+char	*build_and_check(char **paths, char *cmd)
 {
 	char	*correct;
 	int		i;
-	char	*temp;
 
-	if (!paths || !cmd || !cmd[0])
-		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
-		correct = ft_strjoin(paths[i], cmd[0]);
+		correct = ft_strjoin(paths[i], cmd);
 		if (!correct)
 			return (NULL);
 		if (access(correct, X_OK) == 0)
@@ -31,29 +28,7 @@ char	*build_and_check(char **paths, char **cmd)
 		free(correct);
 		i++;
 	}
-	temp = ft_substr(cmd[0], 1, ft_strlen(cmd[0]) - 1);
-	if (!temp)
-		return (NULL);
-	return (perror(temp), free(temp), NULL);
-}
-
-int	ft_strrchrr(const char *s, int c)
-{
-	char	*str;
-	int		i;
-
-	str = (char *)s;
-	if (ft_strlen(str) == 0)
-		i = 0;
-	else
-		i = ft_strlen(str);
-	while (i >= 0)
-	{
-		if (str[i] == (char)c && str[i + 1])
-			return (1);
-		i--;
-	}
-	return (0);
+	return (NULL);
 }
 
 char	*path_len(char *s)
@@ -109,33 +84,35 @@ char	**get_path(char **envp)
 	return (paths);
 }
 
-char	*correct_path(char **argv, char **envp, int j)
+char	*correct_path(char **argv, char **envp)
 {
 	char	**paths;
-	char	**cmd;
 	char	*correct;
 	char	*temp;
 
 	paths = get_path(envp);
 	if (!paths)
 		return (NULL);
-	cmd = ft_split(argv[j], ' ');
-	if (!cmd || !cmd[0])
-	{
-		if (cmd)
-			free_split(cmd);
-		ft_putstr_fd("Invalid command", 2);
+	temp = ft_strjoin("/", argv[0]);
+	if (!temp)
 		return (free_split(paths), NULL);
-	}
-	temp = cmd[0];
-	cmd[0] = ft_strjoin("/", cmd[0]);
-	free(temp);
-	if (!cmd[0])
-		return (free_split(paths), free_split(cmd), NULL);
-	correct = build_and_check(paths, cmd);
+	correct = build_and_check(paths, temp);
 	if (!correct)
-		return (free_split(paths), free_split(cmd), NULL);
-	return (free_split(paths), free_split(cmd), correct);
+		return (free_split(paths), free(temp), NULL);
+	return (free_split(paths), free(temp), correct);
 }
 
+int	wait_for_child(pid_t pid)
+{
+	int	status;
+	int	g_exit_status;
 
+	status = 0;
+	g_exit_status = 0;
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		g_exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		g_exit_status = 128 + WTERMSIG(status);
+	return (g_exit_status);
+}

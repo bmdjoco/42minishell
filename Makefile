@@ -6,13 +6,13 @@
 #    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/09/03 15:45:44 by miltavar         ###   ########.fr        #
+#    Updated: 2025/09/04 12:29:24 by miltavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= minishell
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -Ilibs/libft/includes -Ilibs/ft_fprintf -Iincludes
+CFLAGS		= -g3 -Wall -Wextra -Werror -Ilibs/libft/includes -Ilibs/ft_fprintf -Iincludes
 LDFLAGS		= -lreadline
 
 MAKE = make -s -C
@@ -25,6 +25,7 @@ SRCS = test.c \
 		srcs/minisplit/split_commons.c \
 		srcs/exec/exec.c \
 		srcs/exec/exec_utils.c \
+		srcs/exec/exec_utils2.c \
 		srcs/built-in/echo/echo.c \
 		srcs/built-in/unset/unset.c \
 		srcs/built-in/pwd/pwd.c \
