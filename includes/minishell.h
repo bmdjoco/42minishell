@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/04 12:31:34 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/04 16:57:22 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,11 @@ void	builtin_pwd(void);
 
 /* minisplit */
 
-int		check_redir(char *s);
-int		get_len(char *s, int index);
-int		match_quotes(char *s);
 int		check_quotes(char *s);
 
-char	**mini_split(char *s);
+char	**mini_split(char *s, t_env *env);
 
-void	fill_str(char *dst, char *s, int index);
+void	fill_str(t_env *env, char *s, int index, char *dest);
 
 /* echo */
 

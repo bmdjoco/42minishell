@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:49:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/03 14:22:18 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:01:31 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,34 @@ static int	check_next(char *s)
 			return (i);
 	}
 	return (-1);
+}
+
+int	match_quotes(char *s)
+{
+	int	i;
+
+	if (!s)
+		return (0);
+	i = 0;
+	if (s[i] == '"')
+	{
+		i++;
+		while (s[i] && s[i] != '"')
+			i++;
+		if (s[i] == '"')
+			i++;
+		return (i);
+	}
+	else if (s[i] == '\'')
+	{
+		i++;
+		while (s[i] && s[i] != '\'')
+			i++;
+		if (s[i] == '\'')
+			i++;
+		return (i);
+	}
+	return (i);
 }
 
 int	check_syntax_err(char *line)

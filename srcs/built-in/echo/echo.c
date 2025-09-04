@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:46:13 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/03 11:14:12 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:02:27 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	check_backslash(char *s)
 	return (1);
 }
 
-int	check_dollar(char *s, t_env *env)
+int	check_dollar_echo(char *s, t_env *env)
 {
 	int		i;
 	char	*check;
@@ -62,7 +62,7 @@ void	replace_and_print(char *s, t_env *env)
 	{
 		if (s[i] == '$')
 		{
-			j = check_dollar(s + i + 1, env) + 1;
+			j = check_dollar_echo(s + i + 1, env) + 1;
 			if (j == -1)
 				exit (1);
 			else if (j == 0)
