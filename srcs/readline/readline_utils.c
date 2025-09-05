@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:49:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/04 17:01:31 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/05 12:02:58 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	match_quotes(char *s)
 			i++;
 		return (i);
 	}
-	return (i);
+	return (-1);
 }
 
 int	check_syntax_err(char *line)
@@ -96,7 +96,7 @@ int	check_syntax_err(char *line)
 		if (line[i] == '"' || line[i] == '\'')
 		{
 			if (match_quotes(line + i) == -1)
-				return (-1);
+				return (ft_fprintf(1, "here 1\n"), -1);
 			else
 				i += match_quotes(line + i);
 		}
@@ -104,7 +104,7 @@ int	check_syntax_err(char *line)
 		{
 			len = check_next(line + i);
 			if (len == -1)
-				return (-1);
+				return (ft_fprintf(1, "here 2\n"),-1);
 			else
 				i += len;
 		}

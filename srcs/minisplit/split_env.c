@@ -6,28 +6,18 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 13:01:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/04 17:13:24 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/05 15:37:56 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	skip_spaces(char *s)
-{
-	int	v;
-
-	v = 0;
-	while (s[v] && is_whitespace(s[v]))
-		v++;
-	return (v);
-}
-
 int	check_cond(char c)
 {
 	if (c && c != '|' && c != '>'
 		&& c != '<')
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
 
 int	single(char *s)
@@ -180,7 +170,7 @@ int	check_dollar(t_env *env, char *s, char *dest)
 		return (perror("minishell: "), -1);
 	val = get_env_value(env, key);
 	if (!val)
-		return (free(key), perror("minishell: "), -1);
+		return (free(key), i);
 	i = ft_strlen(val);
 	if (dest)
 		ft_strcat(dest, val);
@@ -198,41 +188,20 @@ int	skip_dollar(char *s)
 	return (i);
 }
 
-int	double_case(char *s, t_env *env)
+int	single_case(char *s)
 {
 	int	i;
-	int	j;
 	int	len;
 
 	i = 0;
 	len = 0;
-	while (s[i] && s[i] != '"')
+	while (s[i] && !is_whitespace(s[i]))
 	{
-		if (s[i] == '$' && s[i + 1])
-		{
-			j = check_dollar(env, s + i + 1, NULL);
-			if (j == -1)
-				return (-1);
-			len += j;
-			i += skip_dollar(s + i);
-		}
-		else
-		{
+		if (s[i] != '\'')
 			len++;
-			i++;
-		}
+		i++;
 	}
 	return (len);
-}
-
-int	single_case(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] && s[i] != '\'')
-		i++;
-	return (i);
 }
 
 int	nothing_case(char *s, t_env *env)
@@ -243,8 +212,7 @@ int	nothing_case(char *s, t_env *env)
 
 	i = 0;
 	len = 0;
-	while (s[i] && !is_whitespace(s[i])
-		&& s[i] != '|' && s[i] != '<' && s[i] != '>')
+	while (s[i] && !is_whitespace(s[i]) && !check_cond(s[i]))
 	{
 		if (s[i] == '$' && s[i + 1])
 		{
@@ -256,7 +224,8 @@ int	nothing_case(char *s, t_env *env)
 		}
 		else
 		{
-			len++;
+			if (s[i] != '\'' || s[i] != '"')
+				len++;
 			i++;
 		}
 	}
@@ -265,10 +234,8 @@ int	nothing_case(char *s, t_env *env)
 
 int	size_word(t_env *env, char *s)
 {
-	if (s[0] == '"')
-		return (double_case(s + 1, env));
-	else if (s[0] == '\'')
-		return (single_case(s + 1));
+	if (s[0] == '\'')
+		return (single_case(s));
 	else
 		return (nothing_case(s, env));
 }
@@ -287,52 +254,26 @@ int	size_of_word_nb(t_env *env, char *s, int nb, int i)
 		word++;
 		if (word == nb)
 			return (size_word(env, s + i));
-		if (s[i] == '\'' || s[i] == '"')
-		{
-			if (size_of_quote(s + i) == -1)
-				return (-1);
-			i += size_of_quote(s + i) + 2;
-		}
-		else if (check_cond(s[i]))
-			while (check_cond(s[i]))
-				i++;
-		else
+		while (s[i] && !is_whitespace(s[i]) && !check_cond(s[i]))
 			i++;
 	}
 	return (-1);
 }
 
-void	double_case_copy(char *src, t_env *env, char *dest)
-{
-	int	i;
-	int	j;
-	int	len;
-
-	i = 0;
-	len = 0;
-	while (src[i] && src[i] != '"')
-	{
-		if (src[i] == '$' && src[i + 1])
-		{
-			j = check_dollar(env, src + i + 1, dest);
-			if (j == -1)
-				return ;
-			len += j;
-			i += skip_dollar(src + i);
-		}
-		else
-			dest[len++] = src[i++];
-	}
-}
-
 void	single_case_copy(char *src, char *dest)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	while (src[i] && src[i] != '\'')
+	j = 0;
+	while (src[i] && !is_whitespace(src[i]))
 	{
-		dest[i] = src[i];
+		if (src[i] != '\'')
+		{
+			dest[j] = src[i];
+			j++;
+		}
 		i++;
 	}
 }
@@ -345,8 +286,7 @@ void	nothing_case_copy(char *src, t_env *env, char *dest)
 
 	i = 0;
 	len = 0;
-	while (src[i] && !is_whitespace(src[i])
-		&& src[i] != '|' && src[i] != '<' && src[i] != '>')
+	while (src[i] && !is_whitespace(src[i]))
 	{
 		if (src[i] == '$' && src[i + 1])
 		{
@@ -357,16 +297,18 @@ void	nothing_case_copy(char *src, t_env *env, char *dest)
 			i += skip_dollar(src + i);
 		}
 		else
-			dest[len++] = src[i++];
+		{
+			if (src[i] != '\'' || src[i] != '"')
+				len++;
+			i++;
+		}
 	}
 }
 
 void	copy_word(char *src, char *dest, t_env *env)
 {
-	if (src[0] == '"')
-		return (double_case_copy(src + 1, env, dest));
-	else if (src[0] == '\'')
-		return (single_case_copy(src + 1, dest));
+	if (src[0] == '\'')
+		return (single_case_copy(src, dest));
 	else
 		return (nothing_case_copy(src, env, dest));
 }
@@ -386,16 +328,7 @@ void	fill_str(t_env *env, char *s, int index, char *dest)
 		words++;
 		if (words == index)
 			return (copy_word(s + i, dest, env));
-		if (s[i] == '\'' || s[i] == '"')
-		{
-			if (size_of_quote(s + i) == -1)
-				return ;
-			i += size_of_quote(s + i) + 2;
-		}
-		else if (check_cond(s[i]))
-			while (check_cond(s[i]))
-				i++;
-		else
+		while (s[i] && !is_whitespace(s[i]) && !check_cond(s[i]))
 			i++;
 	}
 }

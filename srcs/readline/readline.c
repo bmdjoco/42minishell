@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/04 17:03:46 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/05 15:36:33 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,17 @@ int	process_line(char *line, t_env *env)
 	exit = 0;
 	if (*line)
 		add_history(line);
-	if (check_syntax_err(line) == -1)
-	{
-		ft_fprintf(2, "minishell: syntax error near unexpected token\n");
-		return (free(line), 1);
-	}
+	//if (check_syntax_err(line) == -1)
+	//{
+	//	ft_fprintf(2, "minishell: syntax error near unexpected token\n");
+	//	return (free(line), 1);
+	//}
 	if (ft_strlen(line) == 0)
 	{
 		free(line);
 		return (exit);
 	}
-	split = mini_split(line, env);
+	split = mike_split(line, env, 0);
 	if (!split)
 	{
 		free(line);
