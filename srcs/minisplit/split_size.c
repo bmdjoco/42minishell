@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_size.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:38:40 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/05 16:23:01 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/06 13:11:44 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,18 @@ int	get_real_word_size(t_env *env, char *s, int i)
 	int	tmp;
 
 	len = 0;
-	while (s[i])
+	while (s[i] && !word_cond(s[i]))
 	{
 		if (s[i] == '\'')
 			len += size_in_single(s, &i);
 		else if (s[i] == '"')
+		{
+			tmp = size_in_double(env, s, &i);
+			if (tmp == -1)
+				return (len);
+			len += tmp;
+		}
+		else if (s[i] == '>' || s[i] == '<' || s[i] == '|')
 		{
 			tmp = size_in_double(env, s, &i);
 			if (tmp == -1)

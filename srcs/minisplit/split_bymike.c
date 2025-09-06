@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_bymike.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 12:06:48 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/05 16:03:52 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/06 13:07:22 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**mike_split(char *s, t_env *env, int j)
 	len = count_words(s);
 	if (len == 0)
 		return (NULL);
-	printf("%d\n", len);
+	printf("nb pf words :%d\n", len);
 	mike = ft_calloc(len + 1, sizeof(char *));
 	if (!mike)
 		return (NULL);
@@ -32,8 +32,9 @@ char	**mike_split(char *s, t_env *env, int j)
 		mike[i] = write_word(env, s + j, 0);
 		if (!mike[i])
 			return (free_split(mike), NULL);
+		printf("words[%d] :%s\n", i, mike[i]);
 		j += skip_word(s + j);
 	}
 	mike[i] = NULL;
-	return (NULL);
+	return (mike);
 }

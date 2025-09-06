@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/05 15:36:33 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/06 13:06:24 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,12 @@ int	process_line(char *line, t_env *env)
 	split = mike_split(line, env, 0);
 	if (!split)
 	{
+		ft_fprintf(1, "Error Mike Split\n");
 		free(line);
 		return (0);
 	}
 	for (int i = 0; split[i]; i++)
-		printf("%s\n", split[i]);
+		ft_fprintf(1, "split[%d] : %s | size %d\n", i, split[i], (int)ft_strlen(split[i]));
 	return (0);
 	free(line);
 	exit = parse_line(split, env);

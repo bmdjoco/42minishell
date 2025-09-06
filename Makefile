@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
+#    By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/09/05 15:39:18 by miltavar         ###   ########.fr        #
+#    Updated: 2025/09/06 16:57:38 by bdjoco           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,9 @@ LDFLAGS		= -lreadline
 
 MAKE = make -s -C
 
-SRCS = test.c \
+SRCS = srcs/main.c \
 		srcs/environement/env.c \
 		srcs/environement/env_utils.c \
-		srcs/minisplit/split_env.c \
 		srcs/minisplit/split_bymike.c \
 		srcs/minisplit/split_size.c \
 		srcs/minisplit/split_write.c \

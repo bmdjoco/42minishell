@@ -6,13 +6,16 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:24:59 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/02 14:52:54 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/06 12:01:49 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(const char **envp)
+int	main(int ac, char **av, char **envp)
 {
+	(void) ac;
+	(void) av;
+	read_lines(envp);
 	return (0);
 }
