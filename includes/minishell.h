@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/09 12:46:21 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/09 14:57:22 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ void	set_env_value(t_env **env, char *key, char *val);
 t_env	*init_environnement(char **envp);
 t_env	*new_env_node(char *key, char *val);
 
+/* Redirection */
+
+int		do_redirections(char **split, t_env *env);
+
 /* Exec */
 
 int		exec_cmd(t_env *env, char **split);
@@ -63,6 +67,7 @@ char	**create_envp(t_env *env);
 
 int		read_lines(char **envp);
 int		check_syntax_err(char *line);
+int		parse_line(char **split, t_env *env);
 
 /* cd */
 
@@ -95,7 +100,7 @@ void	replace_and_print(char *s, t_env *env);
 
 /* exec */
 
-int		nb_ofredir(char **split);
+int		nb_of_redir(char **split);
 int		reddir_type(char **split, int red);
 
 char	*reddir_file(char **split, int red);

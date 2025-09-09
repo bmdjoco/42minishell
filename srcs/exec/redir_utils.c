@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/09 13:40:12 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/09 14:16:42 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @brief renvoie le nombre de redirection de la commande
  */
-int	nb_ofredir(char **split)
+int	nb_of_redir(char **split)
 {
 	int	res;
 	int	i;

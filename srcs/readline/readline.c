@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/09 13:26:42 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/09 14:58:21 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	process_line(char *line, t_env *env)
 		free(line);
 		return (exit);
 	}
+	check_syntax_err(line);
 	split = mini_split(line, env);
 	if (!split)
 	{
@@ -56,7 +57,10 @@ int	process_line(char *line, t_env *env)
 		return (0);
 	}
 	free(line);
-	exit = parse_line(split, env);
+	for (int i = 0; split[i]; i++)
+		printf("%s\n", split[i]);
+	return (free_split(split), 0);
+	exit = do_redirections(split, env);
 	free_split(split);
 	return (exit);
 }
