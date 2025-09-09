@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/09 13:00:03 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/09 13:26:42 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ int	process_line(char *line, t_env *env)
 		free(line);
 		return (0);
 	}
-	for (int i = 0; split[i]; i++)
-		printf("%s\n", split[i]);
 	free(line);
-	return (0);
 	exit = parse_line(split, env);
 	free_split(split);
 	return (exit);
