@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 15:00:46 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/09 12:34:10 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/09 13:29:48 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,12 @@ int skip_word(char *s)
 
 	i = 0;
 
-	// Si on commence par un opérateur, c'est un mot d'opérateurs
 	if (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
 	{
 		while (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
 			i++;
 		return (i);
 	}
-
-	// Sinon, traitement normal
 	while (s[i] && !word_cond(s[i]))
 	{
 		if (s[i] == '\'')
@@ -147,21 +144,6 @@ static int	write_in_nothing(t_env *env, char *s, char *word, int *i)
 	return (len);
 }
 
-// static int	write_sep(char *s, char *word, int *i)
-// {
-// 	int	j;
-// 	int	k;
-
-// 	j = *i;
-// 	k = -1;
-// 	while (s[*i] && (s[*i] == '>' || s[*i] == '<' || s[*i] == '|'))
-// 	{
-// 		word[++k] = s[*i];
-// 		(*i)++;
-// 	}
-// 	return (*i - j);
-// }
-
 char	*write_word(t_env *env, char *s, int i)
 {
 	int		j;
@@ -172,8 +154,6 @@ char	*write_word(t_env *env, char *s, int i)
 	if (!word)
 		return (perror("minishell: "), NULL);
 	j = 0;
-
-	// Si on commence par un opérateur, c'est un mot d'opérateurs
 	if (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
 	{
 		while (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
@@ -184,8 +164,6 @@ char	*write_word(t_env *env, char *s, int i)
 		}
 		return (word);
 	}
-
-	// Sinon, traitement normal
 	while (s[i] && !word_cond(s[i]))
 	{
 		if (s[i] == '\'')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/03 14:58:38 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/09 13:40:12 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	nb_ofredir(char **split)
 /**
  * @brief renvoie le type de redirection a faire a la red position
  *
- * @return 1 pour >>, 2 pour >, 3 pour < ou -1 en cas d'erreur
+ * @return 1 pour >>, 2 pour >, 3 pour <, 4 pour <<
+ * @return -1 en cas d'erreur
  */
 int	reddir_type(char **split, int red)
 {
@@ -56,6 +57,8 @@ int	reddir_type(char **split, int red)
 				return (2);
 			else if (!ft_strcmp("<", split[i]))
 				return (3);
+			else if (!ft_strcmp("<<", split[i]))
+				return (4);
 		}
 		i++;
 	}

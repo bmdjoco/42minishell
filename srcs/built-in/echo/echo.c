@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:46:13 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/09 12:50:30 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/09 14:04:27 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,11 @@ void	print(char **split, int bs, t_env *env)
 		i = 0;
 	while (split[i])
 	{
+		if (split[i][0] == '<' || split[i][0] == '>' || split[i][0] == '|')
+			break ;
 		replace_and_print(split[i], env);
-		if (split[i + 1])
+		if (split[i + 1] && (split[i + 1][0] != '>'
+			&& split[i + 1][0] != '<' && split[i + 1][0] != '|'))
 			printf(" ");
 		i++;
 	}
