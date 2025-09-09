@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/09 14:16:42 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/09 17:04:00 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	nb_of_redir(char **split)
 int	reddir_type(char **split, int red)
 {
 	int	nb;
-	int	res;
 	int	i;
 
 	nb = 0;

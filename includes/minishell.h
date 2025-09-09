@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/09 14:57:22 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/09 17:04:27 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_env	*new_env_node(char *key, char *val);
 /* Redirection */
 
 int		do_redirections(char **split, t_env *env);
+int		exec_redir(char **split, int red_type, char *file, t_env *env);
 
 /* Exec */
 

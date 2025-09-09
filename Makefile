@@ -6,7 +6,7 @@
 #    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/09/09 11:27:12 by miltavar         ###   ########.fr        #
+#    Updated: 2025/09/09 17:03:44 by miltavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ SRCS = srcs/main.c \
 		srcs/exec/exec.c \
 		srcs/exec/exec_utils.c \
 		srcs/exec/exec_utils2.c \
+		srcs/exec/redir_utils.c \
+		srcs/exec/redir.c \
 		srcs/built-in/echo/echo.c \
 		srcs/built-in/unset/unset.c \
 		srcs/built-in/pwd/pwd.c \

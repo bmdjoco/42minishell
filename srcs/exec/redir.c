@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:58:55 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/09 14:52:41 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/09 17:05:34 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	open_file(int red_type, char *file)
 {
 	int	fd;
 
+	fd = -1;
 	if (red_type == 4);
 		//here_doc;
 	else if (red_type == 3)
@@ -68,11 +69,15 @@ int	exec_redir(char **split, int red_type, char *file, t_env *env)
 	if (fd == -1)
 		return (close(infile), close(outfile), -1);
 	if (red_type == 1 || red_type == 2)
+	{
 		if (dup2(fd, STDOUT_FILENO) == -1)
 			return (close(infile), close(outfile), close(fd), -1);
+	}
 	else
+	{
 		if (dup2(fd, STDIN_FILENO) == -1)
 			return (close(infile), close(outfile), close(fd), -1);
+	}
 	parse_line(split, env);
 	if (dup2(infile, STDIN_FILENO) == -1)
 		return (close(infile), close(outfile), close(fd), -1);
