@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/06 13:06:24 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/09 12:49:22 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	parse_line(char **split, t_env *env)
 		return (exit_builtin(split + 1));
 	else if (!ft_strcmp(split[0], "cd"))
 		return (builtin_cd(split + 1, env));
+	else if (!ft_strcmp(split[0], "echo"))
+			echo(split + 1, env);
 	else
 		return (exec_cmd(env, split));
-	// else if (!ft_strcmp(split[0], "echo"))
-	// 	echo();
 	return (0);
 }
 
@@ -43,26 +43,18 @@ int	process_line(char *line, t_env *env)
 	exit = 0;
 	if (*line)
 		add_history(line);
-	//if (check_syntax_err(line) == -1)
-	//{
-	//	ft_fprintf(2, "minishell: syntax error near unexpected token\n");
-	//	return (free(line), 1);
-	//}
 	if (ft_strlen(line) == 0)
 	{
 		free(line);
 		return (exit);
 	}
-	split = mike_split(line, env, 0);
+	split = mini_split(line, env);
 	if (!split)
 	{
-		ft_fprintf(1, "Error Mike Split\n");
+		ft_fprintf(2, "minishell: split failed\n");
 		free(line);
 		return (0);
 	}
-	for (int i = 0; split[i]; i++)
-		ft_fprintf(1, "split[%d] : %s | size %d\n", i, split[i], (int)ft_strlen(split[i]));
-	return (0);
 	free(line);
 	exit = parse_line(split, env);
 	free_split(split);

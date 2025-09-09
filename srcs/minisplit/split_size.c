@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_size.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:38:40 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/06 13:11:44 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/09 12:36:39 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,14 @@ int	size_of_envval(t_env *env, char *s, char *dest)
 	char	*val;
 
 	i = 0;
-	while (s[i] && s[i] != '|' && s[i] != '>' && s[i] != '<'
-		&& s[i] != '\'' && s[i] != '"' && s[i] != '$' && !is_whitespace(s[i]))
+	while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
 		i++;
 	key = ft_substr(s, 0, i);
 	if (!key)
 		return (perror("minishell: "), -1);
 	val = get_env_value(env, key);
 	if (!val)
-		return (free(key), -1);
+		return (free(key), 0);
 	i = ft_strlen(val);
 	if (dest)
 		ft_strcat(dest, val);
@@ -41,7 +40,7 @@ static int	size_nothing(t_env *env, char *s, int *i)
 
 	len = 0;
 	while (s[*i] && s[*i] != '\'' && s[*i] != '"' && s[*i] != '>'
-		&& s[*i] != '<' && s[*i] != '|')
+		&& s[*i] != '<' && s[*i] != '|' && !is_whitespace(s[*i]))
 	{
 		if (s[*i] == '$')
 		{
@@ -57,9 +56,6 @@ static int	size_nothing(t_env *env, char *s, int *i)
 			(*i)++;
 		}
 	}
-	if (s[*i] && (s[*i] == '\'' || s[*i] == '"' || s[*i] == '>'
-		|| s[*i] == '<' || s[*i] == '|'))
-		return (go_end(s, i), len);
 	return (len);
 }
 
@@ -97,18 +93,24 @@ int	get_real_word_size(t_env *env, char *s, int i)
 	int	tmp;
 
 	len = 0;
+
+	// Si on commence par un opérateur, c'est un mot d'opérateurs
+	if (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
+	{
+		while (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
+		{
+			len++;
+			i++;
+		}
+		return (len);
+	}
+
+	// Sinon, traitement normal
 	while (s[i] && !word_cond(s[i]))
 	{
 		if (s[i] == '\'')
 			len += size_in_single(s, &i);
 		else if (s[i] == '"')
-		{
-			tmp = size_in_double(env, s, &i);
-			if (tmp == -1)
-				return (len);
-			len += tmp;
-		}
-		else if (s[i] == '>' || s[i] == '<' || s[i] == '|')
 		{
 			tmp = size_in_double(env, s, &i);
 			if (tmp == -1)
@@ -124,9 +126,7 @@ int	get_real_word_size(t_env *env, char *s, int i)
 		}
 	}
 	return (len);
-}
-
-void	match_word(char *s, int *i)
+}void	match_word(char *s, int *i)
 {
 	while (s[(*i)] && !word_cond(s[(*i)]))
 	{

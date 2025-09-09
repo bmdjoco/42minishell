@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:46:13 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/04 17:02:27 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/09 12:50:30 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ void	print(char **split, int bs, t_env *env)
 	int	i;
 
 	if (bs == 1)
-		i = 2;
-	else
 		i = 1;
+	else
+		i = 0;
 	while (split[i])
 	{
 		replace_and_print(split[i], env);
@@ -96,7 +96,7 @@ void	print(char **split, int bs, t_env *env)
 			printf(" ");
 		i++;
 	}
-	if (bs == 1)
+	if (bs == 0)
 		printf("\n");
 }
 
@@ -106,7 +106,11 @@ void	print(char **split, int bs, t_env *env)
  * @param env l'environnement actuel
  * @return -1 en cas d'echec, 0 si succes
  */
-// int	echo(char **split, t_env **env)
-// {
-// 	return (0);
-// }
+int	echo(char **split, t_env *env)
+{
+	int	bs;
+
+	bs = check_backslash(split[0]);
+	print(split, bs, env);
+	return (0);
+}

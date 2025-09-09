@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:35:56 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/05 15:37:51 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/09 12:19:52 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,14 @@ int	skip_envkey(char *s)
 	int	i;
 
 	i = 0;
-	while (s[i] && s[i] != '|' && s[i] != '>' && s[i] != '<'
-		&& s[i] != '\'' && s[i] != '"' && s[i] != '$' && !is_whitespace(s[i]))
+	while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
 		i++;
 	return (i);
 }
 
 int	word_cond(char c)
 {
-	if (c && c != '|' && c != '>'
-		&& c != '<' && !is_whitespace(c))
+	if (c && c != '|' && c != '>' && c != '<' && !is_whitespace(c))
 		return (0);
 	return (1);
 }

@@ -3,26 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   split_write.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 15:00:46 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/06 13:14:47 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/09 12:34:10 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int skip_word(char *word)
+int skip_word(char *s)
 {
 	int	i;
 
 	i = 0;
-	while (word[i] && !word_cond(word[i]))
+
+	// Si on commence par un opérateur, c'est un mot d'opérateurs
+	if (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
 	{
-		i += skip_spaces(word + i);
-		if (!word[i])
-			break ;
-		i++;
+		while (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
+			i++;
+		return (i);
+	}
+
+	// Sinon, traitement normal
+	while (s[i] && !word_cond(s[i]))
+	{
+		if (s[i] == '\'')
+		{
+			i++;
+			while (s[i] && s[i] != '\'')
+				i++;
+			if (s[i] == '\'')
+				i++;
+		}
+		else if (s[i] == '"')
+		{
+			i++;
+			while (s[i] && s[i] != '"')
+			{
+				if (s[i] == '$')
+				{
+					i++;
+					while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
+						i++;
+				}
+				else
+					i++;
+			}
+			if (s[i] == '"')
+				i++;
+		}
+		else
+		{
+			while (s[i] && s[i] != '\'' && s[i] != '"' && s[i] != '>'
+				&& s[i] != '<' && s[i] != '|' && !is_whitespace(s[i]))
+			{
+				if (s[i] == '$')
+				{
+					i++;
+					while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
+						i++;
+				}
+				else
+					i++;
+			}
+		}
 	}
 	return (i);
 }
@@ -81,7 +127,7 @@ static int	write_in_nothing(t_env *env, char *s, char *word, int *i)
 
 	len = 0;
 	while (s[*i] && s[*i] != '\'' && s[*i] != '"' && s[*i] != '>'
-		&& s[*i] != '<' && s[*i] != '|')
+		&& s[*i] != '<' && s[*i] != '|' && !is_whitespace(s[*i]))
 	{
 		if (s[*i] == '$')
 		{
@@ -98,47 +144,54 @@ static int	write_in_nothing(t_env *env, char *s, char *word, int *i)
 			(*i)++;
 		}
 	}
-	if (s[*i] && (s[*i] == '\'' || s[*i] == '"' || s[*i] == '>'
-		|| s[*i] == '<' || s[*i] == '|'))
-		return (go_end(s, i), len);
 	return (len);
 }
 
-static int	write_sep(char *s, char *word, int *i)
-{
-	int	j;
-	int	k;
+// static int	write_sep(char *s, char *word, int *i)
+// {
+// 	int	j;
+// 	int	k;
 
-	j = *i;
-	k = -1;
-	while (s[*i] && (s[*i] == '>' || s[*i] == '<' || s[*i] == '|'))
-	{
-		word[++k] = s[*i];
-		(*i)++;
-	}
-	return (*i - j);
-}
+// 	j = *i;
+// 	k = -1;
+// 	while (s[*i] && (s[*i] == '>' || s[*i] == '<' || s[*i] == '|'))
+// 	{
+// 		word[++k] = s[*i];
+// 		(*i)++;
+// 	}
+// 	return (*i - j);
+// }
 
 char	*write_word(t_env *env, char *s, int i)
 {
 	int		j;
 	char	*word;
 
-	j = get_real_word_size(env, s, 0);
-	if (!j)
-		return (NULL);
+	j = get_real_word_size(env, s, i);
 	word = ft_calloc(j + 1, sizeof(char));
 	if (!word)
 		return (perror("minishell: "), NULL);
 	j = 0;
+
+	// Si on commence par un opérateur, c'est un mot d'opérateurs
+	if (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
+	{
+		while (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
+		{
+			word[j] = s[i];
+			j++;
+			i++;
+		}
+		return (word);
+	}
+
+	// Sinon, traitement normal
 	while (s[i] && !word_cond(s[i]))
 	{
 		if (s[i] == '\'')
 			j += write_in_single(s, word + j, &i);
 		else if (s[i] == '"')
 			j += write_in_double(env, s, word + j, &i);
-		else if (s[i] == '>' || s[i] == '<' || s[i] == '|')
-			j += write_sep(s, word + j, &i);
 		else
 			j += write_in_nothing(env, s, word + j, &i);
 	}

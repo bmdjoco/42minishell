@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/05 15:40:01 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/09 12:46:21 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		builtin_cd(char **argv, t_env *env);
 
 void	builtin_pwd(void);
 
-/* mike_split */
+/* minisplit */
 
 int		size_of_envval(t_env *env, char *s, char *dest);
 int		get_real_word_size(t_env *env, char *s, int i);
@@ -86,18 +86,11 @@ int		word_cond(char c);
 void	go_end(char *s, int *i);
 
 char	*write_word(t_env *env, char *s, int i);
-char	**mike_split(char *s, t_env *env, int j);
-
-/* minisplit */
-
-int		check_quotes(char *s);
-
 char	**mini_split(char *s, t_env *env);
-
-void	fill_str(t_env *env, char *s, int index, char *dest);
 
 /* echo */
 
+int		echo(char **split, t_env *env);
 void	replace_and_print(char *s, t_env *env);
 
 /* exec */
