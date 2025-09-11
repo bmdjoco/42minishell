@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:49:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/11 12:54:52 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/11 13:58:06 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ int	match_quotes(char *s)
 		while (s[i] && s[i] != '"')
 			i++;
 		if (s[i] == '"')
-			i++;
-		else
-			return (-1);
-		return (i);
+			return (i + 1);
 	}
 	else if (s[i] == '\'')
 	{
@@ -34,10 +31,7 @@ int	match_quotes(char *s)
 		while (s[i] && s[i] != '\'')
 			i++;
 		if (s[i] == '\'')
-			i++;
-		else
-			return (-1);
-		return (i);
+			return (i + 1);
 	}
 	return (-1);
 }
@@ -63,8 +57,6 @@ int	check_next(char *s)
 	int	i;
 
 	i = 0;
-	if (!s || !s[i])
-		return (-1);
 	if (s[i] == '>' && !s[i + 1])
 		return (-1);
 	else if (s[i] == '<' && !s[i + 1])
@@ -100,14 +92,14 @@ int	check_syntax_err(char *line)
 		{
 			len = match_quotes(line + i);
 			if (len == -1)
-				return (ft_fprintf(2, "minishell: syntax error near unexpected token\n"), -1);
+				return (ft_fprintf(2, "minishell: syntax error near unexpected token '%c'\n", line[i]), -1);
 			i += len;
 		}
 		else if (line[i] == '<' || line[i] == '>' || line[i] == '|')
 		{
 			len = check_next(line + i);
 			if (len == -1)
-				return (ft_fprintf(2, "minishell: syntax error near unexpected token\n"), -1);
+				return (ft_fprintf(2, "minishell: syntax error near unexpected token '%c'\n", line[i]), -1);
 			i += len;
 		}
 		else

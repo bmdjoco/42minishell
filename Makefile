@@ -6,7 +6,7 @@
 #    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/09/09 17:03:44 by miltavar         ###   ########.fr        #
+#    Updated: 2025/09/11 15:27:47 by miltavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS = srcs/main.c \
 		srcs/built-in/export/export.c \
 		srcs/built-in/export/export_utils.c \
 		srcs/built-in/cd/cd.c \
+		srcs/built-in/cd/cd_utils.c \
 		srcs/readline/readline.c \
 		srcs/readline/readline_utils.c \
 		srcs/utils/lib_utils.c \

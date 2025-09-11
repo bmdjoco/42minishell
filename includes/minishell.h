@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/11 12:55:03 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/11 15:27:07 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int		distributor(char **split, t_env *env);
 /* cd */
 
 int		builtin_cd(char **argv, t_env *env);
+char	*join_path(char **argv);
 
 /* pwd */
 
