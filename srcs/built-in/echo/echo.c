@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:46:13 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/09 14:04:27 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/11 12:49:05 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	check_backslash(char *s)
 	int	i;
 
 	i = 0;
+	if (!s || !s[i])
+		return (0);
 	if (s[i] != '-')
 		return (0);
 	i++;
@@ -91,11 +93,8 @@ void	print(char **split, int bs, t_env *env)
 		i = 0;
 	while (split[i])
 	{
-		if (split[i][0] == '<' || split[i][0] == '>' || split[i][0] == '|')
-			break ;
 		replace_and_print(split[i], env);
-		if (split[i + 1] && (split[i + 1][0] != '>'
-			&& split[i + 1][0] != '<' && split[i + 1][0] != '|'))
+		if (split[i + 1])
 			printf(" ");
 		i++;
 	}

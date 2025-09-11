@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/09 17:04:27 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/11 12:55:03 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int		exec_redir(char **split, int red_type, char *file, t_env *env);
 
 int		exec_cmd(t_env *env, char **split);
 int		wait_for_child(pid_t pid);
+int		check_limit(char *s);
 
 char	*correct_path(char **argv, char **envp);
 char	*path_len(char *s);
@@ -63,12 +64,14 @@ char	*final_path(char **argv, char **envp);
 
 char	**get_path(char **envp);
 char	**create_envp(t_env *env);
+char	**split_again(char **split);
 
 /* Readline */
 
 int		read_lines(char **envp);
 int		check_syntax_err(char *line);
 int		parse_line(char **split, t_env *env);
+int		distributor(char **split, t_env *env);
 
 /* cd */
 

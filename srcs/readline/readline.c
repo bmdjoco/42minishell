@@ -6,16 +6,56 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/09 17:02:46 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/11 12:51:38 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+int	check_limit(char *s)
+{
+	if (!ft_strcmp(s, ">"))
+		return (1);
+	else if (!ft_strcmp(s, "<"))
+		return (1);
+	else if (!ft_strcmp(s, "<<"))
+		return (1);
+	else if (!ft_strcmp(s, ">>"))
+		return (1);
+	else if (!ft_strcmp(s, "|"))
+		return (1);
+	return (0);
+}
+
+char	**split_again(char **split)
+{
+	char	**nw_split;
+	int			i;
+
+	if (!split || !split[0])
+		return (NULL);
+	i = 0;
+	while (split[i] && !check_limit(split[i]))
+		i++;
+	nw_split = ft_calloc(i + 1, sizeof(char *));
+	if (!nw_split)
+		return (NULL);
+	i = 0;
+	while (split[i] && !check_limit(split[i]))
+	{
+		nw_split[i] = ft_strdup(split[i]);
+		if (!nw_split[i])
+			return (free_split(nw_split), NULL);
+		i++;
+	}
+	nw_split[i] = NULL;
+	return (nw_split);
+}
+
 int	parse_line(char **split, t_env *env)
 {
-	if (!split[0])
-		return (0);
+	int		return_code;
+
 	if (!ft_strcmp(split[0], "unset"))
 		unset(&env, split + 1);
 	else if (!ft_strcmp(split[0], "pwd"))
@@ -31,7 +71,7 @@ int	parse_line(char **split, t_env *env)
 	else if (!ft_strcmp(split[0], "echo"))
 			echo(split + 1, env);
 	else
-		return (exec_cmd(env, split));
+		return_code = exec_cmd(env, split);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/09 17:04:00 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/11 11:34:54 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	reddir_type(char **split, int red)
 
 	nb = 0;
 	i = 0;
-	while (split[i] && split[i][0] != '|')
+	while (split[i] && split[i][0])
 	{
 		if (split[i][0] == '>' || split[i][0] == '<')
 			nb++;
@@ -71,24 +71,17 @@ int	reddir_type(char **split, int red)
  */
 char	*reddir_file(char **split, int red)
 {
-	char	*file;
 	int		nb;
 	int		i;
 
 	nb = 0;
 	i = 0;
-	while (split[i] && split[i][0] != '|')
+	while (split[i] && split[i][0])
 	{
-		if (nb == red)
-		{
-			file = ft_strdup(split[i]);
-			if (!file)
-				return(ft_fprintf(2, "minishell: cd: malloc error\n")
-					, NULL);
-			return (file);
-		}
 		if (split[i][0] == '>' || split[i][0] == '<')
 			nb++;
+		if (nb == red && split[i + 1])
+			return (ft_strdup(split[i + 1]));
 		i++;
 	}
 	return (NULL);
