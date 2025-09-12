@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 12:27:33 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/04 12:27:59 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/12 13:08:16 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ int	get_size(t_env *env)
 char	**create_envp(t_env *env)
 {
 	char	**envpdup;
-	int			i;
-	int			size;
+	int		i;
+	int		size;
 
 	if (!env)
 		return (NULL);

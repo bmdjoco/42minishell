@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/11 14:36:11 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/12 13:21:47 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	check_limit(char *s)
 char	**split_again(char **split)
 {
 	char	**nw_split;
-	int			i;
+	int		i;
 
 	if (!split || !split[0])
 		return (NULL);
@@ -69,7 +69,7 @@ int	parse_line(char **split, t_env *env)
 	else if (!ft_strcmp(split[0], "cd"))
 		return (builtin_cd(split + 1, env));
 	else if (!ft_strcmp(split[0], "echo"))
-			echo(split + 1, env);
+		echo(split + 1, env);
 	else
 		return_code = exec_cmd(env, split);
 	return (0);
@@ -88,7 +88,7 @@ int	process_line(char *line, t_env *env)
 		free(line);
 		return (exit);
 	}
-	if (check_syntax_err(line) == -1)
+	if (check_syntax_err(line, 0) == -1)
 		return (free(line), 0);
 	split = mini_split(line, env);
 	if (!split)
@@ -98,7 +98,7 @@ int	process_line(char *line, t_env *env)
 		return (0);
 	}
 	free(line);
-	exit = do_redirections(split, env);
+	exit = do_redirections(split, env, -1);
 	free_split(split);
 	return (exit);
 }

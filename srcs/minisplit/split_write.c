@@ -6,172 +6,61 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 15:00:46 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/09 13:29:48 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/12 13:14:53 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int skip_word(char *s)
+static int	skip_operators(char *s, int i)
 {
-	int	i;
-
-	i = 0;
-
-	if (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
-	{
-		while (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
-			i++;
-		return (i);
-	}
-	while (s[i] && !word_cond(s[i]))
-	{
-		if (s[i] == '\'')
-		{
-			i++;
-			while (s[i] && s[i] != '\'')
-				i++;
-			if (s[i] == '\'')
-				i++;
-		}
-		else if (s[i] == '"')
-		{
-			i++;
-			while (s[i] && s[i] != '"')
-			{
-				if (s[i] == '$')
-				{
-					i++;
-					while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
-						i++;
-				}
-				else
-					i++;
-			}
-			if (s[i] == '"')
-				i++;
-		}
-		else
-		{
-			while (s[i] && s[i] != '\'' && s[i] != '"' && s[i] != '>'
-				&& s[i] != '<' && s[i] != '|' && !is_whitespace(s[i]))
-			{
-				if (s[i] == '$')
-				{
-					i++;
-					while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
-						i++;
-				}
-				else
-					i++;
-			}
-		}
-	}
+	while (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
+		i++;
 	return (i);
 }
 
-static int	write_in_single(char *s, char *word, int *i)
+static int	skip_single_quotes(char *s, int i)
 {
-	int	j;
-	int	k;
-
-	(*i)++;
-	j = *i;
-	k = -1;
-	while (s[*i] && s[*i] != '\'')
-	{
-		word[++k] = s[*i];
-		(*i)++;
-	}
-	if (s[*i] == '\'')
-		(*i)++;
-	return (*i - (j + 1));
+	i++;
+	while (s[i] && s[i] != '\'')
+		i++;
+	if (s[i] == '\'')
+		i++;
+	return (i);
 }
 
-static int	write_in_double(t_env *env, char *s, char *word, int *i)
+static int	skip_env_var(char *s, int i)
 {
-	int	len;
-	int	tmp;
+	i++;
+	while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
+		i++;
+	return (i);
+}
 
-	len = 0;
-	(*i)++;
-	while (s[*i] && s[*i] != '"')
+static int	skip_double_quotes(char *s, int i)
+{
+	i++;
+	while (s[i] && s[i] != '"')
 	{
-		if (s[*i] == '$')
-		{
-			tmp = size_of_envval(env, s + *i + 1, word + len);
-			if (tmp == -1)
-				return (go_end(s, i), len);
-			*i += skip_envkey(s + *i + 1) + 1;
-			len += tmp;
-		}
+		if (s[i] == '$')
+			i = skip_env_var(s, i);
 		else
-		{
-			word[len] = s[*i];
-			len++;
-			(*i)++;
-		}
-	}
-	if (s[*i] == '"')
-		(*i)++;
-	return (len);
-}
-
-static int	write_in_nothing(t_env *env, char *s, char *word, int *i)
-{
-	int	len;
-	int	tmp;
-
-	len = 0;
-	while (s[*i] && s[*i] != '\'' && s[*i] != '"' && s[*i] != '>'
-		&& s[*i] != '<' && s[*i] != '|' && !is_whitespace(s[*i]))
-	{
-		if (s[*i] == '$')
-		{
-			tmp = size_of_envval(env, s + *i + 1, word + len);
-			if (tmp == -1)
-				return (go_end(s, i), len);
-			*i += skip_envkey(s + *i + 1) + 1;
-			len += tmp;
-		}
-		else
-		{
-			word[len] = s[*i];
-			len++;
-			(*i)++;
-		}
-	}
-	return (len);
-}
-
-char	*write_word(t_env *env, char *s, int i)
-{
-	int		j;
-	char	*word;
-
-	j = get_real_word_size(env, s, i);
-	word = ft_calloc(j + 1, sizeof(char));
-	if (!word)
-		return (perror("minishell: "), NULL);
-	j = 0;
-	if (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
-	{
-		while (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
-		{
-			word[j] = s[i];
-			j++;
 			i++;
-		}
-		return (word);
 	}
-	while (s[i] && !word_cond(s[i]))
+	if (s[i] == '"')
+		i++;
+	return (i);
+}
+
+static int	skip_unquoted_content(char *s, int i)
+{
+	while (s[i] && s[i] != '\'' && s[i] != '"' && s[i] != '>'
+		&& s[i] != '<' && s[i] != '|' && !is_whitespace(s[i]))
 	{
-		if (s[i] == '\'')
-			j += write_in_single(s, word + j, &i);
-		else if (s[i] == '"')
-			j += write_in_double(env, s, word + j, &i);
+		if (s[i] == '$')
+			i = skip_env_var(s, i);
 		else
-			j += write_in_nothing(env, s, word + j, &i);
+			i++;
 	}
-	return (word);
+	return (i);
 }

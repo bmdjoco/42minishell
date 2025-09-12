@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:59:43 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/04 12:34:46 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/12 12:59:07 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	doit(char **argv, char **envp)
 int	exec_cmd(t_env *env, char **split)
 {
 	char	**env_dup;
-	int			err;
+	int		err;
 
 	env_dup = create_envp(env);
 	if (!env_dup)

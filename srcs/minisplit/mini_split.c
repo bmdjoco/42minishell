@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 12:06:48 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/09 12:46:41 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/12 13:14:59 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,94 @@ char	**mini_split(char *s, t_env *env)
 	}
 	split[i] = NULL;
 	return (split);
+}
+
+void	match_word(char *s, int *i)
+{
+	while (s[(*i)] && !word_cond(s[(*i)]))
+	{
+		if (s[(*i)] && s[(*i)] == '\'')
+		{
+			(*i)++;
+			while (s[(*i)] && s[(*i)] != '\'')
+				(*i)++;
+			(*i)++;
+		}
+		else if (s[(*i)] && s[(*i)] == '"')
+		{
+			(*i)++;
+			while (s[(*i)] && s[(*i)] != '"')
+				(*i)++;
+			(*i)++;
+		}
+		else
+			(*i)++;
+	}
+}
+
+int	count_words(char *s)
+{
+	int	i;
+	int	word;
+
+	i = 0;
+	word = 0;
+	while (s[i])
+	{
+		i += skip_spaces(s + i);
+		if (!s[i])
+			break ;
+		if ((s[i]) && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
+		{
+			word++;
+			while ((s[i]) && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
+				i++;
+		}
+		else
+		{
+			match_word(s, (&i));
+			word++;
+		}
+	}
+	return (word);
+}
+
+int	size_of_envval(t_env *env, char *s, char *dest)
+{
+	int		i;
+	char	*key;
+	char	*val;
+
+	i = 0;
+	while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
+		i++;
+	key = ft_substr(s, 0, i);
+	if (!key)
+		return (perror("minishell: "), -1);
+	val = get_env_value(env, key);
+	if (!val)
+		return (free(key), 0);
+	i = ft_strlen(val);
+	if (dest)
+		ft_strcat(dest, val);
+	return (free(key), free(val), i);
+}
+
+int	skip_word(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
+		return (skip_operators(s, i));
+	while (s[i] && !word_cond(s[i]))
+	{
+		if (s[i] == '\'')
+			i = skip_single_quotes(s, i);
+		else if (s[i] == '"')
+			i = skip_double_quotes(s, i);
+		else
+			i = skip_unquoted_content(s, i);
+	}
+	return (i);
 }

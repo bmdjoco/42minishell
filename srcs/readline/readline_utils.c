@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:49:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/11 13:58:06 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/12 13:21:22 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,26 +80,26 @@ int	check_next(char *s)
 	return (1);
 }
 
-int	check_syntax_err(char *line)
+int	check_syntax_err(char *line, int i)
 {
-	int	i;
 	int	len;
 
-	i = 0;
 	while (line[i])
 	{
 		if (line[i] == '\'' || line[i] == '"')
 		{
 			len = match_quotes(line + i);
 			if (len == -1)
-				return (ft_fprintf(2, "minishell: syntax error near unexpected token '%c'\n", line[i]), -1);
+				return (ft_fprintf(2, "minishell: syntax error near unexpected"
+						" token '%c'\n", line[i]), -1);
 			i += len;
 		}
 		else if (line[i] == '<' || line[i] == '>' || line[i] == '|')
 		{
 			len = check_next(line + i);
 			if (len == -1)
-				return (ft_fprintf(2, "minishell: syntax error near unexpected token '%c'\n", line[i]), -1);
+				return (ft_fprintf(2, "minishell: syntax error near unexpected"
+						" token '%c'\n", line[i]), -1);
 			i += len;
 		}
 		else

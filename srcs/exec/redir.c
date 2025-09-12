@@ -6,35 +6,30 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:58:55 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/11 13:14:51 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/12 13:04:23 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int	do_redirections(char **split, t_env *env)
+static int	setup_redirection_fds(int *infile, int *outfile)
 {
-	int		i;
-	int		tmp;
-	int		redir;
-	char	*file;
+	*infile = dup(STDIN_FILENO);
+	if (*infile == -1)
+		return (-1);
+	*outfile = dup(STDOUT_FILENO);
+	if (*outfile == -1)
+		return (close(*infile), -1);
+	return (0);
+}
 
-	i = -1;
-	redir = nb_of_redir(split);
-	if (redir > 0)
-		while (++i < redir)
-		{
-			file = reddir_file(split, i + 1);
-			if (!file)
-				return (perror("minishell: "), -1);
-			tmp = exec_redir(split, reddir_type(split, i + 1), file, env);
-			if (tmp == -1)
-				return (perror("minishell: "), -1);
-			free(file);
-		}
-	else
-		distributor(split, env);
-	return (1);
+int	close_redir(int infile, int outfile, int fd)
+{
+	if (dup2(infile, STDIN_FILENO) == -1)
+		return (close(infile), close(outfile), close(fd), -1);
+	if (dup2(outfile, STDOUT_FILENO) == -1)
+		return (close(infile), close(outfile), close(fd), -1);
+	return (close(infile), close(outfile), close(fd), 1);
 }
 
 int	open_file(int red_type, char *file)
@@ -53,7 +48,22 @@ int	open_file(int red_type, char *file)
 	return (fd);
 }
 
-int	exec_redir(char **split, int red_type, char *file, t_env *env)
+static int	apply_redirection(int red_type, int fd)
+{
+	if (red_type == 1 || red_type == 2)
+	{
+		if (dup2(fd, STDOUT_FILENO) == -1)
+			return (-1);
+	}
+	else
+	{
+		if (dup2(fd, STDIN_FILENO) == -1)
+			return (-1);
+	}
+	return (0);
+}
+
+int	open_redir(int red_type, char *file)
 {
 	int	infile;
 	int	outfile;
@@ -61,29 +71,12 @@ int	exec_redir(char **split, int red_type, char *file, t_env *env)
 
 	if (red_type < 0)
 		return (-1);
-	infile = dup(STDIN_FILENO);
-	if (infile == -1)
+	if (setup_redirection_fds(&infile, &outfile) == -1)
 		return (-1);
-	outfile = dup(STDOUT_FILENO);
-	if (outfile == -1)
-		return (close(infile), -1);
 	fd = open_file(red_type, file);
 	if (fd == -1)
 		return (close(infile), close(outfile), -1);
-	if (red_type == 1 || red_type == 2)
-	{
-		if (dup2(fd, STDOUT_FILENO) == -1)
-			return (close(infile), close(outfile), close(fd), -1);
-	}
-	else
-	{
-		if (dup2(fd, STDIN_FILENO) == -1)
-			return (close(infile), close(outfile), close(fd), -1);
-	}
-	distributor(split, env);
-	if (dup2(infile, STDIN_FILENO) == -1)
+	if (apply_redirection(red_type, fd) == -1)
 		return (close(infile), close(outfile), close(fd), -1);
-	if (dup2(outfile, STDOUT_FILENO) == -1)
-		return (close(infile), close(outfile), close(fd), -1);
-	return (close(infile), close(outfile), close(fd), 1);
+	return (close_redir(infile, outfile, fd));
 }

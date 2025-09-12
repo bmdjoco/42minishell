@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/11 11:34:54 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/12 13:07:47 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,57 @@ char	*reddir_file(char **split, int red)
 		i++;
 	}
 	return (NULL);
+}
+
+int	exec_redir(char **split, int red_type, char *file, t_env *env)
+{
+	int	infile;
+	int	outfile;
+	int	fd;
+
+	if (red_type < 0)
+		return (-1);
+	if (setup_redirection_fds(&infile, &outfile) == -1)
+		return (-1);
+	fd = open_file(red_type, file);
+	if (fd == -1)
+		return (close(infile), close(outfile), -1);
+	if (apply_redirection(red_type, fd) == -1)
+		return (close(infile), close(outfile), close(fd), -1);
+	distributor(split, env);
+	return (close_redir(infile, outfile, fd));
+}
+
+/**
+ * @brief gere les redirections, open et distribue a parse_line
+ * @param split ensemble de chaines des arguments de commande
+ * @param env ensemble des variables environnementales
+ * @return 1 en cas de succes, -1 en cas d'erreur
+ */
+int	do_redirections(char **split, t_env *env, int i)
+{
+	int		tmp;
+	int		redir;
+	char	*file;
+
+	redir = nb_of_redir(split);
+	if (redir > 0)
+	{
+		while (++i < redir)
+		{
+			file = reddir_file(split, i + 1);
+			if (!file)
+				return (perror("minishell: "), -1);
+			if (i == redir - 1)
+				tmp = exec_redir(split, reddir_type(split, i + 1), file, env);
+			else
+				tmp = open_redir(reddir_type(split, i + 1), file);
+			if (tmp == -1)
+				return (perror("minishell: "), -1);
+			free(file);
+		}
+	}
+	else
+		distributor(split, env);
+	return (1);
 }

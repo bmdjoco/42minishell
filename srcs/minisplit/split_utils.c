@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:35:56 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/09 12:19:52 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/12 13:08:27 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	go_end(char *s, int *i)
 	while (s[*i])
 		(*i)++;
 }
+
 int	skip_envkey(char *s)
 {
 	int	i;
