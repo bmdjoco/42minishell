@@ -6,7 +6,7 @@
 #    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/09/11 15:27:47 by miltavar         ###   ########.fr        #
+#    Updated: 2025/09/12 14:24:20 by miltavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS = srcs/main.c \
 		srcs/environement/env.c \
 		srcs/environement/env_utils.c \
 		srcs/minisplit/mini_split.c \
+		srcs/minisplit/split_norm.c \
 		srcs/minisplit/split_size.c \
 		srcs/minisplit/split_write.c \
 		srcs/minisplit/split_utils.c \
@@ -29,6 +30,7 @@ SRCS = srcs/main.c \
 		srcs/exec/exec_utils2.c \
 		srcs/exec/redir_utils.c \
 		srcs/exec/redir.c \
+		srcs/exec/redir_heredoc.c \
 		srcs/built-in/echo/echo.c \
 		srcs/built-in/unset/unset.c \
 		srcs/built-in/pwd/pwd.c \

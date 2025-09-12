@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/12 13:21:30 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/12 14:44:51 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ t_env	*new_env_node(char *key, char *val);
 
 int		do_redirections(char **split, t_env *env, int i);
 int		open_redir(int red_type, char *file);
+int		open_file(int red_type, char *file);
+int		apply_redirection(int red_type, int fd);
+int		close_redir(int infile, int outfile, int fd);
+
+void	do_heredoc(char *file);
 
 /* Exec */
 
@@ -94,7 +99,13 @@ int		count_words(char *s);
 int		word_cond(char c);
 int		size_of_envval(t_env *env, char *s, char *dest);
 int		skip_word(char *s);
+int		skip_single_quotes(char *s, int i);
+int		skip_operators(char *s, int i);
+int		skip_double_quotes(char *s, int i);
+int		skip_unquoted_content(char *s, int i);
+int		setup_redirection_fds(int *infile, int *outfile);
 
+int		skip_env_var(char *s, int i);
 void	go_end(char *s, int *i);
 
 char	*write_word(t_env *env, char *s, int i);

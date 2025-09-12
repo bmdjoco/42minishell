@@ -6,13 +6,13 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:58:55 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/12 13:04:23 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/12 14:34:23 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	setup_redirection_fds(int *infile, int *outfile)
+int	setup_redirection_fds(int *infile, int *outfile)
 {
 	*infile = dup(STDIN_FILENO);
 	if (*infile == -1)
@@ -48,7 +48,7 @@ int	open_file(int red_type, char *file)
 	return (fd);
 }
 
-static int	apply_redirection(int red_type, int fd)
+int	apply_redirection(int red_type, int fd)
 {
 	if (red_type == 1 || red_type == 2)
 	{
@@ -78,5 +78,7 @@ int	open_redir(int red_type, char *file)
 		return (close(infile), close(outfile), -1);
 	if (apply_redirection(red_type, fd) == -1)
 		return (close(infile), close(outfile), close(fd), -1);
+	if (red_type == 4)
+		do_heredoc(file);
 	return (close_redir(infile, outfile, fd));
 }
