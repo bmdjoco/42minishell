@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/12 14:44:51 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/15 14:42:19 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int		do_redirections(char **split, t_env *env, int i);
 int		open_redir(int red_type, char *file);
 int		open_file(int red_type, char *file);
 int		apply_redirection(int red_type, int fd);
-int		close_redir(int infile, int outfile, int fd);
+int		close_redir(int infile, int outfile);
+int		do_heredoc(char *file, int infile, int outfile);
 
-void	do_heredoc(char *file);
 
 /* Exec */
 

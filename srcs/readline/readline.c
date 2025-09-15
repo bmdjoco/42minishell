@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/12 13:21:47 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/15 13:03:15 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char	**split_again(char **split)
 	i = 0;
 	while (split[i] && !check_limit(split[i]))
 		i++;
+	if (i == 0)
+		return (NULL);
 	nw_split = ft_calloc(i + 1, sizeof(char *));
 	if (!nw_split)
 		return (NULL);

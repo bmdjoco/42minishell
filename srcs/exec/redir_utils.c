@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/12 14:28:26 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/15 15:03:41 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,20 +93,27 @@ int	exec_redir(char **split, int red_type, char *file, t_env *env)
 	int	outfile;
 	int	fd;
 
-	if (red_type < 0)
+	if (red_type < 0 || setup_redirection_fds(&infile, &outfile) == -1)
 		return (-1);
-	if (setup_redirection_fds(&infile, &outfile) == -1)
-		return (-1);
-	fd = open_file(red_type, file);
-	if (fd == -1)
-		return (close(infile), close(outfile), -1);
-	if (apply_redirection(red_type, fd) == -1)
-		return (close(infile), close(outfile), close(fd), -1);
 	if (red_type == 4)
-		do_heredoc(file);
+	{
+		fd = do_heredoc(file, infile, outfile);
+		if (fd == -1)
+			return (close(infile), close(outfile), -1);
+		if (dup2(fd, STDIN_FILENO) == -1)
+			return (close(infile), close(outfile),
+				close(fd), perror("minishell: "), -1);
+	}
 	else
-		distributor(split, env);
-	return (close_redir(infile, outfile, fd));
+	{
+		fd = open_file(red_type, file);
+		if (fd == -1)
+			return (close(infile), close(outfile), -1);
+		if (apply_redirection(red_type, fd) == -1)
+			return (close(infile), close(outfile), close(fd), -1);
+	}
+	close(fd);
+	return (distributor(split, env), close_redir(infile, outfile));
 }
 
 /**
@@ -134,7 +141,7 @@ int	do_redirections(char **split, t_env *env, int i)
 			else
 				tmp = open_redir(reddir_type(split, i + 1), file);
 			if (tmp == -1)
-				return (perror("minishell: "), -1);
+				return (free(file), perror("minishell: "), -1);
 			free(file);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:49:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/12 13:21:22 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/15 13:05:27 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	distributor(char **split, t_env *env)
 	return_code = 0;
 	nw_split = split_again(split);
 	if (!nw_split)
-		return (-1);
+		return (0);
 	return_code = (parse_line(nw_split, env));
 	free_split(nw_split);
 	return (return_code);
