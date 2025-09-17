@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:58:55 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/15 15:02:34 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/17 12:51:58 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,31 +63,38 @@ int	apply_redirection(int red_type, int fd)
 	return (0);
 }
 
-int	open_redir(int red_type, char *file)
+int	shortcut(int opens[2], int *fd, char *file, int red_type)
 {
-	int	infile;
-	int	outfile;
-	int	fd;
-
-	if (red_type < 0 || setup_redirection_fds(&infile, &outfile) == -1)
-		return (-1);
 	if (red_type == 4)
 	{
-		fd = do_heredoc(file, infile, outfile);
-		if (fd == -1)
-			return (close(infile), close(outfile), -1);
-		if (dup2(fd, STDIN_FILENO) == -1)
-			return (close(infile), close(outfile),
-				close(fd), perror("minishell: "), -1);
+		*fd = do_heredoc(file, opens[0], opens[1]);
+		if (*fd == -1)
+			return (close(opens[0]), close(opens[1]), -1);
+		if (dup2(*fd, STDIN_FILENO) == -1)
+			return (close(opens[0]), close(opens[1]),
+				close(*fd), perror("minishell: "), -1);
+		close(*fd);
 	}
 	else
 	{
-		fd = open_file(red_type, file);
-		if (fd == -1)
-			return (close(infile), close(outfile), -1);
-		if (apply_redirection(red_type, fd) == -1)
-			return (close(infile), close(outfile), close(fd), -1);
+		*fd = open_file(red_type, file);
+		if (*fd == -1)
+			return (close(opens[0]), close(opens[1]), -1);
+		if (apply_redirection(red_type, *fd) == -1)
+			return (close(opens[0]), close(opens[1]), close(*fd), -1);
+		close(*fd);
 	}
-	close(fd);
-	return (close_redir(infile, outfile));
+	return (0);
+}
+
+int	open_redir(int red_type, char *file)
+{
+	int	opens[2];
+	int	fd;
+
+	if (red_type < 0 || setup_redirection_fds(&opens[0], &opens[1]) == -1)
+		return (-1);
+	if (shortcut(opens, &fd, file, red_type) == -1)
+		return (-1);
+	return (close_redir(opens[0], opens[1]));
 }

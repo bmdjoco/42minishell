@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/15 14:42:19 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/17 12:49:46 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int		open_file(int red_type, char *file);
 int		apply_redirection(int red_type, int fd);
 int		close_redir(int infile, int outfile);
 int		do_heredoc(char *file, int infile, int outfile);
+int		shortcut(int opens[2], int *fd, char *file, int red_type);
 
 
 /* Exec */
