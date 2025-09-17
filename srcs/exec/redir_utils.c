@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/17 12:51:09 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/17 14:25:00 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	exec_redir(char **split, int red_type, char *file, t_env *env)
 	if (shortcut(opens, &fd, file, red_type) == -1)
 		return (-1);
 	distributor(split, env);
-	return (close_redir(opens[0], opens[1]));
+	return (close_redir(opens));
 }
 
 /**

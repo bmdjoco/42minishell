@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:58:55 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/17 12:51:58 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/17 14:25:06 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	setup_redirection_fds(int *infile, int *outfile)
 	return (0);
 }
 
-int	close_redir(int infile, int outfile)
+int	close_redir(int opens[2])
 {
-	if (dup2(infile, STDIN_FILENO) == -1)
-		return (close(infile), close(outfile), perror("minishell: "), -1);
-	if (dup2(outfile, STDOUT_FILENO) == -1)
-		return (close(infile), close(outfile), perror("minishell: "), -1);
-	return (close(infile), close(outfile), 0);
+	if (dup2(opens[0], STDIN_FILENO) == -1)
+		return (close(opens[0]), close(opens[1]), perror("minishell: "), -1);
+	if (dup2(opens[0], STDOUT_FILENO) == -1)
+		return (close(opens[0]), close(opens[1]), perror("minishell: "), -1);
+	return (close(opens[0]), close(opens[1]), 0);
 }
 
 int	open_file(int red_type, char *file)
@@ -96,5 +96,5 @@ int	open_redir(int red_type, char *file)
 		return (-1);
 	if (shortcut(opens, &fd, file, red_type) == -1)
 		return (-1);
-	return (close_redir(opens[0], opens[1]));
+	return (close_redir(opens));
 }

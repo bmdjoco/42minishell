@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/17 12:49:46 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/17 15:25:00 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,17 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
+
+typedef struct s_redir_util
+{
+	char			**split;
+	int				open[2];
+	int				fd;
+	char			**env;
+	int				red_type;
+	char			*file;
+}	t_redir_util;
+
 /* Environnement */
 
 int		size_of_key(char *str);
@@ -53,7 +64,7 @@ int		do_redirections(char **split, t_env *env, int i);
 int		open_redir(int red_type, char *file);
 int		open_file(int red_type, char *file);
 int		apply_redirection(int red_type, int fd);
-int		close_redir(int infile, int outfile);
+int		close_redir(int opens[2]);
 int		do_heredoc(char *file, int infile, int outfile);
 int		shortcut(int opens[2], int *fd, char *file, int red_type);
 
