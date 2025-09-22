@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 13:30:00 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/22 13:23:56 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/22 15:32:49 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,25 +82,22 @@ int	execute_with_redirections(char **split, t_env *env)
 /**
  * @brief Traite toutes les redirections dans la boucle principale
  */
-int	process_all_redirections(char **split, int i, int redir, int orig_in)
+int	process_all_redirections(char **split, int redir, int orig_in, int orig_out)
 {
 	char	*file;
 	int		red_type;
-	int		orig_out;
+	int			i;
 
-	orig_out = dup(STDOUT_FILENO);
-	if (orig_out == -1)
-		return (-1);
+	i = -1;
 	while (++i < redir)
 	{
 		file = reddir_file(split, i + 1);
 		if (!file)
-			return (close(orig_out), perror("minishell: "), -1);
+			return (perror("minishell: "), -1);
 		red_type = reddir_type(split, i + 1);
 		if (apply_single_redirect(red_type, file, orig_in, orig_out) == -1)
-			return (free(file), close(orig_out), perror("minishell: "), -1);
+			return (free(file), perror("minishell: "), -1);
 		free(file);
 	}
-	close(orig_out);
 	return (0);
 }

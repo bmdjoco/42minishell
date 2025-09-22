@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+         #
+#    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/09/22 13:23:56 by bdjoco           ###   ########.fr        #
+#    Updated: 2025/09/22 14:53:39 by miltavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS = srcs/main.c \
 		srcs/exec/exec_utils2.c \
 		srcs/exec/redir_utils.c \
 		srcs/exec/redir_utils2.c \
+		srcs/exec/redir_utils3.c \
 		srcs/exec/redir.c \
 		srcs/exec/redir_heredoc.c \
 		srcs/built-in/echo/echo.c \

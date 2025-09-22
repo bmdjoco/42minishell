@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/22 13:23:56 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/22 15:18:14 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,14 @@ t_env	*new_env_node(char *key, char *val);
 
 /* Redirection */
 
-int		do_redirections(char **split, t_env *env, int i);
+int		do_redirections(char **split, t_env *env);
 int		open_redir(int red_type, char *file);
 int		open_file(int red_type, char *file);
 int		apply_redirection(int red_type, int fd);
 int		close_redir(int opens[2]);
 int		do_heredoc(char *file, int infile, int outfile);
 int		shortcut(int opens[2], int *fd, char *file, int red_type);
+int		open_redir(int red_type, char *file);
 
 
 /* Exec */

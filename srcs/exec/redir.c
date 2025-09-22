@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:58:55 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/22 13:12:39 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/22 14:51:51 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,4 @@ int	shortcut(int opens[2], int *fd, char *file, int red_type)
 		close(*fd);
 	}
 	return (0);
-}
-
-int	open_redir(int red_type, char *file)
-{
-	int	opens[2];
-	int	fd;
-
-	if (red_type < 0 || setup_redirection_fds(&opens[0], &opens[1]) == -1)
-		return (-1);
-	if (shortcut(opens, &fd, file, red_type) == -1)
-		return (-1);
-	return (close_redir(opens));
 }

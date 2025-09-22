@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 13:57:24 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/22 13:27:09 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/22 14:51:12 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static void	read_heredoc_lines(char *delimiter, int pipe_fd)
 
 	signal(SIGINT, heredoc_signal_handler);
 	signal(SIGQUIT, SIG_IGN);
-
 	while (1)
 	{
 		write(STDOUT_FILENO, "> ", 2);
@@ -46,11 +45,31 @@ static void	read_heredoc_lines(char *delimiter, int pipe_fd)
 	}
 }
 
+static void	handle_child_process(char *delimiter, int *pipe_fd, int infile,
+			int outfile)
+{
+	close(pipe_fd[0]);
+	read_heredoc_lines(delimiter, pipe_fd[1]);
+	1 && (close(pipe_fd[1]), close(infile), close(outfile));
+	exit(0);
+}
+
+static int	handle_parent_process(int *pipe_fd, pid_t pid,
+			void *old_sigint_handler)
+{
+	int	status;
+
+	1 && (close(pipe_fd[1]), waitpid(pid, &status, 0),
+		signal(SIGINT, old_sigint_handler));
+	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+		return (close(pipe_fd[0]), -1);
+	return (pipe_fd[0]);
+}
+
 int	do_heredoc(char *delimiter, int infile, int outfile)
 {
 	int		pipe_fd[2];
 	pid_t	pid;
-	int		status;
 	void	*old_sigint_handler;
 
 	if (pipe(pipe_fd) == -1)
@@ -64,15 +83,6 @@ int	do_heredoc(char *delimiter, int infile, int outfile)
 		return (-1);
 	}
 	if (pid == 0)
-	{
-		close(pipe_fd[0]);
-		read_heredoc_lines(delimiter, pipe_fd[1]);
-		1 && (close(pipe_fd[1]), close(infile), close(outfile));
-		exit(0);
-	}
-	1 && (close(pipe_fd[1]), waitpid(pid, &status, 0),
-		signal(SIGINT, old_sigint_handler));
-	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
-		return (close(pipe_fd[0]), -1);
-	return (pipe_fd[0]);
+		handle_child_process(delimiter, pipe_fd, infile, outfile);
+	return (handle_parent_process(pipe_fd, pid, old_sigint_handler));
 }

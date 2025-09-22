@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   redir_utils3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 12:24:59 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/22 15:39:03 by miltavar         ###   ########.fr       */
+/*   Created: 2025/09/22 14:52:43 by miltavar          #+#    #+#             */
+/*   Updated: 2025/09/22 14:52:55 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	open_redir(int red_type, char *file)
 {
-	(void)argc;
-	(void)argv;
-	int ret = read_lines(envp);
-	return (ret);
+	int	opens[2];
+	int	fd;
+
+	if (red_type < 0 || setup_redirection_fds(&opens[0], &opens[1]) == -1)
+		return (-1);
+	if (shortcut(opens, &fd, file, red_type) == -1)
+		return (-1);
+	return (close_redir(opens));
 }
