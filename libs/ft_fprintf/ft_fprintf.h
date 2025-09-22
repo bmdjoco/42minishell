@@ -6,7 +6,7 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:07:23 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/08/22 16:40:30 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/22 12:03:35 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <string.h>
 # include <fcntl.h>
+# include <stdarg.h>
 
 int	size_calcu(long n);
 int	type_percent_fd(int fd);

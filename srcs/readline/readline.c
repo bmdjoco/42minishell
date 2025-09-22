@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/17 14:18:27 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/22 12:24:06 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	parse_line(char **split, t_env *env)
 {
 	int		return_code;
 
+	(void) return_code;
 	if (!ft_strcmp(split[0], "unset"))
 		unset(&env, split + 1);
 	else if (!ft_strcmp(split[0], "pwd"))
@@ -130,5 +131,6 @@ int	read_lines(char **envp)
 	}
 	rl_clear_history();
 	free_env(env);
+	rl_cleanup_after_signal();
 	return (0);
 }

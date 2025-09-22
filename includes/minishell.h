@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/17 15:25:00 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/22 13:23:56 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <stdarg.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -132,6 +133,9 @@ void	replace_and_print(char *s, t_env *env);
 
 int		nb_of_redir(char **split);
 int		reddir_type(char **split, int red);
+int		apply_single_redirect(int red_type, char *file, int orig_in, int orig_out);
+int		execute_with_redirections(char **split, t_env *env);
+int		process_all_redirections(char **split, int i, int redir, int orig_in);
 
 char	*reddir_file(char **split, int red);
 

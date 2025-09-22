@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/17 14:25:00 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/22 13:24:19 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,21 @@ int	exec_redir(char **split, int red_type, char *file, t_env *env)
 {
 	int	opens[2];
 	int	fd;
+	int	result;
+	char **nw_split;
 
 	if (red_type < 0 || setup_redirection_fds(&opens[0], &opens[1]) == -1)
 		return (-1);
 	if (shortcut(opens, &fd, file, red_type) == -1)
 		return (-1);
-	distributor(split, env);
-	return (close_redir(opens));
+	nw_split = split_again(split);
+	if (nw_split)
+	{
+		parse_line(nw_split, env);
+		free_split(nw_split);
+	}
+	result = close_redir(opens);
+	return (result);
 }
 
 /**
@@ -107,28 +115,23 @@ int	exec_redir(char **split, int red_type, char *file, t_env *env)
  */
 int	do_redirections(char **split, t_env *env, int i)
 {
-	int		tmp;
 	int		redir;
-	char	*file;
+	int		original_stdin;
+	int		original_stdout;
 
 	redir = nb_of_redir(split);
-	if (redir > 0)
-	{
-		while (++i < redir)
-		{
-			file = reddir_file(split, i + 1);
-			if (!file)
-				return (perror("minishell: "), -1);
-			if (i == redir - 1)
-				tmp = exec_redir(split, reddir_type(split, i + 1), file, env);
-			else
-				tmp = open_redir(reddir_type(split, i + 1), file);
-			if (tmp == -1)
-				return (free(file), perror("minishell: "), -1);
-			free(file);
-		}
-	}
-	else
-		distributor(split, env);
+	if (redir <= 0)
+		return (distributor(split, env), 1);
+	original_stdin = dup(STDIN_FILENO);
+	original_stdout = dup(STDOUT_FILENO);
+	if (original_stdin == -1 || original_stdout == -1)
+		return (perror("minishell: dup"), -1);
+	if (process_all_redirections(split, i, redir, original_stdin) == -1)
+		return (close(original_stdin), close(original_stdout), -1);
+	execute_with_redirections(split, env);
+	dup2(original_stdin, STDIN_FILENO);
+	dup2(original_stdout, STDOUT_FILENO);
+	close(original_stdin);
+	close(original_stdout);
 	return (1);
 }

@@ -101,11 +101,11 @@ char	*get_next_line(int fd)
 	if (!stash)
 		return (NULL);
 	if (!*stash)
-		return (free(stash), NULL);
+		return (free(stash), stash = NULL, NULL);
 	line_size = size_calc(stash);
 	line = malloc(sizeof(char) * (line_size + 1));
 	if (!line)
-		return (NULL);
+		return (free(stash), stash = NULL, NULL);
 	ft_strlcpy(line, stash, line_size + 1);
 	stash = next_line(stash);
 	return (line);

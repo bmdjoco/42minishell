@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:58:55 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/17 14:25:06 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/22 13:12:39 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	close_redir(int opens[2])
 {
 	if (dup2(opens[0], STDIN_FILENO) == -1)
 		return (close(opens[0]), close(opens[1]), perror("minishell: "), -1);
-	if (dup2(opens[0], STDOUT_FILENO) == -1)
+	if (dup2(opens[1], STDOUT_FILENO) == -1)
 		return (close(opens[0]), close(opens[1]), perror("minishell: "), -1);
 	return (close(opens[0]), close(opens[1]), 0);
 }

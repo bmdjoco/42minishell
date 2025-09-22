@@ -3,6 +3,7 @@
 		"ft_fprintf.h": "c",
 		"stdio.h": "c",
 		"minishell.h": "c",
-		"t": "c"
+		"t": "c",
+		"stdarg.h": "c"
 	}
 }
