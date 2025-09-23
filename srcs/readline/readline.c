@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/22 15:18:31 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/23 13:20:58 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	parse_line(char **split, t_env *env)
 	else if (!ft_strcmp(split[0], "export"))
 		builtin_export(&env, split + 1);
 	else if (!ft_strcmp(split[0], "exit"))
-		return (exit_builtin(split + 1));
+		exit_builtin(split, env);
 	else if (!ft_strcmp(split[0], "cd"))
 		return (builtin_cd(split + 1, env));
 	else if (!ft_strcmp(split[0], "echo"))

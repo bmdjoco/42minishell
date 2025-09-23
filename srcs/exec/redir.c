@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:58:55 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/22 14:51:51 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/23 15:26:45 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,30 +59,6 @@ int	apply_redirection(int red_type, int fd)
 	{
 		if (dup2(fd, STDIN_FILENO) == -1)
 			return (perror("minishell: "), -1);
-	}
-	return (0);
-}
-
-int	shortcut(int opens[2], int *fd, char *file, int red_type)
-{
-	if (red_type == 4)
-	{
-		*fd = do_heredoc(file, opens[0], opens[1]);
-		if (*fd == -1)
-			return (close(opens[0]), close(opens[1]), -1);
-		if (dup2(*fd, STDIN_FILENO) == -1)
-			return (close(opens[0]), close(opens[1]),
-				close(*fd), perror("minishell: "), -1);
-		close(*fd);
-	}
-	else
-	{
-		*fd = open_file(red_type, file);
-		if (*fd == -1)
-			return (close(opens[0]), close(opens[1]), -1);
-		if (apply_redirection(red_type, *fd) == -1)
-			return (close(opens[0]), close(opens[1]), close(*fd), -1);
-		close(*fd);
 	}
 	return (0);
 }

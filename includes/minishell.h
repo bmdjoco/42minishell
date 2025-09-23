@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/22 15:18:14 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/23 15:28:02 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-
 typedef struct s_redir_util
 {
-	char			**split;
-	int				open[2];
+	int				redir;
+	int				original[2];
+	char			**og_split;
 	int				fd;
-	char			**env;
 	int				red_type;
 	char			*file;
+	t_env			*env;
 }	t_redir_util;
 
 /* Environnement */
@@ -62,13 +62,17 @@ t_env	*new_env_node(char *key, char *val);
 /* Redirection */
 
 int		do_redirections(char **split, t_env *env);
-int		open_redir(int red_type, char *file);
 int		open_file(int red_type, char *file);
 int		apply_redirection(int red_type, int fd);
 int		close_redir(int opens[2]);
-int		do_heredoc(char *file, int infile, int outfile);
-int		shortcut(int opens[2], int *fd, char *file, int red_type);
-int		open_redir(int red_type, char *file);
+int		do_heredoc(t_redir_util *util);
+int		nb_of_redir(char **split);
+int		reddir_type(char **split, int red);
+int		apply_single_redirect(t_redir_util *util);
+int		execute_with_redirections(char **split, t_env *env);
+int		process_all_redirections(t_redir_util *util);
+
+char	*reddir_file(char **split, int red);
 
 
 /* Exec */
@@ -130,16 +134,6 @@ char	**mini_split(char *s, t_env *env);
 int		echo(char **split, t_env *env);
 void	replace_and_print(char *s, t_env *env);
 
-/* exec */
-
-int		nb_of_redir(char **split);
-int		reddir_type(char **split, int red);
-int		apply_single_redirect(int red_type, char *file, int orig_in, int orig_out);
-int		execute_with_redirections(char **split, t_env *env);
-int		process_all_redirections(char **split, int i, int redir, int orig_in);
-
-char	*reddir_file(char **split, int red);
-
 /* utils */
 
 void	free_split(char **split);
@@ -161,6 +155,6 @@ void	builtin_env(t_env *env, int export);
 
 /* exit */
 
-int		exit_builtin(char **split);
+void	exit_builtin(char **split, t_env *env);
 
 #endif

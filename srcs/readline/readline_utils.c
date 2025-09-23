@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:49:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/22 14:44:16 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/23 13:21:50 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,13 +118,5 @@ int	distributor(char **split, t_env *env)
 	if (!nw_split)
 		return (0);
 	return_code = (parse_line(nw_split, env));
-	free_split(nw_split);
-	if (split[0] && !ft_strcmp(split[0], "exit"))
-	{
-		free_env(env);
-		free_split(split);
-		rl_clear_history();
-		exit (return_code);
-	}
-	return (return_code);
+	return (free_split(nw_split), return_code);
 }

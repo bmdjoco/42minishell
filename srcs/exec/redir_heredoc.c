@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 13:57:24 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/22 14:51:12 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/23 15:17:00 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ static void	read_heredoc_lines(char *delimiter, int pipe_fd)
 	}
 }
 
-static void	handle_child_process(char *delimiter, int *pipe_fd, int infile,
-			int outfile)
+static void	handle_child_process(t_redir_util *util, int *pipe_fd)
 {
 	close(pipe_fd[0]);
-	read_heredoc_lines(delimiter, pipe_fd[1]);
-	1 && (close(pipe_fd[1]), close(infile), close(outfile));
+	read_heredoc_lines(util->file, pipe_fd[1]);
+	1 && (close(pipe_fd[1]), free(util->file), free_env(util->env),free_split(util->og_split), close(util->original[0]), close(util->original[1]));
+	free(util);
 	exit(0);
 }
 
@@ -66,7 +66,7 @@ static int	handle_parent_process(int *pipe_fd, pid_t pid,
 	return (pipe_fd[0]);
 }
 
-int	do_heredoc(char *delimiter, int infile, int outfile)
+int	do_heredoc(t_redir_util *util)
 {
 	int		pipe_fd[2];
 	pid_t	pid;
@@ -83,6 +83,6 @@ int	do_heredoc(char *delimiter, int infile, int outfile)
 		return (-1);
 	}
 	if (pid == 0)
-		handle_child_process(delimiter, pipe_fd, infile, outfile);
+		handle_child_process(util, pipe_fd);
 	return (handle_parent_process(pipe_fd, pid, old_sigint_handler));
 }

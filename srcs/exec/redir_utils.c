@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/22 15:24:48 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/23 15:32:22 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,27 +93,6 @@ char	*reddir_file(char **split, int red)
 	return (NULL);
 }
 
-int	exec_redir(char **split, int red_type, char *file, t_env *env)
-{
-	int		opens[2];
-	int		fd;
-	int		result;
-	char	**nw_split;
-
-	if (red_type < 0 || setup_redirection_fds(&opens[0], &opens[1]) == -1)
-		return (-1);
-	if (shortcut(opens, &fd, file, red_type) == -1)
-		return (-1);
-	nw_split = split_again(split);
-	if (nw_split)
-	{
-		parse_line(nw_split, env);
-		free_split(nw_split);
-	}
-	result = close_redir(opens);
-	return (result);
-}
-
 /**
  * @brief gere les redirections, open et distribue a parse_line
  * @param split ensemble de chaines des arguments de commande
@@ -122,25 +101,29 @@ int	exec_redir(char **split, int red_type, char *file, t_env *env)
  */
 int	do_redirections(char **split, t_env *env)
 {
-	int		redir;
-	int		original_stdin;
-	int		original_stdout;
+	t_redir_util	*util;
 
-	redir = nb_of_redir(split);
-	if (redir <= 0)
-		return (distributor(split, env), 1);
-	original_stdin = dup(STDIN_FILENO);
-	if (original_stdin == -1)
+	util = malloc(sizeof(t_redir_util));
+	if (!util)
+		return (perror("minishell: "), -1);
+	util->og_split = split;
+	util->env = env;
+	util->redir = nb_of_redir(split);
+	if (util->redir <= 0)
+		return (parse_line(split, env), 1);
+	util->original[0] = dup(STDIN_FILENO);
+	if (util->original[0] == -1)
 		return (perror("minishell: dup"), -1);
-	original_stdout = dup(STDOUT_FILENO);
-	if (original_stdout == -1)
-		return (close(original_stdin), perror("minishell: dup"), -1);
-	if (process_all_redirections(split, redir, original_stdin, original_stdout) == -1)
-		return (close(original_stdin), close(original_stdout), -1);
+	util->original[1] = dup(STDOUT_FILENO);
+	if (util->original[1] == -1)
+		return (close(util->original[0]), perror("minishell: dup"), -1);
+	if (process_all_redirections(util) == -1)
+		return (close(util->original[0]), close(util->original[1]), -1);
 	execute_with_redirections(split, env);
-	dup2(original_stdin, STDIN_FILENO);
-	dup2(original_stdout, STDOUT_FILENO);
-	close(original_stdin);
-	close(original_stdout);
+	dup2(util->original[0], STDIN_FILENO);
+	dup2(util->original[1], STDOUT_FILENO);
+	close(util->original[0]);
+	close(util->original[1]);
+	free(util);
 	return (1);
 }
