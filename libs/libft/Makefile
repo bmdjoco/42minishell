@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+         #
+#    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/24 16:57:49 by miltavar          #+#    #+#              #
-#    Updated: 2025/08/25 16:10:31 by bdjoco           ###   ########.fr        #
+#    Updated: 2025/09/25 13:12:06 by miltavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,15 +14,10 @@ NAME	= libft.a
 CC		= cc -g
 CFLAGS	= -Wall -Wextra -Werror
 
-BOLD = \e[1m
-GREEN = \e[32m
-PURPLE = \e[35m
-RESET = \e[0m
-
 SRCS	= ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strlen.c \
 		ft_toupper.c ft_tolower.c ft_printf.c ft_strlcpy.c\
 		ft_strchr.c ft_strrchr.c ft_strncmp.c ft_strnstr.c ft_atoi.c \
-		ft_strdup.c ft_strndup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c \
+		ft_strdup.c  ft_strndup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c ft_itoa.c \
 		ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
 		ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c ft_lstlast_bonus.c \
 		ft_lstadd_back_bonus.c ft_lstdelone_bonus.c ft_lstclear_bonus.c get_next_line.c \
@@ -36,17 +31,14 @@ all: ${NAME}
 
 $(NAME): $(OBJS)
 	@ar rcs $(NAME) $^
-	@echo "$(BOLD)$(NAME)$(RESET) $(GREEN)est compilé $(RESET)​🔰​"
 
 %.o: %.c ${HEADERS}
-	@${CC} ${CFLAGS} -c $< -o $@
+	${CC} ${CFLAGS} -c $< -o $@
 
 clean:
-	@rm -f ${OBJS}
-	@echo "$(GREEN)Nettoyage des$(RESET) $(BOLD)fichiers source de libft$(RESET) $(GREEN)terminé$(RESET) 🚮"
+	rm -f ${OBJS}
 
 fclean: clean
-	@rm -f ${NAME}
-	@echo "$(GREEN)Nettoyage de$(RESET) $(BOLD)$(NAME)$(RESET) $(GREEN)terminé$(RESET) 🚮"
+	rm -f ${NAME}
 
 re:	fclean all

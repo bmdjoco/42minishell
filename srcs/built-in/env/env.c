@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 13:38:19 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/02 14:52:20 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/25 13:53:43 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	builtin_env(t_env *env, int export)
 	{
 		while (env)
 		{
-			printf("export %s=%s\n", env->key, env->val);
+			printf("export %s=\"%s\"\n", env->key, env->val);
 			env = env->next;
 		}
 	}

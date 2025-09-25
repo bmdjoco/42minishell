@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:40:23 by milo              #+#    #+#             */
-/*   Updated: 2025/05/21 14:34:56 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/07/10 12:01:15 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@ char	*next_line(char *stash)
 	int				len;
 	char			*next_stash;
 
+	if (!stash)
+		return (NULL);
 	i = 0;
 	while (stash[i] && stash[i] != '\n')
 		i++;
 	if (stash[i] == '\n')
 		i++;
+	if (!stash[i])
+		return (free(stash), NULL);
 	len = ft_strlen(stash + i);
 	if (len == 0)
 		return (free(stash), NULL);
@@ -30,7 +34,8 @@ char	*next_line(char *stash)
 	if (!next_stash)
 		return (free(stash), NULL);
 	ft_strlcpy(next_stash, stash + i, len + 1);
-	return (free(stash), next_stash);
+	free(stash);
+	return (next_stash);
 }
 
 int	size_calc(char *stash)
@@ -89,25 +94,27 @@ char	*create_stash(int fd, char *stash)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*stash;
+	static char	*stash[1024];
 	int			line_size;
 
-	if (BUFFER_SIZE <= 0 || fd < 0)
+	if (fd == -42)
+		return (cleanup(stash), NULL);
+	if (BUFFER_SIZE <= 0 || fd < 0 || fd >= 1024)
 		return (NULL);
-	stash = check_stash(stash);
-	if (!stash)
+	stash[fd] = check_stash(stash[fd]);
+	if (!stash[fd])
 		return (NULL);
-	stash = create_stash(fd, stash);
-	if (!stash)
+	stash[fd] = create_stash(fd, stash[fd]);
+	if (!stash[fd])
 		return (NULL);
-	if (!*stash)
-		return (free(stash), stash = NULL, NULL);
-	line_size = size_calc(stash);
+	if (!*stash[fd])
+		return (free(stash[fd]), stash[fd] = NULL, NULL);
+	line_size = size_calc(stash[fd]);
 	line = malloc(sizeof(char) * (line_size + 1));
 	if (!line)
-		return (free(stash), stash = NULL, NULL);
-	ft_strlcpy(line, stash, line_size + 1);
-	stash = next_line(stash);
+		return (NULL);
+	ft_strlcpy(line, stash[fd], line_size + 1);
+	stash[fd] = next_line(stash[fd]);
 	return (line);
 }
 

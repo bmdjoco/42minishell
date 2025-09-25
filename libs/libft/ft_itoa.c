@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 12:28:08 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/22 12:03:09 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/05/05 17:19:15 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ static int	size_calc(int n)
 
 static void	write_tab(char *str, int n, int size)
 {
+	size_t			i;
 	unsigned int	nb;
 	unsigned int	size_2;
 
+	i = 0;
 	size_2 = size - 1;
 	if (n == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/23 15:28:02 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/25 13:35:44 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct s_redir_util
 	char			*file;
 	t_env			*env;
 }	t_redir_util;
+
+extern int g_signal;
 
 /* Environnement */
 
