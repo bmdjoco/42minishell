@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:11:41 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/25 15:09:01 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/25 16:08:14 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,24 @@ t_env	*new_env_node(char *key, char *val)
 	return (node);
 }
 
+int	init_empty_env(t_env **head)
+{
+	char	*str;
+	char	*temp;
+
+	str = getcwd(NULL, 0);
+	if (!str)
+		return (-1);
+	temp = ft_strjoin("PWD=", str);
+	free(str);
+	if (!temp)
+		return (-1);
+	if (add_env_node(head, temp) == -1)
+		return (free(temp), -1);
+	free(temp);
+	return (0);
+}
+
 /**
  * @brief Initialiser la structure de variable environnemental
  * @return renvoie le pointeur vers la structure ou NULL en cas s'erreur
@@ -40,20 +58,19 @@ t_env	*init_environnement(char **envp)
 	int		i;
 	int		res;
 
-	i = 0;
+	i = -1;
 	head = NULL;
-	while (envp[i])
-	{
+	if (!*envp && init_empty_env(&head) == -1)
+		return (NULL);
+	while (envp && envp[++i])
 		if (add_env_node(&head, envp[i]) == -1)
 			return (free_env(head), NULL);
-		i++;
-	}
 	val = get_env_value(head, "SHLVL");
 	if (!val)
 		set_env_value(&head, "SHLVL", "1");
 	else
 	{
-		1 && (res = ft_atoi(val), free(val), val = ft_itoa(val));
+		1 && (res = ft_atoi(val), free(val), val = ft_itoa(res + 1));
 		if (!val)
 			return (NULL);
 		set_env_value(&head, "SHLVL", val);
