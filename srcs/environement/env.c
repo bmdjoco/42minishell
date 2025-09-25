@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:11:41 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/23 14:31:03 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:09:01 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ t_env	*new_env_node(char *key, char *val)
 t_env	*init_environnement(char **envp)
 {
 	t_env	*head;
+	char	*val;
 	int		i;
+	int		res;
 
 	i = 0;
 	head = NULL;
@@ -45,6 +47,17 @@ t_env	*init_environnement(char **envp)
 		if (add_env_node(&head, envp[i]) == -1)
 			return (free_env(head), NULL);
 		i++;
+	}
+	val = get_env_value(head, "SHLVL");
+	if (!val)
+		set_env_value(&head, "SHLVL", "1");
+	else
+	{
+		1 && (res = ft_atoi(val), free(val), val = ft_itoa(val));
+		if (!val)
+			return (NULL);
+		set_env_value(&head, "SHLVL", val);
+		free(val);
 	}
 	return (head);
 }

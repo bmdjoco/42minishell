@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:55:36 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/04 12:33:02 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/25 14:51:49 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,16 @@ char	*correct_path(char **argv, char **envp)
 	char	*correct;
 	char	*temp;
 
-	paths = get_path(envp);
+	if (!ft_strncmp(argv[0], "./", 2) || !ft_strncmp(argv[0], "../", 3))
+	{
+		paths = ft_calloc(2, sizeof(char *));
+		if (!paths)
+			return (NULL);
+		paths[0] = getcwd(NULL, 0);
+		paths[1] = NULL;
+	}
+	else
+		paths = get_path(envp);
 	if (!paths)
 		return (NULL);
 	temp = ft_strjoin("/", argv[0]);

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/23 15:32:22 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:01:59 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,15 +110,15 @@ int	do_redirections(char **split, t_env *env)
 	util->env = env;
 	util->redir = nb_of_redir(split);
 	if (util->redir <= 0)
-		return (parse_line(split, env), 1);
+		return (free(util),parse_line(split, env), 1);
 	util->original[0] = dup(STDIN_FILENO);
 	if (util->original[0] == -1)
-		return (perror("minishell: dup"), -1);
+		return (free(util),perror("minishell: dup"), -1);
 	util->original[1] = dup(STDOUT_FILENO);
 	if (util->original[1] == -1)
-		return (close(util->original[0]), perror("minishell: dup"), -1);
+		return (close(util->original[0]),free(util), perror("minishell: dup"), -1);
 	if (process_all_redirections(util) == -1)
-		return (close(util->original[0]), close(util->original[1]), -1);
+		return (close(util->original[0]), close(util->original[1]), free(util), -1);
 	execute_with_redirections(split, env);
 	dup2(util->original[0], STDIN_FILENO);
 	dup2(util->original[1], STDOUT_FILENO);
