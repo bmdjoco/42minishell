@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/20 12:24:59 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/26 14:37:32 by miltavar         ###   ########.fr       */
+/*   Created: 2025/09/26 14:02:58 by miltavar          #+#    #+#             */
+/*   Updated: 2025/09/26 14:33:01 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+volatile sig_atomic_t g_received_signal = 0;
+
+void signal_handler(int sig)
 {
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
-	(void)argc;
-	(void)argv;
-	int ret = read_lines(envp);
-	return (ret);
+	if (sig == SIGINT)
+		g_received_signal = SIGINT;
+	else if (sig == SIGQUIT)
+		g_received_signal = SIGQUIT;
 }

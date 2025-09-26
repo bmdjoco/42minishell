@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/26 13:29:43 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/26 14:37:14 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../libs/ft_fprintf/ft_fprintf.h"
 
 # include <stdio.h>
+# include <signal.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -45,7 +46,7 @@ typedef struct s_redir_util
 	t_env			*env;
 }	t_redir_util;
 
-extern int g_signal;
+extern volatile sig_atomic_t g_received_signal;
 
 /* Environnement */
 
@@ -158,5 +159,9 @@ void	builtin_env(t_env *env, int export);
 /* exit */
 
 void	exit_builtin(char **split, t_env *env);
+
+/* signal */
+
+void	signal_handler(int sig);
 
 #endif

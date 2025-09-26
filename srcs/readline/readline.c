@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/26 13:29:57 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/26 14:42:50 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,6 @@ int	process_line(char *line, t_env *env)
 		free(line);
 		return (0);
 	}
-	for (int i = 0; split[i]; i++)
-		printf("%s\n", split[i]);
 	free(line);
 	exit = do_redirections(split, env);
 	free_split(split);
@@ -123,6 +121,14 @@ int	read_lines(char **envp)
 		return (-1);
 	while (1)
 	{
+		if (g_received_signal = SIGINT)
+		{
+
+		}
+		else if (g_received_signal = SIGQUIT)
+		{
+			
+		}
 		line = readline("minishell: ");
 		if (!line)
 		{
