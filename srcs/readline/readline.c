@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/26 14:42:50 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/26 17:54:49 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,11 @@ int	read_lines(char **envp)
 	{
 		if (g_received_signal = SIGINT)
 		{
-
+			
 		}
 		else if (g_received_signal = SIGQUIT)
 		{
-			
+			g_received_signal = 0;
 		}
 		line = readline("minishell: ");
 		if (!line)
