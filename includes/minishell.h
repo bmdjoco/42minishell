@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/25 13:35:44 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/26 13:29:43 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,8 @@ char	**mini_split(char *s, t_env *env);
 
 /* echo */
 
-int		echo(char **split, t_env *env);
-void	replace_and_print(char *s, t_env *env);
+int		echo(char **split);
+void	print_strs(char *s);
 
 /* utils */
 

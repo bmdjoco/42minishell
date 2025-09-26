@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:46:13 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/25 14:11:58 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/26 13:29:28 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,61 +29,19 @@ int	check_backslash(char *s)
 	return (1);
 }
 
-int	check_dollar_echo(char *s, t_env *env)
-{
-	int		i;
-	char	*check;
-	char	*temp;
-
-	i = 0;
-	check = ft_calloc(500, 1);
-	if (!check)
-		return (ft_fprintf(2, "minishell: failed to alloc\n"), -1);
-	while (s[i] && !is_whitespace(s[i]) && s[i] != 92)
-	{
-		check[i] = s[i];
-		i++;
-	}
-	check[i] = '\0';
-	temp = get_env_value(env, check);
-	if (!temp)
-		return (free(check), 0);
-	free(check);
-	printf("%s", temp);
-	free(temp);
-	return (i);
-}
-
-void	replace_and_print(char *s, t_env *env)
+void	print_strs(char *s)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == '$')
-		{
-			j = check_dollar_echo(s + i + 1, env) + 1;
-			if (j == -1)
-				exit (1);
-			else if (j == 0)
-			{
-				printf("%c", s[i]);
-				i++;
-			}
-			else
-				i += j;
-		}
-		else
-		{
-			printf("%c", s[i]);
-			i++;
-		}
+		printf("%c", s[i]);
+		i++;
 	}
 }
 
-void	print(char **split, int bs, t_env *env)
+void	print(char **split, int bs)
 {
 	int	i;
 
@@ -93,7 +51,7 @@ void	print(char **split, int bs, t_env *env)
 		i = 0;
 	while (split[i])
 	{
-		replace_and_print(split[i], env);
+		print_strs(split[i]);
 		if (split[i + 1])
 			printf(" ");
 		i++;
@@ -108,11 +66,11 @@ void	print(char **split, int bs, t_env *env)
  * @param env l'environnement actuel
  * @return -1 en cas d'echec, 0 si succes
  */
-int	echo(char **split, t_env *env)
+int	echo(char **split)
 {
 	int	bs;
 
 	bs = check_backslash(split[0]);
-	print(split, bs, env);
+	print(split, bs);
 	return (0);
 }
