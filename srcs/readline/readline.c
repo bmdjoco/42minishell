@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/28 14:43:04 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/29 15:31:52 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	parse_line(char **split, t_env *env)
 {
 	int		return_code;
 
-	(void) return_code;
+	return_code = 0;
 	if (!ft_strcmp(split[0], "unset"))
 		unset(&env, split + 1);
 	else if (!ft_strcmp(split[0], "pwd"))
@@ -66,7 +66,7 @@ int	parse_line(char **split, t_env *env)
 	else if (!ft_strcmp(split[0], "env"))
 		builtin_env(env, 0);
 	else if (!ft_strcmp(split[0], "export"))
-		builtin_export(&env, split + 1);
+		return (builtin_export(&env, split + 1));
 	else if (!ft_strcmp(split[0], "exit"))
 		exit_builtin(split, env);
 	else if (!ft_strcmp(split[0], "cd"))
@@ -75,7 +75,7 @@ int	parse_line(char **split, t_env *env)
 		echo(split + 1);
 	else
 		return_code = exec_cmd(env, split);
-	return (0);
+	return (return_code);
 }
 
 int	process_line(char *line, t_env *env)
@@ -113,34 +113,30 @@ int	process_line(char *line, t_env *env)
  */
 int	read_lines(char **envp)
 {
-	char	*line;
-	t_env	*env;
+	char		*line;
+	t_env		*env;
+	static int	exit_code = 0;
 
 	env = init_environnement(envp);
 	if (!env)
 		return (-1);
+	signal_distributor();
 	while (1)
 	{
-		if (g_received_signal == SIGINT)
-		{
-			g_received_signal = 0;
-			printf("\n");
-			continue ;
-		}
-		else if (g_received_signal == SIGQUIT)
-		{
-			g_received_signal = 0;
-		}
 		line = readline("minishell: ");
 		if (!line)
 		{
 			printf("exit\n");
 			break ;
 		}
-		process_line(line, env);
+		if (*line == '\0')
+		{
+			(signal_handler(exit_code), free(line));
+			continue ;
+		}
+		exit_code = process_line(line, env);
+		signal_handler(exit_code);
 	}
-	rl_clear_history();
-	free_env(env);
-	rl_cleanup_after_signal();
-	return (0);
+	(rl_clear_history(), free_env(env));
+	return (g_received_signal);
 }

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 10:38:18 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/25 13:36:41 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/29 14:27:49 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	export_variable(t_env **env, char *s)
  * @param env l'adresse vers la liste chainee des variables d'environnement
  * @param split les chaines de caracteres a traiter
  */
-void	builtin_export(t_env **env, char **split)
+int	builtin_export(t_env **env, char **split)
 {
 	int	i;
 
@@ -53,9 +53,10 @@ void	builtin_export(t_env **env, char **split)
 	while (split[i])
 	{
 		if (check_syntax(split[i]) == -1)
-			ft_fprintf(2, "minishell: export: %s: not a valid identifier\n");
+			return (ft_fprintf(2, "minishell: export: %s: not a valid identifier\n"), 1);
 		else
 			export_variable(env, split[i]);
 		i++;
 	}
+	return (0);
 }

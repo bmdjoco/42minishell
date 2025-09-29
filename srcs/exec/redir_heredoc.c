@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redir_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 13:57:24 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/26 17:37:02 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/29 12:05:07 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <signal.h>
 
 static void	read_heredoc_lines(char *delimiter, int pipe_fd)
 {
@@ -40,7 +39,9 @@ static void	handle_child_process(t_redir_util *util, int *pipe_fd)
 {
 	close(pipe_fd[0]);
 	read_heredoc_lines(util->file, pipe_fd[1]);
-	1 && (close(pipe_fd[1]), free(util->file), free_env(util->env),free_split(util->og_split), close(util->original[0]), close(util->original[1]));
+	1 && (close(pipe_fd[1]), free(util->file), free_env(util->env),
+		free_split(util->og_split),
+		close(util->original[0]), close(util->original[1]));
 	free(util);
 	exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/26 14:37:14 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/29 14:28:17 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void	unset(t_env	**env, char **split);
 
 /* export */
 
-void	builtin_export(t_env **env, char **split);
+int		builtin_export(t_env **env, char **split);
 char	**get_args(char *s);
 
 /* env */
@@ -163,5 +163,7 @@ void	exit_builtin(char **split, t_env *env);
 /* signal */
 
 void	signal_handler(int sig);
+void	SIGINT_handler(int sig);
+void	signal_distributor();
 
 #endif
