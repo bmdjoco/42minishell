@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
+#    By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/09/25 13:16:41 by miltavar         ###   ########.fr        #
+#    Updated: 2025/09/28 14:31:28 by bdjoco           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ SRCS = srcs/main.c \
 		srcs/readline/readline.c \
 		srcs/readline/readline_utils.c \
 		srcs/utils/lib_utils.c \
-		srcs/built-in/exit/exit.c
+		srcs/built-in/exit/exit.c \
+		srcs/signals/signals.c
 
 
 BOLD = \e[1m

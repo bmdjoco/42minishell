@@ -6,7 +6,7 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/26 17:54:49 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/09/28 14:43:04 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,11 +121,13 @@ int	read_lines(char **envp)
 		return (-1);
 	while (1)
 	{
-		if (g_received_signal = SIGINT)
+		if (g_received_signal == SIGINT)
 		{
-			
+			g_received_signal = 0;
+			printf("\n");
+			continue ;
 		}
-		else if (g_received_signal = SIGQUIT)
+		else if (g_received_signal == SIGQUIT)
 		{
 			g_received_signal = 0;
 		}
