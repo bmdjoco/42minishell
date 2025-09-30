@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:11:41 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/30 13:00:26 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/30 13:08:47 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	*get_env_value(t_env *env, char *key)
 	return (NULL);
 }
 
-static void	update_existing_env(t_env *env, char *key, char *val)
+void	update_existing_env(t_env *env, char *key, char *val)
 {
 	t_env	*tmp;
 
