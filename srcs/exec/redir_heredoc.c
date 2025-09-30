@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 13:57:24 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/29 12:05:07 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/30 13:55:46 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ static void	read_heredoc_lines(char *delimiter, int pipe_fd)
 	{
 		write(STDOUT_FILENO, "> ", 2);
 		line = get_next_line(STDIN_FILENO);
-		if (!line)
+		if (!line || g_received_signal == 130)
 		{
+			if (line)
+				free(line);
 			break ;
 		}
 		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0
