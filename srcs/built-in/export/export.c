@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 10:38:18 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/29 14:27:49 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/30 12:59:46 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int	builtin_export(t_env **env, char **split)
 	while (split[i])
 	{
 		if (check_syntax(split[i]) == -1)
-			return (ft_fprintf(2, "minishell: export: %s: not a valid identifier\n"), 1);
+			return (ft_fprintf(2,
+					"minishell: export: %s: not a valid identifier\n"), 1);
 		else
 			export_variable(env, split[i]);
 		i++;

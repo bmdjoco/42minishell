@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:11:41 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/25 16:08:14 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/30 13:00:26 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,28 +123,4 @@ static void	update_existing_env(t_env *env, char *key, char *val)
 		}
 		tmp = tmp->next;
 	}
-}
-
-void	set_env_value(t_env **env, char *key, char *val)
-{
-	t_env	*tmp;
-	t_env	*new;
-	char	*value;
-
-	if (!*env)
-		return ;
-	tmp = *env;
-	value = get_env_value(*env, key);
-	if (!value)
-	{
-		while (tmp->next)
-			tmp = tmp->next;
-		new = new_env_node(key, val);
-		if (!new)
-			return (perror("minishell: "));
-		tmp->next = new;
-		return ;
-	}
-	free(value);
-	update_existing_env(*env, key, val);
 }

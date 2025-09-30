@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:35:56 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/26 13:46:30 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/30 13:03:52 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	go_end(char *s, int *i)
 int	skip_envkey(char *s)
 {
 	int	i;
-
 
 	i = 0;
 	while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))

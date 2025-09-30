@@ -6,20 +6,20 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 14:02:58 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/29 15:44:17 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/09/30 13:06:21 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-volatile sig_atomic_t g_received_signal = 0;
+volatile sig_atomic_t	g_received_signal = 0;
 
 void	signal_handler(int sig)
 {
 	g_received_signal = sig;
 }
 
-void	SIGINT_handler(int sig)
+void	sigint_handler(int sig)
 {
 	g_received_signal = 0;
 	signal_handler(sig + 128);
@@ -29,9 +29,9 @@ void	SIGINT_handler(int sig)
 	rl_redisplay();
 }
 
-void	signal_distributor()
+void	signal_distributor(void)
 {
-	signal(SIGINT, SIGINT_handler);
+	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGSTOP, SIG_IGN);
 }
