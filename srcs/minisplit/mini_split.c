@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 12:06:48 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/22 14:48:54 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/07 12:57:13 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	size_of_envval(t_env *env, char *s, char *dest)
 	char	*val;
 
 	i = 0;
-	while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
+	while (s[i] && (ft_isalnum(s[i]) || s[i] == '_' || s[i] == '?'))
 		i++;
 	key = ft_substr(s, 0, i);
 	if (!key)

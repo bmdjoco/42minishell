@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/30 13:03:31 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/07 13:33:10 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,8 @@ int	do_redirections(char **split, t_env *env)
 	util = malloc(sizeof(t_redir_util));
 	if (!util)
 		return (perror("minishell: "), 1);
-	util->og_split = split;
-	util->env = env;
-	util->redir = nb_of_redir(split);
+	1 && (util->og_split = split, util->env = env,
+		util->redir = nb_of_redir(split));
 	if (util->redir <= 0)
 		return (free(util), parse_line(split, env));
 	util->original[0] = dup(STDIN_FILENO);
@@ -124,6 +123,5 @@ int	do_redirections(char **split, t_env *env)
 	(execute_with_redirections(split, env), dup2(util->original[0],
 			STDIN_FILENO), dup2(util->original[1],
 			STDOUT_FILENO), close(util->original[0]), close(util->original[1]));
-	free(util);
-	return (1);
+	return (free(util), 1);
 }

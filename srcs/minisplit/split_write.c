@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 15:00:46 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/12 14:21:49 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/07 13:00:21 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	skip_single_quotes(char *s, int i)
 int	skip_env_var(char *s, int i)
 {
 	i++;
-	while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
+	while (s[i] && (ft_isalnum(s[i]) || s[i] == '_' || s[i] == '?'))
 		i++;
 	return (i);
 }

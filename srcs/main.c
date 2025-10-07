@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:24:59 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/07 11:39:03 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/07 13:21:18 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,10 @@
 int	main(int argc, char **argv, char **envp)
 {
 	int		return_value;
-	t_shell	*shell;
 
 	(void)argv;
 	if (argc != 1)
 		return (printf("minishell: requires only one argument\n"), 1);
-	shell = malloc(sizeof(t_shell));
-	if (!shell)
-		return (printf("minishell: malloc failed\n"), 1);
-	return_value = read_lines(envp, shell);
-	free(shell);
+	return_value = read_lines(envp);
 	return (return_value);
 }
