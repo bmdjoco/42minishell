@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/07 13:34:04 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/07 16:05:20 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	process_line(char *line, t_env *env)
 		return (0);
 	}
 	free(line);
-	exit = do_redirections(split, env);
+	exit = do_pipe(split, env);
 	free_split(split);
 	return (exit);
 }

@@ -6,7 +6,7 @@
 #    By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/09/28 14:31:28 by bdjoco           ###   ########.fr        #
+#    Updated: 2025/10/07 16:00:04 by bdjoco           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCS = srcs/main.c \
 		srcs/minisplit/split_write.c \
 		srcs/minisplit/split_utils.c \
 		srcs/exec/exec.c \
+		srcs/exec/redir_pipe.c \
 		srcs/exec/exec_utils.c \
 		srcs/exec/exec_utils2.c \
 		srcs/exec/redir_utils.c \
