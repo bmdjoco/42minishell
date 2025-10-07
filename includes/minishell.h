@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/07 13:37:53 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/07 13:38:30 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_env
 typedef struct s_redir_util
 {
 	int				redir;
+	int				pipefd[2];
 	int				original[2];
 	char			**og_split;
 	int				fd;
