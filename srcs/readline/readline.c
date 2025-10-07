@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/30 13:57:25 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/07 12:22:29 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ int	process_line(char *line, t_env *env)
 		free(line);
 		return (0);
 	}
+	for (int i = 0; split[i]; i++)
+		printf("%s\n", split[i]);
 	free(line);
 	exit = do_redirections(split, env);
 	free_split(split);
@@ -111,31 +113,29 @@ int	process_line(char *line, t_env *env)
  * @param envp environnement du terminal
  * @return code != 0 en cas d'echec, 0 si succes
  */
-int	read_lines(char **envp)
+int	read_lines(char **envp, t_shell *shell)
 {
-	char		*line;
-	t_env		*env;
-	static int	exit_code = 0;
 
-	env = init_environnement(envp);
-	if (!env)
+	shell->env = init_environnement(envp);
+	if (!shell->env)
 		return (-1);
+	shell->exit_code = 0;
 	signal_distributor();
 	while (1)
 	{
-		line = readline("minishell: ");
-		if (!line)
+		shell->line = readline("minishell: ");
+		if (!shell->line)
 		{
 			printf("exit\n");
 			break ;
 		}
-		if (*line == '\0')
+		if (shell->line[0] == '\0')
 		{
-			(signal_handler(exit_code), free(line));
+			(signal_handler(shell->exit_code), free(shell->line));
 			continue ;
 		}
-		exit_code = process_line(line, env);
-		signal_handler(exit_code);
+		shell->exit_code = process_line(shell->line, shell->env);
+		signal_handler(shell->exit_code);
 	}
-	return (rl_clear_history(), free_env(env), g_received_signal);
+	return (rl_clear_history(), free_env(shell->env), g_received_signal);
 }

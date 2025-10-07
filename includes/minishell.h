@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/30 13:08:55 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/07 11:36:40 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
+typedef struct s_shell
+{
+	char		*line;
+	t_env		*env;
+	int			exit_code;
+}				t_shell;
+
 typedef struct s_redir_util
 {
 	int				redir;
@@ -44,7 +51,7 @@ typedef struct s_redir_util
 	int				red_type;
 	char			*file;
 	t_env			*env;
-}	t_redir_util;
+}				t_redir_util;
 
 extern volatile sig_atomic_t g_received_signal;
 
@@ -95,7 +102,7 @@ char	**split_again(char **split);
 
 /* Readline */
 
-int		read_lines(char **envp);
+int		read_lines(char **envp, t_shell *shell);
 int		check_syntax_err(char *line, int i);
 int		parse_line(char **split, t_env *env);
 int		distributor(char **split, t_env *env);
