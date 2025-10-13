@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 14:51:45 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/23 13:24:53 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:22:36 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	err_check(char **split)
 		if (!ft_isdigit(split[1][i]))
 			return (ft_fprintf(2,
 					"minishell: exit: %c: numeric argument required\n",
-					split[1][i]), 1);
+					split[1][i]), 2);
 		i++;
 	}
 	return (0);
@@ -60,7 +60,7 @@ void	exit_builtin(char **split, t_env *env)
 			exit_status(1, split, env);
 		err = ft_atoi(split[1]);
 		if (err < 0 || err > 255)
-			err = 66;
+			err = ft_atoi(split[1]) % 256;
 	}
 	exit_status(err, split, env);
 }
