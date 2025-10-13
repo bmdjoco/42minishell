@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:59:43 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/29 15:50:56 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/07 16:51:40 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,17 @@ int	doit(char **argv, char **envp)
 int	exec_cmd(t_env *env, char **split)
 {
 	char	**env_dup;
+	char	**nw_split;
 	int		err;
 
+	nw_split = split_again(split);
+	if (!nw_split)
+		return (perror("minishell: "), 1);
 	env_dup = create_envp(env);
 	if (!env_dup)
-		return (ft_fprintf(2, "minishell: failed to alloc\n"), -1);
-	err = doit(split, env_dup);
+		return (perror("minishell: "), 1);
+	err = doit(nw_split, env_dup);
 	free_split(env_dup);
+	free_split(nw_split);
 	return (err);
 }

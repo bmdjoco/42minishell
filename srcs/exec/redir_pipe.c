@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 13:40:10 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/07 16:07:29 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/10/07 16:56:46 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	skip_cmd(char **split, int i)
 		if (pipes == i && split[j + 1])
 			return (j + 1);
 	}
-	return (-1);
+	return (93);
 }
 
 int	first(char **split, t_env *env, int *oldfd)
@@ -94,14 +94,14 @@ int	do_pipe(char **split, t_env *env)
 	int	oldfd;
 	int	exit_code;
 
-	i = 0;
+	i = -1;
 	nb = nb_of_pipe(split);
-	printf("nb == %d\n", nb);
 	if (nb == 0)
 		return (do_redirections(split, env));
 	exit_code = first(split, env, &oldfd);
 	if (exit_code != 0)
 		return (close(oldfd), exit_code);
+	i++;
 	while (++i < nb - 1)
 	{
 		exit_code = mid(split, env, &oldfd, i);
