@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/13 13:46:05 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/13 14:33:20 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,9 @@ char	*reddir_file(char **split, int red)
 int	do_redirections(char **split, t_env *env)
 {
 	t_redir_util	*util;
+	int				res;
 
+	res = 0;
 	util = malloc(sizeof(t_redir_util));
 	if (!util)
 		return (perror("minishell: "), 1);
@@ -120,8 +122,8 @@ int	do_redirections(char **split, t_env *env)
 	if (process_all_redirections(util) == -1)
 		return (close(util->original[0]),
 			close(util->original[1]), free(util), 1);
-	(execute_with_redirections(split, env), dup2(util->original[0],
+	1 && (res = execute_with_redirections(split, env), dup2(util->original[0],
 			STDIN_FILENO), dup2(util->original[1],
 			STDOUT_FILENO), close(util->original[0]), close(util->original[1]));
-	return (free(util), 1);
+	return (free(util), res);
 }

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:46:13 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/07 12:29:24 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/13 14:39:45 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	print_strs(char *s)
 	i = 0;
 	while (s[i])
 	{
-		printf("%c", s[i]);
+		write(STDOUT_FILENO, &s[i], 1);
 		i++;
 	}
 }
@@ -53,11 +53,11 @@ void	print(char **split, int bs)
 	{
 		print_strs(split[i]);
 		if (split[i + 1])
-			printf(" ");
+			write(STDOUT_FILENO, " ", 1);
 		i++;
 	}
 	if (bs == 0)
-		printf("\n");
+		write(STDOUT_FILENO, "\n", 1);
 }
 
 /**
