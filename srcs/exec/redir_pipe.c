@@ -6,29 +6,16 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 13:40:10 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/07 16:56:46 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:40:16 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	nb_of_pipe(char **split)
-{
-	int	i;
-	int	res;
-
-	res = 0;
-	i = -1;
-	while (split[++i])
-		if (!ft_strcmp(split[i], "|"))
-			res++;
-	return (res);
-}
-
 int	skip_cmd(char **split, int i)
 {
 	int	j;
-	int pipes;
+	int	pipes;
 
 	j = -1;
 	pipes = 0;

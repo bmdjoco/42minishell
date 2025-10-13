@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/07 15:59:07 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/10/13 15:40:10 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int		check_syntax_err(char *line, int i);
 int		parse_line(char **split, t_env *env);
 int		distributor(char **split, t_env *env);
 int		do_pipe(char **split, t_env *env);
+int		nb_of_pipe(char **split);
 
 /* cd */
 

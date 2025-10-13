@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/13 14:33:20 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:40:26 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,4 +126,17 @@ int	do_redirections(char **split, t_env *env)
 			STDIN_FILENO), dup2(util->original[1],
 			STDOUT_FILENO), close(util->original[0]), close(util->original[1]));
 	return (free(util), res);
+}
+
+int	nb_of_pipe(char **split)
+{
+	int	i;
+	int	res;
+
+	res = 0;
+	i = -1;
+	while (split[++i])
+		if (!ft_strcmp(split[i], "|"))
+			res++;
+	return (res);
 }
