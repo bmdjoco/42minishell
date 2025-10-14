@@ -6,7 +6,7 @@
 #    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/10/14 15:13:41 by miltavar         ###   ########.fr        #
+#    Updated: 2025/10/14 16:09:41 by miltavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,7 +77,7 @@ $(FT_FPRINTF):
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@rm -f $(OBJS) $(LIBFT)
+	@rm -f $(OBJS) $(LIBFT) $(FT_FPRINTF)
 	@$(MAKE) $(LIBFT_PATH) clean
 	@$(MAKE) $(FT_FPRINTF_PATH) clean
 	@echo "$(GRAY)Nettoyage des$(RESET) $(BOLD)fichiers source de minishell$(RESET) $(GRAY)terminé$(RESET) 🚮"
