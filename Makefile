@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+         #
+#    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/10/07 16:00:04 by bdjoco           ###   ########.fr        #
+#    Updated: 2025/10/14 15:13:41 by miltavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,6 @@ SRCS = srcs/main.c \
 		srcs/built-in/pwd/pwd.c \
 		srcs/built-in/env/env.c \
 		srcs/built-in/export/export.c \
-		srcs/built-in/export/export_utils.c \
 		srcs/built-in/cd/cd.c \
 		srcs/built-in/cd/cd_utils.c \
 		srcs/readline/readline.c \

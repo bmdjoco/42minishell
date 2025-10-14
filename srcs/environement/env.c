@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:11:41 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/07 12:28:40 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/14 15:08:22 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,14 @@ t_env	*new_env_node(char *key, char *val)
 	node->key = ft_strdup(key);
 	if (!node->key)
 		return (perror("minishell: "), free(node), NULL);
-	node->val = ft_strdup(val);
-	if (!node->val)
-		return (perror("minishell: "), free(node->key), free(node), NULL);
+	if (!val)
+		node->val = NULL;
+	else
+	{
+		node->val = ft_strdup(val);
+		if (!node->val)
+			return (perror("minishell: "), free(node->key), free(node), NULL);
+	}
 	node->next = NULL;
 	return (node);
 }
@@ -118,9 +123,14 @@ void	update_existing_env(t_env *env, char *key, char *val)
 		if (!ft_strcmp(tmp->key, key))
 		{
 			free(tmp->val);
-			tmp->val = ft_strdup(val);
-			if (!tmp->val)
-				return (perror("minishell: "));
+			if (!val)
+				tmp->val = NULL;
+			else
+			{
+				tmp->val = ft_strdup(val);
+				if (!tmp->val)
+					return (perror("minishell: "));
+			}
 			return ;
 		}
 		tmp = tmp->next;

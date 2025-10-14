@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 13:38:19 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/25 13:53:43 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/14 15:20:59 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ void	builtin_env(t_env *env, int export)
 	{
 		while (env)
 		{
-			printf("%s=%s\n", env->key, env->val);
+			if (!env->val)
+				printf("%s=\n", env->key);
+			else
+				printf("%s=%s\n", env->key, env->val);
 			env = env->next;
 		}
 	}
@@ -32,7 +35,10 @@ void	builtin_env(t_env *env, int export)
 	{
 		while (env)
 		{
-			printf("export %s=\"%s\"\n", env->key, env->val);
+			if (!env->val)
+				printf("export %s=\"\"\n", env->key);
+			else
+				printf("export %s=\"%s\"\n", env->key, env->val);
 			env = env->next;
 		}
 	}

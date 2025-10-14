@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 12:36:55 by miltavar          #+#    #+#             */
-/*   Updated: 2025/05/01 13:12:23 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/14 15:05:09 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *s)
 	size_t	size;
 	size_t	i;
 
+	if (!s)
+		return (NULL);
 	i = 0;
 	size = ft_strlen(s) + 1;
 	dup = (char *)malloc(sizeof(char) * (size));

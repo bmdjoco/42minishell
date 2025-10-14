@@ -6,36 +6,65 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 10:38:18 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/30 12:59:46 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/14 15:17:09 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-int	check_syntax(char *s)
+int	check_export(char *s, char **dest)
 {
 	int	i;
 
 	i = 0;
 	while (s[i] && ft_isalpha(s[i]))
 		i++;
-	if (!s[i] || s[i] != '=')
-		return (-1);
-	i++;
+	if (i == 0)
+		return (ft_fprintf(2,
+				"minishell: export: '%s': not a valid identifier\n"), -1);
+	dest[0] = ft_strndup(s, i);
+	if (!dest[0])
+		return (perror("minishell: "), -1);
 	if (!s[i])
-		return (-1);
+		return (dest[1] = NULL, dest[2] = NULL, dest[3] = NULL, 1);
+	if (ft_strncmp("=", s + i, 1) != 0)
+		return (ft_fprintf(2,
+				"minishell: export: '%s': not a valid identifier\n"), -1);
+	dest[1] = ft_strndup(s + i, 1);
+	if (!dest[1])
+		return (perror("minishell: "), -1);
+	i++;
+	dest[2] = ft_strdup(s + i);
+	dest[3] = NULL;
 	return (1);
 }
 
-void	export_variable(t_env **env, char *s)
+char	**get_args(char *s)
+{
+	char	**res;
+	int		i;
+
+	if (!s)
+		return (NULL);
+	i = 0;
+	res = ft_calloc(4, sizeof(char *));
+	if (!res)
+		return (NULL);
+	if (check_export(s, res) == -1)
+		return (NULL);
+	return (res);
+}
+
+int	export_variable(t_env **env, char *s)
 {
 	char	**args;
 
 	args = get_args(s);
 	if (!args)
-		return (perror("minishell: "));
+		return (free_split(args), -1);
 	set_env_value(env, args[0], args[2]);
 	free_split(args);
+	return (1);
 }
 
 /**
@@ -52,11 +81,8 @@ int	builtin_export(t_env **env, char **split)
 	i = 0;
 	while (split[i])
 	{
-		if (check_syntax(split[i]) == -1)
-			return (ft_fprintf(2,
-					"minishell: export: %s: not a valid identifier\n"), 1);
-		else
-			export_variable(env, split[i]);
+		if (export_variable(env, split[i]) == -1)
+			return (1);
 		i++;
 	}
 	return (0);
