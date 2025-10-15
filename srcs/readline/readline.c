@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/14 16:10:49 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/15 13:57:48 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,15 @@ int	parse_line(char **split, t_env *env)
 int	process_line(char *line, t_env *env)
 {
 	char	**split;
-	int		exit;
+	int		exit_code;
 
-	exit = 0;
+	exit_code = 0;
 	if (*line)
 		add_history(line);
 	if (ft_strlen(line) == 0)
 	{
 		free(line);
-		return (exit);
+		return (exit_code);
 	}
 	if (check_syntax_err(line, 0) == -1)
 		return (free(line), 0);
@@ -101,9 +101,10 @@ int	process_line(char *line, t_env *env)
 		return (0);
 	}
 	free(line);
-	exit = do_pipe(split, env);
+	exit_code = do_pipe(split, env);
+	g_received_signal = exit_code;
 	free_split(split);
-	return (exit);
+	return (exit_code);
 }
 
 /**

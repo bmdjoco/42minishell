@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/13 15:40:10 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/15 15:05:00 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_redir_util
 	t_env			*env;
 }				t_redir_util;
 
-extern volatile sig_atomic_t g_received_signal;
+extern volatile sig_atomic_t	g_received_signal;
 
 /* Environnement */
 
@@ -79,12 +79,12 @@ int		process_all_redirections(t_redir_util *util);
 
 char	*reddir_file(char **split, int red);
 
-
 /* Exec */
 
 int		exec_cmd(t_env *env, char **split);
 int		wait_for_child(pid_t pid);
 int		check_limit(char *s);
+int		skip_cmd(char **split, int i);
 
 char	*correct_path(char **argv, char **envp);
 char	*path_len(char *s);
@@ -93,6 +93,9 @@ char	*final_path(char **argv, char **envp);
 char	**get_path(char **envp);
 char	**create_envp(t_env *env);
 char	**split_again(char **split);
+
+void	process_child_status(int status, int *first_error,
+			int *exit_code, int is_last);
 
 /* Readline */
 
@@ -168,6 +171,6 @@ void	exit_builtin(char **split, t_env *env);
 
 void	signal_handler(int sig);
 void	sigint_handler(int sig);
-void	signal_distributor();
+void	signal_distributor(void);
 
 #endif

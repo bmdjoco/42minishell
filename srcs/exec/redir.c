@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:58:55 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/23 15:26:45 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/15 13:50:22 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,23 @@ int	apply_redirection(int red_type, int fd)
 	{
 		if (dup2(fd, STDIN_FILENO) == -1)
 			return (perror("minishell: "), -1);
+	}
+	return (0);
+}
+
+int	skip_cmd(char **split, int i)
+{
+	int	j;
+	int	pipes;
+
+	j = -1;
+	pipes = 0;
+	while (split[++j])
+	{
+		if (!ft_strcmp(split[j], "|"))
+			pipes++;
+		if (pipes == i && split[j + 1])
+			return (j + 1);
 	}
 	return (0);
 }

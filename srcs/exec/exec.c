@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:59:43 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/07 16:51:40 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:13:51 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	doit(char **argv, char **envp)
 	path = final_path(argv, envp);
 	if (!path)
 	{
-		ft_fprintf(2, "minishell: %s: No such file or directory\n", argv[0]);
+		ft_fprintf(2, "minishell: %s: command not found\n", argv[0]);
 		return (127);
 	}
 	pid = fork();

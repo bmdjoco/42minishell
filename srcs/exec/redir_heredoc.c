@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 13:57:24 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/30 13:55:46 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/15 15:05:43 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,27 @@ int	do_heredoc(t_redir_util *util)
 	if (pid == 0)
 		handle_child_process(util, pipe_fd);
 	return (handle_parent_process(pipe_fd, pid));
+}
+
+void	process_child_status(int status, int *first_error,
+	int *exit_code, int is_last)
+{
+	int	code;
+
+	if (WIFEXITED(status))
+	{
+		code = WEXITSTATUS(status);
+		if (code != 0 && *first_error == 0)
+			*first_error = code;
+		if (is_last)
+			*exit_code = code;
+	}
+	else if (WIFSIGNALED(status))
+	{
+		code = 128 + WTERMSIG(status);
+		if (*first_error == 0)
+			*first_error = code;
+		if (is_last)
+			*exit_code = code;
+	}
 }

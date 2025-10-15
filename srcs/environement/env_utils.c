@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:49:44 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/30 13:00:32 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:28:30 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ void	free_env(t_env *env)
 	while (env)
 	{
 		tmp = env->next;
-		free(env->key);
-		free(env->val);
+		if (env->key)
+			free(env->key);
+		if (env->val)
+			free(env->val);
 		free(env);
 		env = tmp;
 	}
