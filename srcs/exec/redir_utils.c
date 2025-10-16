@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/16 14:14:39 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/16 15:46:15 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,31 +101,26 @@ char	*reddir_file(char **split, int red)
  */
 int	do_redirections(char **split, t_env *env)
 {
-	t_redir_util	*util;
-	int				res;
+	int		nb;
+	pid_t	pid;
 
-	res = 0;
-	util = malloc(sizeof(t_redir_util));
-	if (!util)
-		return (perror("minishell: "), 1);
-	1 && (util->og_split = split, util->env = env,
-		util->redir = nb_of_redir(split));
-	if (util->redir <= 0)
-		return (free(util), parse_line(split, env));
-	util->original[0] = dup(STDIN_FILENO);
-	if (util->original[0] == -1)
-		return (free(util), perror("minishell: dup"), 1);
-	util->original[1] = dup(STDOUT_FILENO);
-	if (util->original[1] == -1)
-		return (close(util->original[0]),
-			free(util), perror("minishell: dup"), 1);
-	if (process_all_redirections(util) == -1)
-		return (close(util->original[0]),
-			close(util->original[1]), free(util), 1);
-	1 && (res = execute_with_redirections(split, env), dup2(util->original[0],
-			STDIN_FILENO), dup2(util->original[1],
-			STDOUT_FILENO), close(util->original[0]), close(util->original[1]));
-	return (free(util), res);
+		nb = nb_of_redir(split);
+	if (nb <= 0)
+		return (parse_line(split, env));
+	pid = fork();
+	if (pid == -1)
+		return (1);
+	if (pid == 0)
+	{
+		if (process_all_redirections(nb, split, env) == -1)
+		{
+			free_env(env);
+			free_split(split);
+			exit (1);
+		}
+		exit (execute_with_redirections(split, env));
+	}
+	return (get_code(pid));
 }
 
 int	nb_of_pipe(char **split)

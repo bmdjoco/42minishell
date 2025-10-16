@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 13:30:00 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/13 14:18:53 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/16 15:13:26 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,46 +15,50 @@
 /**
  * @brief Applique une redirection heredoc
  */
-static int	apply_heredoc_redir(t_redir_util *util)
+static int	apply_heredoc_redir(char **split, t_env *env, char *delim)
 {
-	util->fd = do_heredoc(util);
-	if (util->fd == -1)
+	int	fd;
+
+	fd = do_heredoc(split, env, delim);
+	if (fd == -1)
 		return (-1);
-	if (dup2(util->fd, STDIN_FILENO) == -1)
+	if (dup2(fd, STDIN_FILENO) == -1)
 	{
-		close(util->fd);
+		close(fd);
 		return (-1);
 	}
-	close(util->fd);
+	close(fd);
 	return (0);
 }
 
 /**
  * @brief Applique une redirection normale (>, <, >>)
  */
-static int	apply_normal_redir(t_redir_util *util)
+static int	apply_normal_redir(int type, char *delim)
 {
-	util->fd = open_file(util->red_type, util->file);
-	if (util->fd == -1)
+	int	fd;
+
+	fd = open_file(type, delim);
+	if (fd == -1)
 		return (-1);
-	if (apply_redirection(util->red_type, util->fd) == -1)
+	if (apply_redirection(type, fd) == -1)
 	{
-		close(util->fd);
+		close(fd);
 		return (-1);
 	}
-	close(util->fd);
+	close(fd);
 	return (0);
 }
 
 /**
  * @brief Applique une seule redirection selon son type
  */
-int	apply_single_redirect(t_redir_util *util)
+int	apply_single_redirect(char **split, t_env *env, char *delim, int type)
 {
-	if (util->red_type == 4)
-		return (apply_heredoc_redir(util));
+	if (type == 4)
+		return (apply_heredoc_redir(split, env, delim));
 	else
-		return (apply_normal_redir(util));
+		return (apply_normal_redir(type, delim));
 }
 
 /**
@@ -77,20 +81,21 @@ int	execute_with_redirections(char **split, t_env *env)
 /**
  * @brief Traite toutes les redirections dans la boucle principale
  */
-int	process_all_redirections(t_redir_util *util)
+int	process_all_redirections(int nb, char **split, t_env *env)
 {
 	int		i;
+	int		type;
+	char	*delim;
 
 	i = -1;
-	while (++i < util->redir)
+	while (++i < nb)
 	{
-		util->file = reddir_file(util->og_split, i + 1);
-		if (!util->file)
+		delim = reddir_file(split, i + 1);
+		if (!delim)
 			return (perror("minishell: "), -1);
-		util->red_type = reddir_type(util->og_split, i + 1);
-		if (apply_single_redirect(util) == -1)
-			return (free(util->file), perror("minishell: "), -1);
-		free(util->file);
+		type = reddir_type(split, i + 1);
+		if (apply_single_redirect(split, env, delim, type) == -1)
+			return (free(delim), perror("minishell: "), -1);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/10/14 16:09:41 by miltavar         ###   ########.fr        #
+#    Updated: 2025/10/16 15:29:59 by miltavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS = srcs/main.c \
 		srcs/exec/exec_utils.c \
 		srcs/exec/exec_utils2.c \
 		srcs/exec/redir_utils.c \
+		srcs/exec/heredoc_utils.c \
 		srcs/exec/redir_utils2.c \
 		srcs/exec/redir.c \
 		srcs/exec/redir_heredoc.c \

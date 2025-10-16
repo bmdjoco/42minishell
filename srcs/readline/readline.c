@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/16 12:58:00 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/16 15:33:28 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int	process_line(char *line, t_env *env)
 	split = mini_split(line, env);
 	if (!split)
 	{
-		ft_fprintf(2, "minishell: split failed\n");
 		free(line);
 		return (0);
 	}

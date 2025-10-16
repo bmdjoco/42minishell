@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/16 13:00:41 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/16 15:30:07 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,6 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-typedef struct s_redir_util
-{
-	int				redir;
-	int				pipefd[2];
-	int				original[2];
-	char			**og_split;
-	int				fd;
-	int				red_type;
-	char			*file;
-	t_env			*env;
-}				t_redir_util;
-
 extern volatile sig_atomic_t	g_received_signal;
 
 /* Environnement */
@@ -70,12 +58,13 @@ int		do_redirections(char **split, t_env *env);
 int		open_file(int red_type, char *file);
 int		apply_redirection(int red_type, int fd);
 int		close_redir(int opens[2]);
-int		do_heredoc(t_redir_util *util);
+int		do_heredoc(char **split, t_env *env, char *delim);
 int		nb_of_redir(char **split);
 int		reddir_type(char **split, int red);
-int		apply_single_redirect(t_redir_util *util);
+int		apply_single_redirect(char **split, t_env *env, char *delim, int type);
 int		execute_with_redirections(char **split, t_env *env);
-int		process_all_redirections(t_redir_util *util);
+int		process_all_redirections(int nb, char **split, t_env *env);
+int		get_code(pid_t pid);
 
 char	*reddir_file(char **split, int red);
 
