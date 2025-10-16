@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 13:57:24 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/15 15:05:43 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/16 14:03:20 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,20 @@ static void	handle_child_process(t_redir_util *util, int *pipe_fd)
 {
 	close(pipe_fd[0]);
 	read_heredoc_lines(util->file, pipe_fd[1]);
-	1 && (close(pipe_fd[1]), free(util->file), free_env(util->env),
-		free_split(util->og_split),
-		close(util->original[0]), close(util->original[1]));
-	free(util);
+	dup2(util->original[0], STDIN_FILENO);
+	dup2(util->original[1], STDOUT_FILENO);
+	close(pipe_fd[1]);
+	close(pipe_fd[0]);
+	close(util->original[0]);
+	close(util->original[1]);
+	if (util->env)
+		free_env(util->env);
+	if (util->og_split)
+		free_split(util->og_split);
+	if (util->file)
+		free(util->file);
+	if (util)
+		free(util);
 	exit(0);
 }
 

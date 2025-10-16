@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 14:51:45 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/13 15:22:36 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/16 13:49:43 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,31 @@ void	exit_status(int status, char **split, t_env *env)
  * @param split tableau de chaines avec les arguments de readline
  * @return 1 si exit est appele sans option sinon return le code specifie
  */
-void	exit_builtin(char **split, t_env *env)
+int	exit_builtin(char **split, t_env *env)
 {
 	int	err;
 
 	err = 1;
-	printf("exit\n");
 	if (!split || !split[1])
+	{
+		write(STDOUT_FILENO, "exit\n", 5);
 		exit_status(1, split, env);
+	}
 	else
 	{
 		err = err_check(split);
-		if (err != 0)
-			exit_status(1, split, env);
+		if (err == 2)
+		{
+			write(STDOUT_FILENO, "exit\n", 5);
+			exit_status(2, split, env);
+		}
+		else if (err == 1)
+			return (1);
 		err = ft_atoi(split[1]);
 		if (err < 0 || err > 255)
 			err = ft_atoi(split[1]) % 256;
 	}
+	write(STDOUT_FILENO, "exit\n", 5);
 	exit_status(err, split, env);
+	return (0);
 }
