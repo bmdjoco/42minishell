@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 13:57:24 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/16 16:08:35 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/17 15:48:18 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	handle_child_process(char **split, t_env *env, int *pipe_fd, char *d
 static int	handle_parent_process(int *pipe_fd, pid_t pid)
 {
 	close(pipe_fd[1]);
-	return (get_code(pid));
+	return (get_code(pid, 0));
 }
 
 int	do_heredoc(char **split, t_env *env, char *delim)

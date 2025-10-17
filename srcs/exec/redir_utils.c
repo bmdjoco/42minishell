@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/16 15:46:15 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/17 15:48:27 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	do_redirections(char **split, t_env *env)
 		}
 		exit (execute_with_redirections(split, env));
 	}
-	return (get_code(pid));
+	return (get_code(pid, 1));
 }
 
 int	nb_of_pipe(char **split)

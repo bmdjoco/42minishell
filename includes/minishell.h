@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/16 15:30:07 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/17 15:48:34 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int		reddir_type(char **split, int red);
 int		apply_single_redirect(char **split, t_env *env, char *delim, int type);
 int		execute_with_redirections(char **split, t_env *env);
 int		process_all_redirections(int nb, char **split, t_env *env);
-int		get_code(pid_t pid);
+int		get_code(pid_t pid, int i);
 
 char	*reddir_file(char **split, int red);
 
