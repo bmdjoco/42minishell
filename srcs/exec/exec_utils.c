@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:55:36 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/29 15:51:04 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/20 15:07:36 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ char	*correct_path(char **argv, char **envp)
 int	wait_for_child(pid_t pid)
 {
 	int	status;
+	int	sig;
 	int	g_exit_status;
 
 	status = 0;
@@ -122,6 +123,12 @@ int	wait_for_child(pid_t pid)
 	if (WIFEXITED(status))
 		g_exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
+	{
+		sig = WTERMSIG(status);
+		if (sig == SIGQUIT)
+			ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
 		g_exit_status = 128 + WTERMSIG(status);
+
+	}
 	return (g_exit_status);
 }

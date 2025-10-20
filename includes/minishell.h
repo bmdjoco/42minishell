@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/20 13:01:43 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:53:55 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int		skip_cmd(char **split, int i);
 char	*correct_path(char **argv, char **envp);
 char	*path_len(char *s);
 char	*final_path(char **argv, char **envp);
-char	*expand_var(char *s, t_env *env);
 
 char	**get_path(char **envp);
 char	**create_envp(t_env *env);
@@ -162,5 +161,6 @@ int	exit_builtin(char **split, t_env *env);
 void	signal_handler(int sig);
 void	sigint_handler(int sig);
 void	signal_distributor(void);
+void	exec_distributor(void);
 
 #endif

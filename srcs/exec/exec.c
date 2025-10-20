@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:59:43 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/20 14:12:07 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/20 15:00:52 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	doit(char **argv, char **envp)
 		return (free(path), perror("minishell: fork: "), 1);
 	if (pid == 0)
 	{
+		exec_distributor();
 		if (execve(path, argv, envp) == -1)
 		{
 			free(path);

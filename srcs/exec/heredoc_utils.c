@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 15:27:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/20 13:34:58 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/20 15:26:26 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,3 +28,4 @@ int	get_code(pid_t pid, int i)
 		g_received_signal = exit_code;
 	return (exit_code);
 }
+
