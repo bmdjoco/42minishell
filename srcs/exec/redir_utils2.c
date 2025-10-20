@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 13:30:00 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/16 15:13:26 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/20 13:50:18 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	process_all_redirections(int nb, char **split, t_env *env)
 		type = reddir_type(split, i + 1);
 		if (apply_single_redirect(split, env, delim, type) == -1)
 			return (free(delim), perror("minishell: "), -1);
+		free(delim);
 	}
 	return (0);
 }

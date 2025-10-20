@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/17 15:48:27 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:16:27 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,10 @@ char	*reddir_file(char **split, int red)
 int	do_redirections(char **split, t_env *env)
 {
 	int		nb;
+	int		exit_code;
 	pid_t	pid;
 
-		nb = nb_of_redir(split);
+	nb = nb_of_redir(split);
 	if (nb <= 0)
 		return (parse_line(split, env));
 	pid = fork();
@@ -118,7 +119,9 @@ int	do_redirections(char **split, t_env *env)
 			free_split(split);
 			exit (1);
 		}
-		exit (execute_with_redirections(split, env));
+		exit_code = execute_with_redirections(split, env);
+		free_env(env);
+		exit (exit_code);
 	}
 	return (get_code(pid, 1));
 }

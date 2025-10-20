@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 13:57:24 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/20 12:59:22 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:33:13 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,11 @@ static void	handle_child_process(char **split, t_env *env, int *pipe_fd, char *d
 {
 	int	exit_code;
 
+	(void)split;
 	close(pipe_fd[0]);
 	exit_code  = read_heredoc_lines(delim, pipe_fd[1]);
 	close(pipe_fd[1]);
 	free_env(env);
-	free_split(split);
-	free(delim);
 	exit(exit_code);
 }
 
