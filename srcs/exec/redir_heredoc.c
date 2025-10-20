@@ -6,16 +6,15 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 13:57:24 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/17 15:48:18 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/20 12:59:22 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	read_heredoc_lines(char *delimiter, int pipe_fd, t_env *env)
+static int	read_heredoc_lines(char *delimiter, int pipe_fd)
 {
 	char	*line;
-	char	*temp;
 
 	while (1)
 	{
@@ -23,18 +22,14 @@ static int	read_heredoc_lines(char *delimiter, int pipe_fd, t_env *env)
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
 			return (1);
-		temp = expand_var(line, env);
-		if (!temp)
-			return (free(line), 1);
-		free(line);
-		if (ft_strncmp(temp, delimiter, ft_strlen(delimiter)) == 0
-			&& temp[ft_strlen(delimiter)] == '\n')
+		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0
+			&& line[ft_strlen(delimiter)] == '\n')
 		{
-			free(temp);
+			free(line);
 			break ;
 		}
-		write(pipe_fd, temp, ft_strlen(temp));
-		free(temp);
+		write(pipe_fd, line, ft_strlen(line));
+		free(line);
 	}
 	return (0);
 }
@@ -44,7 +39,7 @@ static void	handle_child_process(char **split, t_env *env, int *pipe_fd, char *d
 	int	exit_code;
 
 	close(pipe_fd[0]);
-	exit_code  = read_heredoc_lines(delim, pipe_fd[1], env);
+	exit_code  = read_heredoc_lines(delim, pipe_fd[1]);
 	close(pipe_fd[1]);
 	free_env(env);
 	free_split(split);
@@ -55,7 +50,8 @@ static void	handle_child_process(char **split, t_env *env, int *pipe_fd, char *d
 static int	handle_parent_process(int *pipe_fd, pid_t pid)
 {
 	close(pipe_fd[1]);
-	return (get_code(pid, 0));
+	waitpid(pid, NULL, 0);
+	return (pipe_fd[0]);
 }
 
 int	do_heredoc(char **split, t_env *env, char *delim)
