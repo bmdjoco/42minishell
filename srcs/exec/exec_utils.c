@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:55:36 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/20 15:07:36 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/21 12:43:18 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ int	wait_for_child(pid_t pid)
 		if (sig == SIGQUIT)
 			ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
 		g_exit_status = 128 + WTERMSIG(status);
-
 	}
 	return (g_exit_status);
 }

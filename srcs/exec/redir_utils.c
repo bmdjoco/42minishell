@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/20 15:40:42 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/21 13:03:21 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	do_redirections(char **split, t_env *env)
 		return (parse_line(split, env));
 	pid = fork();
 	if (pid == -1)
-		return (1);
+		return (perror("minishell: "), 1);
 	if (pid == 0)
 	{
 		if (process_all_redirections(nb, split, env) == -1)
