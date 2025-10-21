@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:59:43 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/20 15:00:52 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/21 18:12:23 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	doit(char **argv, char **envp)
 			return (1);
 		}
 	}
-	return (free(path), wait_for_child(pid));
+	return (free(path), get_code(pid));
 }
 
 /**

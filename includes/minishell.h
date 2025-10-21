@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/20 14:53:55 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/21 19:05:29 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@
 # include <stdarg.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+typedef struct s_heredoc
+{
+	int	fd[1024];
+	int	index;
+}				t_heredoc;
 
 typedef struct s_env
 {
@@ -58,13 +64,13 @@ int		do_redirections(char **split, t_env *env);
 int		open_file(int red_type, char *file);
 int		apply_redirection(int red_type, int fd);
 int		close_redir(int opens[2]);
-int		do_heredoc(char **split, t_env *env, char *delim);
+int		do_heredoc(char **split, t_env *env, char *delim, int *outfd);
 int		nb_of_redir(char **split);
 int		reddir_type(char **split, int red);
-int		apply_single_redirect(char **split, t_env *env, char *delim, int type);
+int		apply_single_redirect(char *delim, int type);
 int		execute_with_redirections(char **split, t_env *env);
-int		process_all_redirections(int nb, char **split, t_env *env);
-int		get_code(pid_t pid, int i);
+int		process_all_redirections(int nb, char **split);
+int		get_code(pid_t pid);
 
 char	*reddir_file(char **split, int red);
 
@@ -74,11 +80,17 @@ int		exec_cmd(t_env *env, char **split);
 int		wait_for_child(pid_t pid);
 int		check_limit(char *s);
 int		skip_cmd(char **split, int i);
+int		has_here(char **split, int index);
+
+int		*here_prep(char **split, t_env *env, int nb);
 
 char	*correct_path(char **argv, char **envp);
+char	*get_delim(char **split, int index);
 char	*path_len(char *s);
 char	*final_path(char **argv, char **envp);
 
+char	**cmd_split(char **split, int index);
+char	**split_range(char **split, int start, int end);
 char	**get_path(char **envp);
 char	**create_envp(t_env *env);
 char	**split_again(char **split);

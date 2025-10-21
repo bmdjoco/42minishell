@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 13:57:24 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/21 13:22:05 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/21 19:05:35 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,17 @@ void	child_process(char **split, t_env *env, int *pipe_fd, char *delim)
 	free_split(split);
 	free(delim);
 	free_env(env);
-	_exit (exit_code);
+	exit (exit_code);
 }
 
-static int	handle_parent_process(int *pipe_fd, pid_t pid)
+static int	handle_parent_process(int *pipe_fd, pid_t pid, int *outfd)
 {
 	close(pipe_fd[1]);
-	get_code(pid, 1);
-	return (pipe_fd[0]);
+	*outfd = pipe_fd[0];
+	return (get_code(pid));
 }
 
-int	do_heredoc(char **split, t_env *env, char *delim)
+int	do_heredoc(char **split, t_env *env, char *delim, int *outfd)
 {
 	int		pipe_fd[2];
 	pid_t	pid;
@@ -86,5 +86,5 @@ int	do_heredoc(char **split, t_env *env, char *delim)
 	}
 	if (pid == 0)
 		child_process(split, env, pipe_fd, delim);
-	return (handle_parent_process(pipe_fd, pid));
+	return (handle_parent_process(pipe_fd, pid, outfd));
 }

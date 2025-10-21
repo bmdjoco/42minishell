@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/21 13:03:21 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/21 18:00:34 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	do_redirections(char **split, t_env *env)
 		return (perror("minishell: "), 1);
 	if (pid == 0)
 	{
-		if (process_all_redirections(nb, split, env) == -1)
+		if (process_all_redirections(nb, split) == -1)
 		{
 			free_env(env);
 			free_split(split);
@@ -123,7 +123,7 @@ int	do_redirections(char **split, t_env *env)
 		free_env(env);
 		exit (exit_code);
 	}
-	return (get_code(pid, 1));
+	return (get_code(pid));
 }
 
 int	nb_of_pipe(char **split)
