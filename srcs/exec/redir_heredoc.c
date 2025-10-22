@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 13:57:24 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/21 19:05:35 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:53:22 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,17 @@ static int	read_heredoc_lines(char *delimiter, int pipe_fd)
 	return (close(tty), 0);
 }
 
-void	child_process(char **split, t_env *env, int *pipe_fd, char *delim)
+void	child_process(t_doc *doc, int *pipe_fd)
 {
 	int	exit_code;
 
 	close(pipe_fd[0]);
-	exit_code = read_heredoc_lines(delim, pipe_fd[1]);
+	exit_code = read_heredoc_lines(doc->delim, pipe_fd[1]);
 	close(pipe_fd[1]);
-	free_split(split);
-	free(delim);
-	free_env(env);
+	free_split(doc->cmd);
+	free(doc->delim);
+	free_env(doc->env_dup);
+	free(doc);
 	exit (exit_code);
 }
 
@@ -71,10 +72,11 @@ static int	handle_parent_process(int *pipe_fd, pid_t pid, int *outfd)
 	return (get_code(pid));
 }
 
-int	do_heredoc(char **split, t_env *env, char *delim, int *outfd)
+int	do_heredoc(t_doc *doc, int *herefd, int i, t_pipes *pipes)
 {
 	int		pipe_fd[2];
 	pid_t	pid;
+	int		exit_code;
 
 	if (pipe(pipe_fd) == -1)
 		return (perror("minishell: pipe"), -1);
@@ -85,6 +87,12 @@ int	do_heredoc(char **split, t_env *env, char *delim, int *outfd)
 		return (-1);
 	}
 	if (pid == 0)
-		child_process(split, env, pipe_fd, delim);
-	return (handle_parent_process(pipe_fd, pid, outfd));
+	{
+		free_split(doc->og_split);
+		free(pipes);
+		free(herefd);
+		child_process(doc, pipe_fd);
+	}
+	exit_code = handle_parent_process(pipe_fd, pid, &herefd[i]);
+	return (exit_code);
 }

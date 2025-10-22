@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 15:27:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/21 18:59:32 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:52:21 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	process_child_status(int status, int *first_error,
 	}
 }
 
-void	free_close(int *here_fd, int index)
+void	close_fds(int *here_fd, int index)
 {
 	int	i;
 
@@ -61,14 +61,18 @@ void	free_close(int *here_fd, int index)
 	}
 }
 
-int	*here_prep(char **split, t_env *env, int nb)
+int	*here_prep(char **split, t_env *env, int nb, t_pipes *pipes)
 {
 	int	*here_fd;
 	int		i;
-	char	**cmd;
-	char	*delim;
 	int		err;
+	t_doc	*doc;
 
+	doc = malloc(sizeof(t_doc));
+	if (!doc)
+		return (NULL);
+	doc->env_dup = env;
+	doc->og_split = split;
 	here_fd = malloc(sizeof(int) * nb);
 	if (!here_fd)
 		return (signal_handler(1), NULL);
@@ -77,18 +81,18 @@ int	*here_prep(char **split, t_env *env, int nb)
 	{
 		if (has_here(split, i))
 		{
-			cmd = cmd_split(split, i);
-			delim = get_delim(split, i);
-			err = do_heredoc(cmd, env, delim, &here_fd[i]);
-			(free_split(cmd), free(delim));
+			doc->cmd = cmd_split(split, i);
+			doc->delim = get_delim(split, i);
+			err = do_heredoc(doc, here_fd, i, pipes);
+			(free_split(doc->cmd), free(doc->delim));
 			if (err == 130)
-				return (free_close(here_fd, i), free(here_fd), NULL);
+				return (close_fds(here_fd, i + 1), free(here_fd), NULL);
 		}
 		else
 			here_fd[i] = -1;
 		i++;
 	}
-	return (here_fd);
+	return (free(doc), here_fd);
 }
 
 int	has_here(char **split, int index)
@@ -100,7 +104,7 @@ int	has_here(char **split, int index)
 	cmd_i = 0;
 	while (split[i])
 	{
-		if (!strcmp(split[i], "|"))
+		if (!ft_strcmp(split[i], "|"))
 		{
 			cmd_i++;
 			i++;
@@ -111,79 +115,4 @@ int	has_here(char **split, int index)
 		i++;
 	}
 	return (0);
-}
-
-char	*get_delim(char **split, int index)
-{
-	int	i;
-	int	cmd_i;
-
-	i = 0;
-	cmd_i = 0;
-	while (split[i])
-	{
-		if (!ft_strcmp(split[i], "|"))
-		{
-			cmd_i++;
-			i++;
-			continue ;
-		}
-		if (cmd_i == index && !ft_strcmp(split[i], "<<"))
-		{
-			if (split[i + 1])
-				return (ft_strdup(split[i + 1]));
-			else
-				return (NULL);
-		}
-		i++;
-	}
-	return (NULL);
-}
-
-char	**cmd_split(char **split, int index)
-{
-	int	i;
-	int	cmd_i;
-	int	start;
-	int	count;
-
-	1 && (i = 0, cmd_i = 0, start = 0);
-	while (split[i])
-	{
-		if (cmd_i == index)
-			break ;
-		if (!ft_strcmp(split[i], "|"))
-		{
-			cmd_i++;
-			start = i + 1;
-		}
-		i++;
-	}
-	count = 0;
-	while (split[i] && ft_strcmp(split[i], "|") != 0)
-	{
-		count++;
-		i++;
-	}
-	return (split_range(split, start, start + count));
-}
-
-char	**split_range(char **split, int start, int end)
-{
-	int		len;
-	int		i;
-	char	**new;
-
-	len = end - start;
-	new = ft_calloc(len + 1, sizeof(char *));
-	if (!new)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		new[i] = ft_strdup(split[start + i]);
-		i++;
-	}
-	new[i] = NULL;
-	return (new);
 }

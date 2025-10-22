@@ -4,6 +4,7 @@
 		"stdio.h": "c",
 		"minishell.h": "c",
 		"t": "c",
-		"stdarg.h": "c"
+		"stdarg.h": "c",
+		"readline.h": "c"
 	}
 }

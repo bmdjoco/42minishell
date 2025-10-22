@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 13:30:00 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/21 16:58:11 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:57:00 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ static int	apply_normal_redir(int type, char *delim)
 	if (fd == -1)
 		return (-1);
 	if (apply_redirection(type, fd) == -1)
-	{
-		close(fd);
-		return (-1);
-	}
+		return (close(fd), -1);
 	close(fd);
 	return (0);
 }
@@ -53,8 +50,7 @@ int	execute_with_redirections(char **split, t_env *env)
 	cmd_result = 0;
 	nw_split = split_again(split);
 	if (!nw_split)
-		return (free_split(split), g_received_signal);
-	free_split(split);
+		return (g_received_signal);
 	cmd_result = parse_line(nw_split, env);
 	free_split(nw_split);
 	return (cmd_result);

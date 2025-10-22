@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 13:40:10 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/21 19:01:21 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:56:23 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	child_code(int pids[1024], int nb)
 	return (exit_code);
 }
 
-int	first(char **split, t_env *env, int *oldfd, int *here_fd)
+int	first(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 {
 	pid_t	pid;
 	int		pipefd[2];
@@ -51,10 +51,12 @@ int	first(char **split, t_env *env, int *oldfd, int *here_fd)
 		if (here_fd && here_fd[0] != -1)
 		{
 			dup2(here_fd[0], STDIN_FILENO);
-			close(here_fd[0]);
+			close_fds(here_fd, pipes->nb + 1);
 		}
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
+		free(here_fd);
+		free(pipes);
 		exit_code = do_redirections(split, env);
 		free_env(env);
 		free_split(split);
@@ -63,18 +65,18 @@ int	first(char **split, t_env *env, int *oldfd, int *here_fd)
 	close(pipefd[1]);
 	if (here_fd && here_fd[0] != -1)
 		close(here_fd[0]);
-	*oldfd = pipefd[0];
+	pipes->oldfd = pipefd[0];
 	return (pid);
 }
 
-int	mid(char **split, t_env *env, int *oldfd, int i, int *here_fd)
+int	mid(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 {
 	pid_t	pid;
 	int		prevfd;
 	int		pipefd[2];
 	int		exit_code;
 
-	prevfd = *oldfd;
+	prevfd = pipes->oldfd;
 	if (pipe(pipefd) == -1)
 		return (perror("minishell: "), close(prevfd), -1);
 	pid = fork();
@@ -84,115 +86,97 @@ int	mid(char **split, t_env *env, int *oldfd, int i, int *here_fd)
 	if (pid == 0)
 	{
 		close(pipefd[0]);
-		if (here_fd && here_fd[i] != -1)
+		if (here_fd && here_fd[pipes->i] != -1)
 		{
-			dup2(here_fd[i], STDIN_FILENO);
-			close(here_fd[i]);
+			dup2(here_fd[pipes->i], STDIN_FILENO);
+			close_fds(here_fd, pipes->nb + 1);
 		}
 		else
 			dup2(prevfd, STDIN_FILENO);
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
 		close(prevfd);
-		exit_code = do_redirections(split + skip_cmd(split, i), env);
+		free(here_fd);
+		exit_code = do_redirections(split + skip_cmd(split, pipes->i), env);
+		free(pipes);
 		free_env(env);
 		free_split(split);
 		exit(exit_code);
 	}
 	close(prevfd);
 	close(pipefd[1]);
-	if (here_fd && here_fd[i] != -1)
-		close(here_fd[i]);
-	*oldfd = pipefd[0];
+	if (here_fd && here_fd[pipes->i] != -1)
+		close(here_fd[pipes->i]);
+	pipes->oldfd = pipefd[0];
 	return (pid);
 }
 
-int	last(char **split, t_env *env, int oldfd, int i, int *here_fd)
+int	last(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 {
 	pid_t	pid;
 	int		exit_code;
 
 	pid = fork();
 	if (pid == -1)
-		return (perror("minishell: "), close(oldfd), -1);
+		return (perror("minishell: "), close(pipes->oldfd), -1);
 	if (pid == 0)
 	{
-		if (here_fd && here_fd[i] != -1)
+		if (here_fd && here_fd[pipes->i] != -1)
 		{
-			dup2(here_fd[i], STDIN_FILENO);
-			close(here_fd[i]);
+			dup2(here_fd[pipes->i], STDIN_FILENO);
+			close_fds(here_fd, pipes->nb + 1);
 		}
 		else
-			dup2(oldfd, STDIN_FILENO);
-		close(oldfd);
-		exit_code = do_redirections(split + skip_cmd(split, i), env);
+			dup2(pipes->oldfd, STDIN_FILENO);
+		close(pipes->oldfd);
+		free(here_fd);
+		exit_code = do_redirections(split + skip_cmd(split, pipes->i), env);
+		free(pipes);
 		free_env(env);
 		free_split(split);
 		exit(exit_code);
 	}
-	close(oldfd);
-	if (here_fd && here_fd[i] != -1)
-		close(here_fd[i]);
+	close(pipes->oldfd);
+	if (here_fd && here_fd[pipes->i] != -1)
+		close(here_fd[pipes->i]);
 	return (pid);
-}
-
-int	solo(char **split, t_env *env, int *herefd)
-{
-	pid_t	pid;
-	int		exit_code;
-
-	if (herefd && herefd[0] != -1)
-	{
-		pid = fork();
-		if (pid == -1)
-			return (perror("minishell: "), -1);
-		if (pid == 0)
-		{
-			dup2(herefd[0], STDIN_FILENO);
-			close(herefd[0]);
-			exit_code = do_redirections(split, env);
-			free_env(env);
-			free_split(split);
-			exit (exit_code);
-		}
-		close(herefd[0]);
-		return (get_code(pid));
-	}
-	return (do_redirections(split, env));
 }
 
 int	do_pipe(char **split, t_env *env)
 {
-	int	i;
 	int	pids[1024];
-	int	nb;
-	int	oldfd;
 	int	*here_fd;
+	t_pipes	*pipes;
+	int	exit_code;
 
-	i = 0;
-	nb = nb_of_pipe(split);
-	here_fd = here_prep(split, env, nb + 1);
+	pipes = malloc(sizeof(t_pipes));
+	if (!pipes)
+		return (perror("minishell: "), 1);
+	pipes->i = 0;
+	pipes->nb = nb_of_pipe(split);
+	here_fd = here_prep(split, env, pipes->nb + 1, pipes);
 	if (!here_fd)
-		return (g_received_signal);
-	if (nb == 0)
+		return (free(pipes), g_received_signal);
+	if (pipes->nb == 0)
 	{
-		i = solo(split, env, here_fd);
-		return (free(here_fd), i);
+		free(pipes);
+		exit_code = solo(split, env, here_fd);
+		return (exit_code);
 	}
-	pids[i] = first(split, env, &oldfd, here_fd);
-	if (pids[i] == -1)
-		return (free(here_fd), 1);
-	i++;
-	while (i < nb)
+	pids[pipes->i] = first(split, env, pipes, here_fd);
+	if (pids[pipes->i] == -1)
+		return (free(here_fd), free(pipes), 1);
+	pipes->i++;
+	while (pipes->i < pipes->nb)
 	{
-		pids[i] = mid(split, env, &oldfd, i, here_fd);
-		if (pids[i] == -1)
-			return (free(here_fd), 1);
-		i++;
+		pids[pipes->i] = mid(split, env, pipes, here_fd);
+		if (pids[pipes->i] == -1)
+			return (free(here_fd), free(pipes), 1);
+		pipes->i++;
 	}
-	pids[i] = last(split, env, oldfd, i, here_fd);
-	if (pids[i] == -1)
-		return (free(here_fd), 1);
-	free(here_fd);
-	return (child_code(pids, nb));
+	pids[pipes->i] = last(split, env, pipes, here_fd);
+	if (pids[pipes->i] == -1)
+		return (free(here_fd), free(here_fd), 1);
+	exit_code = child_code(pids, pipes->nb);
+	return (free(here_fd), free(pipes), exit_code);
 }

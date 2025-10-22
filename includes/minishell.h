@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/21 19:05:29 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/22 14:42:10 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef struct s_heredoc
+typedef struct s_pipes
 {
-	int	fd[1024];
-	int	index;
-}				t_heredoc;
+	int	oldfd;
+	int	i;
+	int	nb;
+}				t_pipes;
 
 typedef struct s_env
 {
@@ -40,6 +41,14 @@ typedef struct s_env
 
 	struct s_env	*next;
 }					t_env;
+
+typedef struct s_doc
+{
+	char	**og_split;
+	char	**cmd;
+	char	*delim;
+	t_env	*env_dup;
+}				t_doc;
 
 extern volatile sig_atomic_t	g_received_signal;
 
@@ -64,7 +73,7 @@ int		do_redirections(char **split, t_env *env);
 int		open_file(int red_type, char *file);
 int		apply_redirection(int red_type, int fd);
 int		close_redir(int opens[2]);
-int		do_heredoc(char **split, t_env *env, char *delim, int *outfd);
+int		do_heredoc(t_doc *doc, int *herefd, int i, t_pipes *pipes);
 int		nb_of_redir(char **split);
 int		reddir_type(char **split, int red);
 int		apply_single_redirect(char *delim, int type);
@@ -81,8 +90,9 @@ int		wait_for_child(pid_t pid);
 int		check_limit(char *s);
 int		skip_cmd(char **split, int i);
 int		has_here(char **split, int index);
+int		solo(char **split, t_env *env, int *herefd);
 
-int		*here_prep(char **split, t_env *env, int nb);
+int		*here_prep(char **split, t_env *env, int nb, t_pipes *pipes);
 
 char	*correct_path(char **argv, char **envp);
 char	*get_delim(char **split, int index);
@@ -97,6 +107,7 @@ char	**split_again(char **split);
 
 void	process_child_status(int status, int *first_error,
 			int *exit_code, int is_last);
+void	close_fds(int *here_fd, int index);
 
 /* Readline */
 
