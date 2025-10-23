@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/23 11:46:26 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/23 13:52:44 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_doc
 	char	**og_split;
 	char	**cmd;
 	char	*delim;
+	int			i;
 	t_env	*env_dup;
 }				t_doc;
 
@@ -73,7 +74,7 @@ int		do_redirections(char **split, int index, t_env *env, t_pipes *pipes);
 int		open_file(int red_type, char *file);
 int		apply_redirection(int red_type, int fd);
 int		close_redir(int opens[2]);
-int		do_heredoc(t_doc *doc, int *herefd, int i, t_pipes *pipes);
+int		do_heredoc(t_doc *doc, int *herefd, t_pipes *pipes);
 int		nb_of_redir(char **split);
 int		reddir_type(char **split, int red);
 int		apply_single_redirect(char *delim, int type);
@@ -98,6 +99,7 @@ char	*correct_path(char **argv, char **envp);
 char	*get_delim(char **split, int index);
 char	*path_len(char *s);
 char	*final_path(char **argv, char **envp);
+char	*expand_doc(char *line, t_env *env);
 
 char	**cmd_split(char **split, int index);
 char	**split_range(char **split, int start, int end);

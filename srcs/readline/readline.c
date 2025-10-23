@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/21 18:42:20 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:07:53 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int	read_lines(char **envp)
 		}
 		if (*line == '\0')
 		{
-			(exit_code = 0, signal_handler(exit_code), free(line));
+			1 && (exit_code = 0, signal_handler(exit_code), free(line), 1);
 			continue ;
 		}
 		exit_code = process_line(line, env);

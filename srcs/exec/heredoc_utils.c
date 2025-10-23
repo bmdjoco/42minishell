@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 15:27:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/23 12:01:54 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:05:56 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	close_fds(int *here_fd, int index)
 
 int	*here_prep(char **split, t_env *env, int nb, t_pipes *pipes)
 {
-	int	*here_fd;
+	int		*here_fd;
 	int		i;
 	int		err;
 	t_doc	*doc;
@@ -83,10 +83,12 @@ int	*here_prep(char **split, t_env *env, int nb, t_pipes *pipes)
 		{
 			doc->cmd = cmd_split(split, i);
 			doc->delim = get_delim(split, i);
-			err = do_heredoc(doc, here_fd, i, pipes);
+			doc->i = i;
+			err = do_heredoc(doc, here_fd, pipes);
 			(free_split(doc->cmd), free(doc->delim));
 			if (err == 130)
-				return (close_fds(here_fd, i + 1), free(here_fd), free(doc), NULL);
+				return (close_fds(here_fd, i + 1),
+					free(here_fd), free(doc), NULL);
 		}
 		else
 			here_fd[i] = -1;

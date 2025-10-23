@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 13:40:10 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/23 12:01:45 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:05:22 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ int	mid(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 		close(pipefd[1]);
 		close(prevfd);
 		free(here_fd);
-		exit_code = do_redirections(split, skip_cmd(split, pipes->i), env, pipes);
+		exit_code = do_redirections(split,
+				skip_cmd(split, pipes->i), env, pipes);
 		free_split(split);
 		free_env(env);
 		exit(exit_code);
@@ -128,7 +129,8 @@ int	last(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 			dup2(pipes->oldfd, STDIN_FILENO);
 		close(pipes->oldfd);
 		free(here_fd);
-		exit_code = do_redirections(split, skip_cmd(split, pipes->i), env, pipes);
+		exit_code = do_redirections(split,
+				skip_cmd(split, pipes->i), env, pipes);
 		free_split(split);
 		free_env(env);
 		exit(exit_code);
@@ -141,10 +143,10 @@ int	last(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 
 int	do_pipe(char **split, t_env *env)
 {
-	int	pids[1024];
-	int	*here_fd;
+	int		pids[1024];
+	int		*here_fd;
 	t_pipes	*pipes;
-	int	exit_code;
+	int		exit_code;
 
 	pipes = malloc(sizeof(t_pipes));
 	if (!pipes)
