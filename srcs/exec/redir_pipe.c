@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 13:40:10 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/22 15:56:23 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/23 12:01:45 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,9 @@ int	first(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
 		free(here_fd);
-		free(pipes);
-		exit_code = do_redirections(split, env);
-		free_env(env);
+		exit_code = do_redirections(split, 0, env, pipes);
 		free_split(split);
+		free_env(env);
 		exit(exit_code);
 	}
 	close(pipefd[1]);
@@ -97,10 +96,9 @@ int	mid(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 		close(pipefd[1]);
 		close(prevfd);
 		free(here_fd);
-		exit_code = do_redirections(split + skip_cmd(split, pipes->i), env);
-		free(pipes);
-		free_env(env);
+		exit_code = do_redirections(split, skip_cmd(split, pipes->i), env, pipes);
 		free_split(split);
+		free_env(env);
 		exit(exit_code);
 	}
 	close(prevfd);
@@ -130,10 +128,9 @@ int	last(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 			dup2(pipes->oldfd, STDIN_FILENO);
 		close(pipes->oldfd);
 		free(here_fd);
-		exit_code = do_redirections(split + skip_cmd(split, pipes->i), env);
-		free(pipes);
-		free_env(env);
+		exit_code = do_redirections(split, skip_cmd(split, pipes->i), env, pipes);
 		free_split(split);
+		free_env(env);
 		exit(exit_code);
 	}
 	close(pipes->oldfd);
@@ -159,8 +156,7 @@ int	do_pipe(char **split, t_env *env)
 		return (free(pipes), g_received_signal);
 	if (pipes->nb == 0)
 	{
-		free(pipes);
-		exit_code = solo(split, env, here_fd);
+		exit_code = solo(split, env, here_fd, pipes);
 		return (exit_code);
 	}
 	pids[pipes->i] = first(split, env, pipes, here_fd);
@@ -176,7 +172,7 @@ int	do_pipe(char **split, t_env *env)
 	}
 	pids[pipes->i] = last(split, env, pipes, here_fd);
 	if (pids[pipes->i] == -1)
-		return (free(here_fd), free(here_fd), 1);
+		return (free(here_fd), free(pipes), 1);
 	exit_code = child_code(pids, pipes->nb);
 	return (free(here_fd), free(pipes), exit_code);
 }

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 11:42:45 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/22 15:52:30 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/23 11:46:15 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	**cmd_split(char **split, int index)
 	return (split_range(split, start, start + count));
 }
 
-int	solo(char **split, t_env *env, int *herefd)
+int	solo(char **split, t_env *env, int *herefd, t_pipes *pipes)
 {
 	pid_t	pid;
 	int		exit_code;
@@ -96,20 +96,21 @@ int	solo(char **split, t_env *env, int *herefd)
 	{
 		pid = fork();
 		if (pid == -1)
-			return (perror("minishell: "), -1);
+			return (free(pipes), perror("minishell: "), -1);
 		if (pid == 0)
 		{
 			dup2(herefd[0], STDIN_FILENO);
 			close(herefd[0]);
 			free(herefd);
-			exit_code = do_redirections(split, env);
-			free_env(env);
+			exit_code = do_redirections(split, 0, env, pipes);
 			free_split(split);
+			free_env(env);
 			exit (exit_code);
 		}
+		free(pipes);
 		close(herefd[0]);
 		free(herefd);
 		return (get_code(pid));
 	}
-	return (free(herefd), do_redirections(split, env));
+	return (free(herefd), do_redirections(split, 0, env, pipes));
 }

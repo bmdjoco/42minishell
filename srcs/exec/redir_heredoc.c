@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 13:57:24 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/22 15:53:22 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/23 12:12:57 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	do_heredoc(t_doc *doc, int *herefd, int i, t_pipes *pipes)
 	if (pid == 0)
 	{
 		free_split(doc->og_split);
+		close_fds(herefd, i);
 		free(pipes);
 		free(herefd);
 		child_process(doc, pipe_fd);

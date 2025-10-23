@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 15:27:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/22 15:52:21 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/23 12:01:54 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ int	*here_prep(char **split, t_env *env, int nb, t_pipes *pipes)
 
 	doc = malloc(sizeof(t_doc));
 	if (!doc)
-		return (NULL);
+		return (signal_handler(1), NULL);
 	doc->env_dup = env;
 	doc->og_split = split;
 	here_fd = malloc(sizeof(int) * nb);
 	if (!here_fd)
-		return (signal_handler(1), NULL);
+		return (free(doc), signal_handler(1), NULL);
 	i = 0;
 	while (i < nb)
 	{
@@ -86,7 +86,7 @@ int	*here_prep(char **split, t_env *env, int nb, t_pipes *pipes)
 			err = do_heredoc(doc, here_fd, i, pipes);
 			(free_split(doc->cmd), free(doc->delim));
 			if (err == 130)
-				return (close_fds(here_fd, i + 1), free(here_fd), NULL);
+				return (close_fds(here_fd, i + 1), free(here_fd), free(doc), NULL);
 		}
 		else
 			here_fd[i] = -1;

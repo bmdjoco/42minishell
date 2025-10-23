@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/22 14:42:10 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/23 11:46:26 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_env	*new_env_node(char *key, char *val);
 
 /* Redirection */
 
-int		do_redirections(char **split, t_env *env);
+int		do_redirections(char **split, int index, t_env *env, t_pipes *pipes);
 int		open_file(int red_type, char *file);
 int		apply_redirection(int red_type, int fd);
 int		close_redir(int opens[2]);
@@ -90,7 +90,7 @@ int		wait_for_child(pid_t pid);
 int		check_limit(char *s);
 int		skip_cmd(char **split, int i);
 int		has_here(char **split, int index);
-int		solo(char **split, t_env *env, int *herefd);
+int		solo(char **split, t_env *env, int *herefd, t_pipes *pipes);
 
 int		*here_prep(char **split, t_env *env, int nb, t_pipes *pipes);
 
