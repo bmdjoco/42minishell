@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 13:19:56 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/23 14:07:23 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/23 14:45:39 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	env_len(char *line, t_env *env, char *dest)
 		temp[i] = line[i];
 		i++;
 	}
-	1 && (temp[i] = '\0', val = get_env_value(env, temp), free(temp), 1);
+	1 && (temp[i] = '\0', val = get_env_value(env, temp), free(temp), 0);
 	if (!val)
 		return (0);
 	if (dest)
