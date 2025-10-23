@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/23 14:46:06 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/23 17:51:15 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int	read_lines(char **envp)
 	1 && (exit_code = 0, signal_distributor(), 0);
 	while (1)
 	{
-		line = readline("minishell: ");
+		1 && (g_received_signal = 0, line = readline("minishell: "), 0);
 		if (!line)
 		{
 			printf("exit\n");
@@ -136,5 +136,5 @@ int	read_lines(char **envp)
 		exit_code = process_line(line, env);
 		signal_handler(exit_code);
 	}
-	return (rl_clear_history(), free_env(env), g_received_signal);
+	return (rl_clear_history(), free_env(env), exit_code);
 }

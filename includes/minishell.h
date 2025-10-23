@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/23 13:52:44 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/23 19:30:38 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,9 @@ int	exit_builtin(char **split, t_env *env);
 
 void	signal_handler(int sig);
 void	sigint_handler(int sig);
+void	doc_ignore(void);
+void	doc_handler(int sig);
+void	doc_distributor(void);
 void	signal_distributor(void);
 void	exec_distributor(void);
 

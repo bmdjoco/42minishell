@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 13:30:00 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/23 11:22:46 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/23 19:04:50 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	execute_with_redirections(char **split, t_env *env)
 	cmd_result = 0;
 	nw_split = split_again(split);
 	if (!nw_split)
-		return (g_received_signal);
+		return (1);
 	cmd_result = parse_line(nw_split, env);
 	free_split(nw_split);
 	return (cmd_result);
