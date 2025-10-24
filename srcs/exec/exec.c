@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:59:43 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/21 18:12:23 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/24 13:12:50 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,11 @@ int	doit(char **argv, char **envp)
 		{
 			free(path);
 			perror("minishell: execve: ");
-			return (1);
+			exit (1);
 		}
 	}
-	return (free(path), get_code(pid));
+	doc_ignore();
+	return (free(path), signal_distributor(), get_code(pid));
 }
 
 /**
@@ -54,17 +55,12 @@ int	doit(char **argv, char **envp)
 int	exec_cmd(t_env *env, char **split)
 {
 	char	**env_dup;
-	char	**nw_split;
 	int		err;
 
-	nw_split = split_again(split);
-	if (!nw_split)
-		return (perror("minishell: "), 1);
 	env_dup = create_envp(env);
 	if (!env_dup)
 		return (perror("minishell: "), 1);
-	err = doit(nw_split, env_dup);
+	err = doit(split, env_dup);
 	free_split(env_dup);
-	free_split(nw_split);
 	return (err);
 }

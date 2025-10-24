@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/23 17:51:15 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/24 14:00:47 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	read_lines(char **envp)
 
 	env = init_environnement(envp);
 	if (!env)
-		return (-1);
+		return (1);
 	1 && (exit_code = 0, signal_distributor(), 0);
 	while (1)
 	{

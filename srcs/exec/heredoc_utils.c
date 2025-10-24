@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 15:27:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/23 19:37:16 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/24 13:16:16 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,10 @@ int	get_code(pid_t pid)
 		exit_code = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		exit_code = 128 + WTERMSIG(status);
-	exit_code = g_received_signal;
+	else
+		exit_code = 1;
+	g_received_signal = exit_code;
 	return (exit_code);
-}
-
-void	process_child_status(int status, int *first_error,
-	int *exit_code, int is_last)
-{
-	int	code;
-
-	if (WIFEXITED(status))
-	{
-		code = WEXITSTATUS(status);
-		if (code != 0 && *first_error == 0)
-			*first_error = code;
-		if (is_last)
-			*exit_code = code;
-	}
-	else if (WIFSIGNALED(status))
-	{
-		code = 128 + WTERMSIG(status);
-		if (*first_error == 0)
-			*first_error = code;
-		if (is_last)
-			*exit_code = code;
-	}
 }
 
 void	close_fds(int *here_fd, int index)
@@ -56,7 +35,8 @@ void	close_fds(int *here_fd, int index)
 	i = 0;
 	while (i < index)
 	{
-		close(here_fd[i]);
+		if (here_fd[i] != -1)
+			close(here_fd[i]);
 		i++;
 	}
 }

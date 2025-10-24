@@ -6,30 +6,30 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 13:40:10 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/23 19:43:58 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/24 13:20:08 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	child_code(int pids[1024], int nb)
+int	child_code(int pids[1024], int nb, int i)
 {
-	int	i;
 	int	exit_code;
 	int	status;
-	int	first_error;
 
 	i = 0;
 	exit_code = 0;
-	first_error = 0;
 	while (i <= nb)
 	{
 		waitpid(pids[i], &status, 0);
-		process_child_status(status, &first_error, &exit_code, (i == nb));
+		if (WIFEXITED(status))
+			exit_code = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			exit_code = 128 + WTERMSIG(status);
+		else
+			exit_code = 1;
 		i++;
 	}
-	if (first_error != 0)
-		exit_code = first_error;
 	g_received_signal = exit_code;
 	return (exit_code);
 }
@@ -55,6 +55,7 @@ int	first(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 		}
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
+		close_fds(here_fd, pipes->nb + 1);
 		free(here_fd);
 		exit_code = do_redirections(split, 0, env, pipes);
 		free_split(split);
@@ -95,6 +96,7 @@ int	mid(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
 		close(prevfd);
+		close_fds(here_fd, pipes->nb + 1);
 		free(here_fd);
 		exit_code = do_redirections(split,
 				skip_cmd(split, pipes->i), env, pipes);
@@ -128,6 +130,7 @@ int	last(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 		else
 			dup2(pipes->oldfd, STDIN_FILENO);
 		close(pipes->oldfd);
+		close_fds(here_fd, pipes->nb + 1);
 		free(here_fd);
 		exit_code = do_redirections(split,
 				skip_cmd(split, pipes->i), env, pipes);
@@ -175,6 +178,6 @@ int	do_pipe(char **split, t_env *env)
 	pids[pipes->i] = last(split, env, pipes, here_fd);
 	if (pids[pipes->i] == -1)
 		return (free(here_fd), free(pipes), 1);
-	exit_code = child_code(pids, pipes->nb);
+	exit_code = child_code(pids, pipes->nb, pipes->i);
 	return (free(here_fd), free(pipes), exit_code);
 }
