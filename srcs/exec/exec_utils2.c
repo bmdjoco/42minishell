@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 12:27:33 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/25 13:21:31 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 18:26:21 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ char	*concat(char *key, char *val)
 	char	*val2;
 	char	*tmp;
 
+	if (!val)
+		return (ft_strdup(key));
 	key2 = ft_strdup(key);
 	if (!key2)
 		return (NULL);

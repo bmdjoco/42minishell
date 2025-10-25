@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:59:43 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/25 13:32:49 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 18:25:15 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	doit(char **argv, char **envp)
 			exit (126);
 		}
 		if (execve(path, argv, envp) == -1)
-			1 && (free(path), perror("minishell: "), exit (1), 0);
+			1 && (free(path), perror("minishell:drgerg "), exit (1), 0);
 	}
 	1 && (doc_ignore(), free(path), err = get_code(pid));
 	return (signal_distributor(), err);

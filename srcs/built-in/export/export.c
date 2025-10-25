@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 10:38:18 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/25 12:31:57 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 18:05:42 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_export(char *s, char **dest)
 				"minishell: export: '%s': not a valid identifier\n", s), -1);
 	dest[0] = ft_strndup(s, i);
 	if (!dest[0])
-		return (perror("minishell: "), -1);
+		return (-1);
 	if (!s[i])
 		return (dest[1] = NULL, dest[2] = NULL, dest[3] = NULL, 1);
 	if (ft_strncmp("=", s + i, 1) != 0)
@@ -32,7 +32,7 @@ int	check_export(char *s, char **dest)
 				"minishell: export: '%s': not a valid identifier\n", s), -1);
 	dest[1] = ft_strndup(s + i, 1);
 	if (!dest[1])
-		return (perror("minishell: "), -1);
+		return (-1);
 	i++;
 	dest[2] = ft_strdup(s + i);
 	dest[3] = NULL;

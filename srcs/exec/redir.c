@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:58:55 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/22 15:58:01 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 17:56:28 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	open_file(int red_type, char *file)
 	else if (red_type == 1)
 		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
-		perror("minishell: ");
+		ft_fprintf(2, "minishell: %s: No such file or directory\n", file);
 	return (fd);
 }
 
