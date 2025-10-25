@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 13:40:10 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/24 13:20:08 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 15:25:03 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,19 @@ int	last(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 	return (pid);
 }
 
+int	nb_of_docs(char **split)
+{
+	int	i;
+	int	res;
+
+	res = 0;
+	i = -1;
+	while (split[++i])
+		if (!ft_strcmp(split[i], "<<"))
+			res++;
+	return (res);
+}
+
 int	do_pipe(char **split, t_env *env)
 {
 	int		pids[1024];
@@ -155,8 +168,9 @@ int	do_pipe(char **split, t_env *env)
 	if (!pipes)
 		return (perror("minishell: "), 1);
 	pipes->i = 0;
+	pipes->docs = nb_of_docs(split);
 	pipes->nb = nb_of_pipe(split);
-	here_fd = here_prep(split, env, pipes->nb + 1, pipes);
+	here_fd = here_prep(split, env, pipes->docs, pipes);
 	if (!here_fd)
 		return (free(pipes), g_received_signal);
 	if (pipes->nb == 0)

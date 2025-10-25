@@ -6,18 +6,20 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 11:42:45 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/23 11:46:15 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 15:38:04 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*get_delim(char **split, int index)
+char	*get_delim(char **split, int index, int index2)
 {
 	int	i;
+	int	j;
 	int	cmd_i;
 
 	i = 0;
+	j = 0;
 	cmd_i = 0;
 	while (split[i])
 	{
@@ -29,10 +31,9 @@ char	*get_delim(char **split, int index)
 		}
 		if (cmd_i == index && !ft_strcmp(split[i], "<<"))
 		{
-			if (split[i + 1])
+			if (split[i + 1] && index2 == j)
 				return (ft_strdup(split[i + 1]));
-			else
-				return (NULL);
+			j++;
 		}
 		i++;
 	}
@@ -92,7 +93,7 @@ int	solo(char **split, t_env *env, int *herefd, t_pipes *pipes)
 	pid_t	pid;
 	int		exit_code;
 
-	if (herefd && herefd[0] != -1)
+	if (pipes->docs > 0)
 	{
 		pid = fork();
 		if (pid == -1)

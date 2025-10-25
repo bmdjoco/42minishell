@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 16:19:37 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/25 12:58:31 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 13:46:41 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*get_target_path(char **argv, t_env *env)
 	{
 		path = join_path(argv, env);
 		if (!path)
-			return (perror("minishell: "), NULL);
+			return (NULL);
 	}
 	return (path);
 }

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/25 12:37:41 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 13:39:42 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	parse_line(char **split, t_env *env)
 		unset(&env, split + 1);
 	else if (!ft_strcmp(split[0], "pwd"))
 		return_code = builtin_pwd();
-	else if (!ft_strcmp(split[0], "env"))
+	else if (!ft_strcmp(split[0], "env") && !split[1])
 		return_code = builtin_env(env, 0, split);
 	else if (!ft_strcmp(split[0], "export"))
 		return_code = builtin_export(&env, split + 1);

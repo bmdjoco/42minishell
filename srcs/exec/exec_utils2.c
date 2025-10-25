@@ -6,30 +6,28 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 12:27:33 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/25 14:38:31 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 13:21:31 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*final_path(char **argv, char **envp)
+char	*final_path(char **argv, char **envp, int *err)
 {
 	char	*correct;
 
+	*err = 1;
 	correct = NULL;
-	if (argv[0][0] != 47)
+	if (argv[0][0] != '/' && argv[0][0] != '.' && argv[0][0] != '~')
 	{
-		correct = correct_path(argv, envp);
+		correct = correct_path(argv, envp, err);
 		if (!correct)
 			return (NULL);
 	}
 	else
 	{
 		if (access(argv[0], X_OK) != 0)
-		{
-			perror(argv[0]);
-			return (NULL);
-		}
+			return (*err = 126, NULL);
 		correct = ft_strdup(argv[0]);
 	}
 	return (correct);

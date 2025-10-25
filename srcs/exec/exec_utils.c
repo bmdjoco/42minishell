@@ -6,13 +6,13 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:55:36 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/21 12:43:18 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 13:19:22 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*build_and_check(char **paths, char *cmd)
+char	*build_and_check(char **paths, char *cmd, int *err)
 {
 	char	*correct;
 	int		i;
@@ -28,7 +28,7 @@ char	*build_and_check(char **paths, char *cmd)
 		free(correct);
 		i++;
 	}
-	return (NULL);
+	return (*err = 127, NULL);
 }
 
 char	*path_len(char *s)
@@ -84,7 +84,7 @@ char	**get_path(char **envp)
 	return (paths);
 }
 
-char	*correct_path(char **argv, char **envp)
+char	*correct_path(char **argv, char **envp, int *err)
 {
 	char	**paths;
 	char	*correct;
@@ -105,7 +105,7 @@ char	*correct_path(char **argv, char **envp)
 	temp = ft_strjoin("/", argv[0]);
 	if (!temp)
 		return (free_split(paths), NULL);
-	correct = build_and_check(paths, temp);
+	correct = build_and_check(paths, temp, err);
 	if (!correct)
 		return (free_split(paths), free(temp), NULL);
 	return (free_split(paths), free(temp), correct);

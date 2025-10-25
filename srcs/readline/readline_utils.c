@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:49:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/23 19:06:04 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 14:37:53 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ int	is_it_good(char *s)
 		i++;
 	if (!s[i])
 		return (-1);
-	if (s[i] == '|')
+	if (s[i] == '|' | s[i] == '<' || s[i] == '>')
 		return (-1);
 	return (1);
 }
 
-int	check_next(char *s)
+static int	check_next(char *s)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/25 12:56:10 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 15:41:31 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_pipes
 	int	oldfd;
 	int	i;
 	int	nb;
+	int	docs;
 }				t_pipes;
 
 typedef struct s_env
@@ -45,7 +46,6 @@ typedef struct s_env
 typedef struct s_doc
 {
 	char	**og_split;
-	char	**cmd;
 	char	*delim;
 	int			i;
 	t_env	*env_dup;
@@ -95,10 +95,10 @@ int		solo(char **split, t_env *env, int *herefd, t_pipes *pipes);
 
 int		*here_prep(char **split, t_env *env, int nb, t_pipes *pipes);
 
-char	*correct_path(char **argv, char **envp);
-char	*get_delim(char **split, int index);
+char	*correct_path(char **argv, char **envp, int *err);
+char	*get_delim(char **split, int index, int index2);
 char	*path_len(char *s);
-char	*final_path(char **argv, char **envp);
+char	*final_path(char **argv, char **envp, int *err);
 char	*expand_doc(char *line, t_env *env);
 
 char	**cmd_split(char **split, int index);

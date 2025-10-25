@@ -6,11 +6,19 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:59:43 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/24 15:22:11 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 13:32:49 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static void	message(int err, char **argv)
+{
+	if (err == 126)
+		ft_fprintf(2, "minishell: %s: Permission denied\n", argv[0]);
+	else if (err == 127)
+		ft_fprintf(2, "minishell: %s: No such file or directory\n", argv[0]);
+}
 
 static int	check_folder(char **argv)
 {
@@ -40,16 +48,14 @@ int	doit(char **argv, char **envp)
 {
 	char	*path;
 	pid_t	pid;
+	int		err;
 
-	path = final_path(argv, envp);
+	path = final_path(argv, envp, &err);
 	if (!path)
-	{
-		ft_fprintf(2, "minishell: %s: command not found\n", argv[0]);
-		return (127);
-	}
+		return (message(err, argv), err);
 	pid = fork();
 	if (pid == -1)
-		return (free(path), perror("minishell: fork: "), 1);
+		return (free(path), perror("minishell: "), 1);
 	if (pid == 0)
 	{
 		exec_distributor();
@@ -59,10 +65,10 @@ int	doit(char **argv, char **envp)
 			exit (126);
 		}
 		if (execve(path, argv, envp) == -1)
-			1 && (free(path), perror("minishell: execve: "), exit (1), 0);
+			1 && (free(path), perror("minishell: "), exit (1), 0);
 	}
-	doc_ignore();
-	return (free(path), signal_distributor(), get_code(pid));
+	1 && (doc_ignore(), free(path), err = get_code(pid));
+	return (signal_distributor(), err);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 15:27:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/24 15:28:21 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 15:38:16 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,33 @@ void	close_fds(int *here_fd, int index)
 	}
 }
 
+int	create_docs(t_doc *doc, int *herefd, t_pipes *pipes, int index)
+{
+	int	err;
+	int	nb;
+	int	i;
+
+	i = 0;
+	nb = has_here(doc->og_split, index);
+	while (i < nb)
+	{
+		doc->delim = get_delim(doc->og_split, index, i);
+		doc->i = index;
+		err = do_heredoc(doc, herefd, pipes);
+		free(doc->delim);
+		if (i < nb - 1)
+			close(herefd[doc->i]);
+		if (err == 130)
+		{
+			g_received_signal = err;
+			return (close_fds(herefd, index + 1),
+				free(herefd), free(doc), 130);
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	*here_prep(char **split, t_env *env, int nb, t_pipes *pipes)
 {
 	int		*here_fd;
@@ -63,19 +90,11 @@ int	*here_prep(char **split, t_env *env, int nb, t_pipes *pipes)
 	i = 0;
 	while (i < nb)
 	{
-		if (has_here(split, i))
+		if (has_here(split, i) != 0)
 		{
-			doc->cmd = cmd_split(split, i);
-			doc->delim = get_delim(split, i);
-			doc->i = i;
-			err = do_heredoc(doc, here_fd, pipes);
-			(free_split(doc->cmd), free(doc->delim));
+			err = create_docs(doc, here_fd, pipes, i);
 			if (err == 130)
-			{
-				g_received_signal = err;
-				return (close_fds(here_fd, i + 1),
-					free(here_fd), free(doc), NULL);
-			}
+				return (NULL);
 		}
 		else
 			here_fd[i] = -1;
@@ -87,10 +106,12 @@ int	*here_prep(char **split, t_env *env, int nb, t_pipes *pipes)
 int	has_here(char **split, int index)
 {
 	int	i;
+	int	res;
 	int	cmd_i;
 
 	i = 0;
 	cmd_i = 0;
+	res = 0;
 	while (split[i])
 	{
 		if (!ft_strcmp(split[i], "|"))
@@ -100,8 +121,8 @@ int	has_here(char **split, int index)
 			continue ;
 		}
 		if (cmd_i == index && !ft_strcmp(split[i], "<<"))
-			return (1);
+			res++;
 		i++;
 	}
-	return (0);
+	return (res);
 }

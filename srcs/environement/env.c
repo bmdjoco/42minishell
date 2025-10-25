@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:11:41 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/25 12:22:32 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 13:42:44 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	init_empty_env(t_env **head)
 
 	str = getcwd(NULL, 0);
 	if (!str)
-		return (-1);
+		return (perror("minishell: "), -1);
 	temp = ft_strjoin("PWD=", str);
 	free(str);
 	if (!temp)
