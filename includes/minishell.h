@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/25 15:41:31 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 18:49:32 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int		wait_for_child(pid_t pid);
 int		check_limit(char *s);
 int		skip_cmd(char **split, int i);
 int		has_here(char **split, int index);
+int		go_to_cmd(int i, char **split);
 int		solo(char **split, t_env *env, int *herefd, t_pipes *pipes);
 
 int		*here_prep(char **split, t_env *env, int nb, t_pipes *pipes);
