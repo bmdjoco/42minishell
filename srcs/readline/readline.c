@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/24 14:00:47 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 12:37:41 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,15 @@ int	parse_line(char **split, t_env *env)
 	if (!ft_strcmp(split[0], "unset"))
 		unset(&env, split + 1);
 	else if (!ft_strcmp(split[0], "pwd"))
-		builtin_pwd();
+		return_code = builtin_pwd();
 	else if (!ft_strcmp(split[0], "env"))
-		builtin_env(env, 0);
+		return_code = builtin_env(env, 0, split);
 	else if (!ft_strcmp(split[0], "export"))
-		return (builtin_export(&env, split + 1));
+		return_code = builtin_export(&env, split + 1);
 	else if (!ft_strcmp(split[0], "exit"))
-		return (exit_builtin(split, env));
+		return_code = exit_builtin(split, env);
 	else if (!ft_strcmp(split[0], "cd"))
-		return (builtin_cd(split + 1, env));
+		return_code = builtin_cd(split + 1, env);
 	else if (!ft_strcmp(split[0], "echo"))
 		echo(split + 1);
 	else
@@ -78,12 +78,36 @@ int	parse_line(char **split, t_env *env)
 	return (return_code);
 }
 
+int	ignore(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (line)
+	{
+		if (line[0] == '!' || line[0] == ':')
+		{
+			i++;
+			while (line[i])
+			{
+				if (!is_whitespace(line[i]))
+					return (0);
+				i++;
+			}
+			return (1);
+		}
+	}
+	return (0);
+}
+
 int	process_line(char *line, t_env *env)
 {
 	char	**split;
-	int		exit_code;
+	char	*itoaa;
+	static int		exit_code = 0;
 
-	exit_code = 0;
+	1 && (itoaa = ft_itoa(exit_code), set_env_value(&env, "?", itoaa),
+		free(itoaa), 0);
 	if (*line)
 		add_history(line);
 	if (ft_strlen(line) == 0)
@@ -91,17 +115,17 @@ int	process_line(char *line, t_env *env)
 		free(line);
 		return (exit_code);
 	}
-	if (check_syntax_err(line, 0) == -1)
+	if (ignore(line))
 		return (free(line), 0);
+	if (check_syntax_err(line, 0) == -1)
+		return (free(line), 2);
 	split = mini_split(line, env);
 	if (!split)
 	{
 		free(line);
 		return (0);
 	}
-	free(line);
-	exit_code = do_pipe(split, env);
-	free_split(split);
+	1 && (free(line), exit_code = do_pipe(split, env), free_split(split), 0);
 	return (exit_code);
 }
 
@@ -130,7 +154,7 @@ int	read_lines(char **envp)
 		}
 		if (*line == '\0')
 		{
-			1 && (exit_code = 0, signal_handler(exit_code), free(line), 0);
+			1 && (exit_code = g_received_signal, signal_handler(exit_code), free(line), 0);
 			continue ;
 		}
 		exit_code = process_line(line, env);

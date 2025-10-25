@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 16:12:15 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/09/03 12:38:55 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 11:20:07 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 /**
  * @brief affiche le chemin actuellent utilise par le terminal
  */
-void	builtin_pwd(void)
+int	builtin_pwd(void)
 {
 	char	*path;
 
 	path = getcwd(NULL, 0);
 	if (!path)
-		return ;
+		return (ft_putstr_fd("minishell: pwd: error retrieving current directory\n",
+				2), 1);
 	printf("%s\n", path);
 	free(path);
+	return (0);
 }

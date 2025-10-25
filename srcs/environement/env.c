@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:11:41 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/15 14:21:25 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 12:22:32 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ char	*get_env_value(t_env *env, char *key)
 
 	if (!key)
 		return (NULL);
-	if (!ft_strcmp(key, "?"))
-		return (ft_itoa(g_received_signal));
 	tmp = env;
 	while (tmp)
 	{

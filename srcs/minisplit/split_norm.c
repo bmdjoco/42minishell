@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 13:12:05 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/12 13:18:01 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/24 15:12:19 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	write_in_double(t_env *env, char *s, char *word, int *i)
 	(*i)++;
 	while (s[*i] && s[*i] != '"')
 	{
-		if (s[*i] == '$')
+		if (s[*i] == '$' && s[*i + 1] && s[*i + 1] != '$')
 		{
 			tmp = size_of_envval(env, s + *i + 1, word + len);
 			if (tmp == -1)
@@ -68,7 +68,7 @@ static int	write_in_nothing(t_env *env, char *s, char *word, int *i)
 	while (s[*i] && s[*i] != '\'' && s[*i] != '"' && s[*i] != '>'
 		&& s[*i] != '<' && s[*i] != '|' && !is_whitespace(s[*i]))
 	{
-		if (s[*i] == '$')
+		if (s[*i] == '$' && s[*i + 1] && s[*i + 1] != '$')
 		{
 			tmp = size_of_envval(env, s + *i + 1, word + len);
 			if (tmp == -1)

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 14:02:58 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/23 17:57:54 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 12:11:39 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	sigquit_handler(int sig)
 {
 	g_received_signal = 0;
 	signal_handler(sig + 128);
-	ft_putstr_fd("Quit (core dumped)\n", 2);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 }

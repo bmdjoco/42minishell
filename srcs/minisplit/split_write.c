@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 15:00:46 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/07 13:00:21 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/24 15:13:01 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	skip_unquoted_content(char *s, int i)
 	while (s[i] && s[i] != '\'' && s[i] != '"' && s[i] != '>'
 		&& s[i] != '<' && s[i] != '|' && !is_whitespace(s[i]))
 	{
-		if (s[i] == '$')
+		if (s[i] == '$' && s[i + 1] && s[i + 1] != '$')
 			i = skip_env_var(s, i);
 		else
 			i++;

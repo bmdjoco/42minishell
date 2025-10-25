@@ -6,11 +6,29 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:59:43 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/24 13:12:50 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/24 15:22:11 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static int	check_folder(char **argv)
+{
+	int	i;
+
+	i = 0;
+	if (!argv[0])
+		return (0);
+	if (argv[0] && argv[1])
+		return (0);
+	while (argv[0][i])
+	{
+		if (argv[0][i] != '/' && argv[0][i] != '.')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 /**
 *@brief recupere le path et execute la commande via execve
@@ -35,12 +53,13 @@ int	doit(char **argv, char **envp)
 	if (pid == 0)
 	{
 		exec_distributor();
-		if (execve(path, argv, envp) == -1)
+		if (check_folder(argv))
 		{
-			free(path);
-			perror("minishell: execve: ");
-			exit (1);
+			1 && (free(path), ft_fprintf(2, "minishell: %s: is a directory\n", argv[0]));
+			exit (126);
 		}
+		if (execve(path, argv, envp) == -1)
+			1 && (free(path), perror("minishell: execve: "), exit (1), 0);
 	}
 	doc_ignore();
 	return (free(path), signal_distributor(), get_code(pid));

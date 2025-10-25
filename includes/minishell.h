@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/23 19:30:38 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/25 12:56:10 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,6 @@ char	**get_path(char **envp);
 char	**create_envp(t_env *env);
 char	**split_again(char **split);
 
-void	process_child_status(int status, int *first_error,
-			int *exit_code, int is_last);
 void	close_fds(int *here_fd, int index);
 
 /* Readline */
@@ -116,18 +114,16 @@ void	close_fds(int *here_fd, int index);
 int		read_lines(char **envp);
 int		check_syntax_err(char *line, int i);
 int		parse_line(char **split, t_env *env);
-int		distributor(char **split, t_env *env);
 int		do_pipe(char **split, t_env *env);
 int		nb_of_pipe(char **split);
 
 /* cd */
 
 int		builtin_cd(char **argv, t_env *env);
-char	*join_path(char **argv);
 
 /* pwd */
 
-void	builtin_pwd(void);
+int	builtin_pwd(void);
 
 /* minisplit */
 
@@ -175,7 +171,7 @@ char	**get_args(char *s);
 
 /* env */
 
-void	builtin_env(t_env *env, int export);
+int	builtin_env(t_env *env, int export, char **split);
 
 /* exit */
 
