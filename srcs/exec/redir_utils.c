@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/25 18:50:38 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 13:10:12 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ int	nb_of_redir(char **split)
 
 	res = 0;
 	i = 0;
-	while (split[i] && split[i][0] != '|')
+	while (split[i] && ft_strcmp(split[i], "|") != 0)
 	{
-		if (split[i][0] == '>' || split[i][0] == '<')
+		if (!ft_strcmp(split[i], ">>") || !ft_strcmp(split[i], ">")
+			|| !ft_strcmp(split[i], "<<") || !ft_strcmp(split[i], "<"))
 			res++;
 		i++;
 	}
@@ -114,17 +115,13 @@ int	do_redirections(char **split, int index, t_env *env, t_pipes *pipes)
 		return (perror("minishell: "), 1);
 	if (pid == 0)
 	{
-		int i = -1;
-		while (split[++i])
-			ft_fprintf(2, "split[%d] %s\n", i, split[i]);
-
 		if (process_all_redirections(nb, split + index) == -1)
 		{
 			free_env(env);
 			free_split(split);
 			exit (1);
 		}
-		exit_code = execute_with_redirections(split + index + go_to_cmd(i, split), env);
+		exit_code = execute_with_redirections(split + index + go_to_cmd(index, split), env);
 		free_split(split);
 		free_env(env);
 		exit (exit_code);
