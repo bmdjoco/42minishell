@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 12:06:48 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/24 15:04:19 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 16:00:12 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,19 @@ char	**mini_split(char *s, t_env *env)
 
 void	match_word(char *s, int *i)
 {
-	while (s[(*i)] && !word_cond(s[(*i)]))
+	while (s[(*i)] && !word_cond(s[(*i)]) && backs_cond(s, *i))
 	{
 		if (s[(*i)] && s[(*i)] == '\'')
 		{
 			(*i)++;
-			while (s[(*i)] && s[(*i)] != '\'')
+			while (s[(*i)] && s[(*i)] != '\'' && backs_cond(s, *i))
 				(*i)++;
 			(*i)++;
 		}
 		else if (s[(*i)] && s[(*i)] == '"')
 		{
 			(*i)++;
-			while (s[(*i)] && s[(*i)] != '"')
+			while (s[(*i)] && s[(*i)] != '"' && backs_cond(s, *i))
 				(*i)++;
 			(*i)++;
 		}
@@ -75,7 +75,8 @@ int	count_words(char *s)
 		i += skip_spaces(s + i);
 		if (!s[i])
 			break ;
-		if ((s[i]) && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
+		if ((s[i]) && ((s[i] == '>' || s[i] == '<' || s[i] == '|'))
+			&& backs_cond(s, i))
 		{
 			word++;
 			while ((s[i]) && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
@@ -116,13 +117,14 @@ int	skip_word(char *s)
 	int	i;
 
 	i = 0;
-	if (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
+	if (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|')
+		&& backs_cond(s, i))
 		return (skip_operators(s, i));
-	while (s[i] && !word_cond(s[i]))
+	while (s[i] && (!word_cond(s[i]) || word_cond(s[i]) && !backs_cond(s, i)))
 	{
-		if (s[i] == '\'')
+		if (s[i] == '\'' && backs_cond(s, i))
 			i = skip_single_quotes(s, i);
-		else if (s[i] == '"')
+		else if (s[i] == '"' && backs_cond(s, i))
 			i = skip_double_quotes(s, i);
 		else
 			i = skip_unquoted_content(s, i);

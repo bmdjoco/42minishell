@@ -1,0 +1,10 @@
+[1] OK : echo hello world | cat -e
+[2] OK : pwd
+[3] OK : ls | grep test
+[4] KO : export VAR=42 | echo $VAR
+---- Expected ----
+42
+---- Got ----
+
+
+[5] OK : unset VAR | echo $VAR

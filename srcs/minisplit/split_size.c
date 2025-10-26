@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_size.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:38:40 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/24 15:12:41 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 14:25:42 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ static int	size_nothing(t_env *env, char *s, int *i)
 
 	len = 0;
 	while (s[*i] && s[*i] != '\'' && s[*i] != '"' && s[*i] != '>'
-		&& s[*i] != '<' && s[*i] != '|' && !is_whitespace(s[*i]))
+		&& s[*i] != '<' && s[*i] != '|' && !is_whitespace(s[*i])
+		&& backs_cond(s, *i))
 	{
-		if (s[*i] == '$' && s[*i + 1] && s[*i + 1] != '$')
+		if (s[*i] == '$' && s[*i + 1] && s[*i + 1] != '$' && backs_cond(s, *i))
 		{
 			tmp = size_of_envval(env, s + *i + 1, NULL);
 			if (tmp == -1)
@@ -45,9 +46,9 @@ static int	size_in_double(t_env *env, char *s, int *i)
 
 	len = 0;
 	(*i)++;
-	while (s[*i] && s[*i] != '"')
+	while (s[*i] && s[*i] != '"' && backs_cond(s, *i))
 	{
-		if (s[*i] == '$' && s[*i + 1] && s[*i + 1] != '$')
+		if (s[*i] == '$' && s[*i + 1] && s[*i + 1] != '$' && backs_cond(s, *i))
 		{
 			tmp = size_of_envval(env, s + *i + 1, NULL);
 			if (tmp == -1)
@@ -107,9 +108,9 @@ int	get_real_word_size(t_env *env, char *s, int i)
 	int	len;
 
 	len = 0;
-	if (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
+	if (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|') && backs_cond(s, i))
 		return (handle_operator_size(s, i));
-	while (s[i] && !word_cond(s[i]))
+	while (s[i] && !word_cond(s[i]) && backs_cond(s, i))
 	{
 		if (process_quote_content(env, s, &i, &len) == -1)
 			return (len);

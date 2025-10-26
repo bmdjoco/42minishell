@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 14:26:14 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/16 15:49:54 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 13:22:06 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,13 @@ void	free_split(char **split)
 		i++;
 	}
 	free(split);
+}
+
+void	print_split(char **split)
+{
+	int	i;
+
+	i = -1;
+	while (split[++i])
+		ft_fprintf(2, "split[%d] %s\n", i, split[i]);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 13:30:00 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/26 13:03:40 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 13:24:51 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	execute_with_redirections(char **split, t_env *env)
 	nw_split = split_again(split);
 	if (!nw_split)
 		return (1);
+	ft_fprintf(2, "************ nw_split ************\n");
+	print_split(nw_split);
 	cmd_result = parse_line(nw_split, env);
 	free_split(nw_split);
 	return (cmd_result);

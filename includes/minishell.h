@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/25 18:49:32 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 14:13:32 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ int		skip_envkey(char *s);
 int		skip_spaces(char *s);
 int		count_words(char *s);
 int		word_cond(char c);
+int		backs_cond(char *s, int i);
 int		size_of_envval(t_env *env, char *s, char *dest);
 int		skip_word(char *s);
 int		skip_single_quotes(char *s, int i);
@@ -160,6 +161,7 @@ void	print_strs(char *s);
 void	free_split(char **split);
 int		is_whitespace(char c);
 int		ft_strcmp(char *s1, char *s2);
+void	print_split(char **split);
 
 /* unset */
 

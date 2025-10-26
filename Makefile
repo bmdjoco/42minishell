@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
+#    By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/10/25 12:56:24 by miltavar         ###   ########.fr        #
+#    Updated: 2025/10/26 14:29:55 by bdjoco           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS = srcs/main.c \
 		srcs/minisplit/split_size.c \
 		srcs/minisplit/split_write.c \
 		srcs/minisplit/split_utils.c \
+		srcs/minisplit/split_utils_bis.c \
 		srcs/exec/exec.c \
 		srcs/exec/expand_doc.c \
 		srcs/exec/redir_pipe.c \
