@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 13:30:00 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/26 13:03:40 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 14:03:57 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	process_all_redirections(int nb, char **split)
 
 int	go_to_cmd(int i, char **split)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (split[i + j][0] == '>' || split[i + j][0] == '<')

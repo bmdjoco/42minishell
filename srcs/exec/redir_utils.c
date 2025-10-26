@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/26 13:10:12 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 15:04:58 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,9 @@ int	do_redirections(char **split, int index, t_env *env, t_pipes *pipes)
 			free_split(split);
 			exit (1);
 		}
-		exit_code = execute_with_redirections(split + index + go_to_cmd(index, split), env);
-		free_split(split);
-		free_env(env);
+		exit_code = execute_with_redirections(split + index + go_to_cmd(index,
+					split), env);
+		1 && (free_split(split), free_env(env), 0);
 		exit (exit_code);
 	}
 	return (get_code(pid));

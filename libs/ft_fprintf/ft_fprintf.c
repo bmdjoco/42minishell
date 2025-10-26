@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:49:20 by milo              #+#    #+#             */
-/*   Updated: 2025/08/26 16:26:06 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 15:07:04 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	check_char(char c)
 	return (0);
 }
 
-static int	distrib_fd(char type, va_list params, int fd)
+int	distrib_fd(char type, va_list params, int fd)
 {
 	int	i;
 
@@ -48,24 +48,24 @@ static int	distrib_fd(char type, va_list params, int fd)
 int	print_str_fd(int fd, const char *format, va_list params)
 {
 	int	i;
+	int	start;
 	int	res;
 
 	i = 0;
-	res = i;
+	start = 0;
+	res = 0;
 	while (format[i])
 	{
 		if (format[i] == '%' && format[i + 1] && check_char(format[i + 1]))
 		{
-			res = res + distrib_fd(format[i + 1], params, fd);
-			i = i + 2;
+			res += write_chunk(fd, format, start, i);
+			res += process_format(fd, format, params, &i);
+			start = i;
 		}
 		else
-		{
-			ft_putchar_fd(format[i], fd);
-			res++;
 			i++;
-		}
 	}
+	res += write_chunk(fd, format, start, i);
 	return (res);
 }
 

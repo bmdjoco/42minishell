@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
+/*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 11:56:33 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/08/22 16:43:32 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/10/26 15:07:13 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,24 @@ void	ft_putnbr_fd(int nb, int fd)
 	}
 	else
 		ft_putchar_fd(nbr + '0', fd);
+}
+
+int	write_chunk(int fd, const char *format, int start, int end)
+{
+	int	len;
+
+	len = end - start;
+	if (len > 0)
+		write(fd, &format[start], len);
+	return (len);
+}
+
+int	process_format(int fd, const char *format, va_list params,
+				int *i)
+{
+	int	res;
+
+	res = distrib_fd(format[*i + 1], params, fd);
+	*i += 2;
+	return (res);
 }

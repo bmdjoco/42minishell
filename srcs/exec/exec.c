@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:59:43 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/25 18:25:15 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 13:58:51 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int	doit(char **argv, char **envp)
 		exec_distributor();
 		if (check_folder(argv))
 		{
-			1 && (free(path), ft_fprintf(2, "minishell: %s: is a directory\n", argv[0]));
+			1 && (free(path), ft_fprintf(2,
+					"minishell: %s: is a directory\n", argv[0]));
 			exit (126);
 		}
 		if (execve(path, argv, envp) == -1)

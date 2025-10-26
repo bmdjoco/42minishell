@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/25 18:49:32 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 14:37:46 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ int		skip_cmd(char **split, int i);
 int		has_here(char **split, int index);
 int		go_to_cmd(int i, char **split);
 int		solo(char **split, t_env *env, int *herefd, t_pipes *pipes);
+int		dollar(char *line);
+int		pipe_fork(int *pipefd, pid_t *pid);
 
 int		*here_prep(char **split, t_env *env, int nb, t_pipes *pipes);
 
@@ -108,7 +110,7 @@ char	**get_path(char **envp);
 char	**create_envp(t_env *env);
 char	**split_again(char **split);
 
-void	close_fds(int *here_fd, int index);
+void	cl_fd(int *here_fd, int index);
 
 /* Readline */
 
@@ -117,6 +119,8 @@ int		check_syntax_err(char *line, int i);
 int		parse_line(char **split, t_env *env);
 int		do_pipe(char **split, t_env *env);
 int		nb_of_pipe(char **split);
+int		check_limit(char *s);
+int		child_code(int pids[1024], int nb, int i);
 
 /* cd */
 

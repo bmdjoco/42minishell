@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:24:59 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/23 13:53:45 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 13:23:16 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	if (argc != 1)
-		return (printf("minishell: requires only one argument\n"), 1);
+		return (ft_fprintf(2, "minishell: requires no argument\n"));
 	return_value = read_lines(envp);
 	return (return_value);
 }

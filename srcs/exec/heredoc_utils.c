@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 15:27:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/25 15:38:16 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 14:52:06 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	get_code(pid_t pid)
 	return (exit_code);
 }
 
-void	close_fds(int *here_fd, int index)
+void	cl_fd(int *here_fd, int index)
 {
 	int	i;
 
@@ -64,7 +64,7 @@ int	create_docs(t_doc *doc, int *herefd, t_pipes *pipes, int index)
 		if (err == 130)
 		{
 			g_received_signal = err;
-			return (close_fds(herefd, index + 1),
+			return (cl_fd(herefd, index + 1),
 				free(herefd), free(doc), 130);
 		}
 		i++;
@@ -76,15 +76,13 @@ int	*here_prep(char **split, t_env *env, int nb, t_pipes *pipes)
 {
 	int		*here_fd;
 	int		i;
-	int		err;
 	t_doc	*doc;
 
 	doc = malloc(sizeof(t_doc));
 	if (!doc)
 		return (NULL);
-	doc->env_dup = env;
-	doc->og_split = split;
-	here_fd = malloc(sizeof(int) * nb);
+	1 && (doc->env_dup = env, doc->og_split = split,
+		here_fd = malloc(sizeof(int) * nb));
 	if (!here_fd)
 		return (free(doc), NULL);
 	i = 0;
@@ -92,8 +90,7 @@ int	*here_prep(char **split, t_env *env, int nb, t_pipes *pipes)
 	{
 		if (has_here(split, i) != 0)
 		{
-			err = create_docs(doc, here_fd, pipes, i);
-			if (err == 130)
+			if (create_docs(doc, here_fd, pipes, i) == 130)
 				return (NULL);
 		}
 		else

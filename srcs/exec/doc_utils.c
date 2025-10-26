@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 19:13:46 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/23 19:30:29 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 13:59:09 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,18 @@ void	doc_ignore(void)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+int	dollar(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '$')
+			return (1);
+		i++;
+	}
+	return (0);
 }

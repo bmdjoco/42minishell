@@ -6,25 +6,11 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 13:19:56 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/23 14:45:39 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 13:59:04 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	dollar(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == '$')
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 int	env_len(char *line, t_env *env, char *dest)
 {
