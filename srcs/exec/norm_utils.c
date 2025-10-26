@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:10:56 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/26 14:37:30 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 15:35:23 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,16 @@ int	pipe_fork(int *pipefd, pid_t *pid)
 	if (*pid == -1)
 		return (close(pipefd[0]), close(pipefd[1]), -1);
 	return (0);
+}
+
+void	init_pids(int pids[1024])
+{
+	int	i;
+
+	i = 0;
+	while (i < 1024)
+	{
+		pids[i] = 0;
+		i++;
+	}
 }

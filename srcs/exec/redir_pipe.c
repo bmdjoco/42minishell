@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 13:40:10 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/26 14:47:33 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 15:34:44 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,13 +115,14 @@ int	do_pipe(char **split, t_env *env)
 	t_pipes	*pipes;
 	int		exit_code;
 
+	init_pids(pids);
 	pipes = malloc(sizeof(t_pipes));
 	if (!pipes)
 		return (perror("minishell: "), 1);
 	1 && (pipes->i = 0, pipes->docs = nb_of_docs(split),
 		pipes->nb = nb_of_pipe(split),
 		here_fd = here_prep(split, env, pipes->docs, pipes));
-	if (!here_fd)
+	if (!here_fd && pipes->docs > 0)
 		return (free(pipes), g_received_signal);
 	if (pipes->nb == 0)
 		return (solo(split, env, here_fd, pipes));

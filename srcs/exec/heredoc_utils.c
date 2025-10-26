@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 15:27:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/26 14:52:06 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 15:27:59 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	cl_fd(int *here_fd, int index)
 {
 	int	i;
 
+	if (!here_fd)
+		return ;
 	i = 0;
 	while (i < index)
 	{
@@ -78,14 +80,15 @@ int	*here_prep(char **split, t_env *env, int nb, t_pipes *pipes)
 	int		i;
 	t_doc	*doc;
 
+	if (nb == 0)
+		return (NULL);
 	doc = malloc(sizeof(t_doc));
 	if (!doc)
 		return (NULL);
 	1 && (doc->env_dup = env, doc->og_split = split,
-		here_fd = malloc(sizeof(int) * nb));
+		here_fd = malloc(sizeof(int) * nb), i = 0);
 	if (!here_fd)
 		return (free(doc), NULL);
-	i = 0;
 	while (i < nb)
 	{
 		if (has_here(split, i) != 0)
