@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:38:40 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/24 15:12:41 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 11:13:03 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,12 @@ static int	process_quote_content(t_env *env, char *s, int *i, int *len)
 {
 	int	tmp;
 
-	if (s[*i] == '\'')
+	if (s[*i] == '\\' && s[*i + 1])
+	{
+		(*i) += 2;
+		(*len)++;
+	}
+	else if (s[*i] == '\'')
 		*len += size_in_single(s, i);
 	else if (s[*i] == '"')
 	{
