@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/26 16:01:41 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 19:29:53 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,12 @@ int		has_here(char **split, int index);
 int		go_to_cmd(int i, char **split);
 int		solo(char **split, t_env *env, int *herefd, t_pipes *pipes);
 int		dollar(char *line);
+int		nb_of_docs(char **split);
 int		pipe_fork(int *pipefd, pid_t *pid);
-int		pipe_norm(int pids[1024], t_pipes *pipes, char **split, t_env *env);
+int		pipe_norm(int pids[1024], t_pipes **pipes, char **split);
 void	init_pids(int pids[1024]);
 
-int		*here_prep(char **split, t_env *env, int nb, t_pipes *pipes);
+int		*here_prep(char **split, t_env *env, t_pipes *pipes);
 
 char	*correct_path(char **argv, char **envp, int *err);
 char	*get_delim(char **split, int index, int index2);

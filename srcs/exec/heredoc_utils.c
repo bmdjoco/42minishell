@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 15:27:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/26 15:27:59 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 19:30:28 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,22 +74,22 @@ int	create_docs(t_doc *doc, int *herefd, t_pipes *pipes, int index)
 	return (0);
 }
 
-int	*here_prep(char **split, t_env *env, int nb, t_pipes *pipes)
+int	*here_prep(char **split, t_env *env, t_pipes *pipes)
 {
 	int		*here_fd;
 	int		i;
 	t_doc	*doc;
 
-	if (nb == 0)
+	if (pipes->docs == 0)
 		return (NULL);
 	doc = malloc(sizeof(t_doc));
 	if (!doc)
 		return (NULL);
 	1 && (doc->env_dup = env, doc->og_split = split,
-		here_fd = malloc(sizeof(int) * nb), i = 0);
+		here_fd = malloc(sizeof(int) * 1024), i = 0);
 	if (!here_fd)
 		return (free(doc), NULL);
-	while (i < nb)
+	while (i < 1024)
 	{
 		if (has_here(split, i) != 0)
 		{
