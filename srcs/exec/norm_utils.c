@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:10:56 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/26 15:35:23 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 16:01:25 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,16 @@ void	init_pids(int pids[1024])
 		pids[i] = 0;
 		i++;
 	}
+}
+
+int	pipe_norm(int pids[1024], t_pipes *pipes, char **split, t_env *env)
+{
+	init_pids(pids);
+	pipes = malloc(sizeof(t_pipes));
+	if (!pipes)
+		return (perror("minishell: "), 1);
+	pipes->i = 0;
+	pipes->docs = nb_of_docs(split);
+	pipes->nb = nb_of_pipe(split);
+	return (0);
 }

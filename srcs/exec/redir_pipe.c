@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 13:40:10 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/26 15:34:44 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/26 16:03:01 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,15 +113,10 @@ int	do_pipe(char **split, t_env *env)
 	int		pids[1024];
 	int		*here_fd;
 	t_pipes	*pipes;
-	int		exit_code;
+	int		ext;
 
-	init_pids(pids);
-	pipes = malloc(sizeof(t_pipes));
-	if (!pipes)
-		return (perror("minishell: "), 1);
-	1 && (pipes->i = 0, pipes->docs = nb_of_docs(split),
-		pipes->nb = nb_of_pipe(split),
-		here_fd = here_prep(split, env, pipes->docs, pipes));
+	pipe_norm(pids, pipes, split, env);
+	here_fd = here_prep(split, env, pipes->docs, pipes);
 	if (!here_fd && pipes->docs > 0)
 		return (free(pipes), g_received_signal);
 	if (pipes->nb == 0)
@@ -138,6 +133,6 @@ int	do_pipe(char **split, t_env *env)
 	pids[pipes->i] = last(split, env, pipes, here_fd);
 	if (pids[pipes->i] == -1)
 		return (free(here_fd), free(pipes), 1);
-	exit_code = child_code(pids, pipes->nb, pipes->i);
-	return (free(here_fd), free(pipes), exit_code);
+	ext = child_code(pids, pipes->nb, pipes->i);
+	return (free(here_fd), free(pipes), ext);
 }
