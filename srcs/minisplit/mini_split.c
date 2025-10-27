@@ -6,7 +6,7 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 12:06:48 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/26 16:00:12 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/10/27 16:43:51 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,17 @@ char	**mini_split(char *s, t_env *env)
 
 void	match_word(char *s, int *i)
 {
-	while (s[(*i)] && !word_cond(s[(*i)]) && backs_cond(s, *i))
+	while (s[(*i)]
+		&& (!word_cond(s[*i]) || (word_cond(s[*i]) && !backs_cond(s, *i))))
 	{
-		if (s[(*i)] && s[(*i)] == '\'')
+		if (s[(*i)] && s[(*i)] == '\'' && backs_cond(s, *i))
 		{
 			(*i)++;
 			while (s[(*i)] && s[(*i)] != '\'' && backs_cond(s, *i))
 				(*i)++;
 			(*i)++;
 		}
-		else if (s[(*i)] && s[(*i)] == '"')
+		else if (s[(*i)] && s[(*i)] == '"' && backs_cond(s, *i))
 		{
 			(*i)++;
 			while (s[(*i)] && s[(*i)] != '"' && backs_cond(s, *i))
@@ -120,7 +121,7 @@ int	skip_word(char *s)
 	if (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|')
 		&& backs_cond(s, i))
 		return (skip_operators(s, i));
-	while (s[i] && (!word_cond(s[i]) || word_cond(s[i]) && !backs_cond(s, i)))
+	while (s[i] && (!word_cond(s[i]) || (word_cond(s[i]) && !backs_cond(s, i))))
 	{
 		if (s[i] == '\'' && backs_cond(s, i))
 			i = skip_single_quotes(s, i);

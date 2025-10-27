@@ -6,7 +6,7 @@
 /*   By: bdjoco <bdjoco@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:35:56 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/26 14:29:30 by bdjoco           ###   ########.fr       */
+/*   Updated: 2025/10/27 16:14:32 by bdjoco           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	size_in_single(char *s, int *i)
 
 	(*i)++;
 	j = *i;
-	while (s[*i] && s[*i] != '\'' && backs_cond(s, *i))
+	while (s[*i] && ((s[*i] != '\'' || (s[*i] == '\'' && !backs_cond(s, *i)))))
 		(*i)++;
 	if (s[*i] == '\'')
 		(*i)++;
@@ -50,10 +50,10 @@ int	word_cond(char c)
 
 int	skip_spaces(char *s)
 {
-	int	v;
+	int	i;
 
-	v = 0;
-	while (s[v] && is_whitespace(s[v]) && backs_cond(s, v))
-		v++;
-	return (v);
+	i = 0;
+	while (s[i] && (is_whitespace(s[i]) || (s[i] == '\\' && backs_cond(s, i))))
+		i++;
+	return (i);
 }
