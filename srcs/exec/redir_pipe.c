@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 13:40:10 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/26 19:29:46 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/27 12:28:36 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	first(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 		close(pipefd[0]);
 		if (here_fd && here_fd[0] != -1)
 			1 && (dup2(here_fd[0], STDIN_FILENO),
-				cl_fd(here_fd, pipes->docs), 0);
+				cl_fd(here_fd, 1024), 0);
 		1 && (dup2(pipefd[1], STDOUT_FILENO),
-			close(pipefd[1]), cl_fd(here_fd, pipes->docs),
+			close(pipefd[1]), cl_fd(here_fd, 1024),
 			free(here_fd), ext = do_redirections(split, 0, env, pipes),
 			free_split(split), free_env(env), exit (ext), 0);
 	}
@@ -54,12 +54,12 @@ int	mid(char **split, t_env *env, t_pipes *pip, int *fds)
 	if (pid == 0)
 	{
 		if (fds && fds[pip->i] != -1)
-			1 && (dup2(fds[pip->i], STDIN_FILENO), cl_fd(fds, pip->docs), 0);
+			1 && (dup2(fds[pip->i], STDIN_FILENO), cl_fd(fds, 1024), 0);
 		else
 			dup2(prevfd, STDIN_FILENO);
 		1 && (close(pipefd[0]), dup2(pipefd[1], STDOUT_FILENO),
 			close(pipefd[1]), close(prevfd),
-			cl_fd(fds, pip->docs), free(fds),
+			cl_fd(fds, 1024), free(fds),
 			ext = do_redirections(split, skip_cmd(split, pip->i),
 				env, pip), free_split(split), free_env(env), exit (ext), 0);
 	}
@@ -79,18 +79,18 @@ int	last(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 		return (perror("minishell: "), close(pipes->oldfd), -1);
 	if (pid == 0)
 	{
-		if (has_here(split, pipes->i))
+		if (here_fd && here_fd[pipes->i] != -1)
 			1 && (dup2(here_fd[pipes->i], STDIN_FILENO),
-				cl_fd(here_fd, pipes->docs), 0);
+				cl_fd(here_fd, 1024), 0);
 		else
 			dup2(pipes->oldfd, STDIN_FILENO);
-		1 && (close(pipes->oldfd), cl_fd(here_fd, pipes->docs),
+		1 && (close(pipes->oldfd), cl_fd(here_fd, 1024),
 			free(here_fd), ext = do_redirections(split,
 				skip_cmd(split, pipes->i), env, pipes),
 			free_split(split), free_env(env), exit (ext), 0);
 	}
 	close(pipes->oldfd);
-	if (has_here(split, pipes->i))
+	if (here_fd && here_fd[pipes->i] != -1)
 		close(here_fd[pipes->i]);
 	return (pid);
 }
@@ -118,7 +118,7 @@ int	do_pipe(char **split, t_env *env)
 	pipe_norm(pids, &pipes, split);
 	here_fd = here_prep(split, env, pipes);
 	if (!here_fd && pipes->docs > 0)
-		return (free(pipes), g_received_signal);
+		return (ext = pipes->err, free(pipes), ext);
 	if (pipes->nb == 0)
 		return (solo(split, env, here_fd, pipes));
 	pids[pipes->i] = first(split, env, pipes, here_fd);

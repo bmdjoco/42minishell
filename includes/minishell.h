@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/26 19:29:53 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/27 12:26:53 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_pipes
 	int	i;
 	int	nb;
 	int	docs;
+	int	err;
 }				t_pipes;
 
 typedef struct s_env

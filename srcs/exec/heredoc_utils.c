@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 15:27:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/26 19:30:28 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/27 12:27:28 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,10 @@ int	create_docs(t_doc *doc, int *herefd, t_pipes *pipes, int index)
 		free(doc->delim);
 		if (i < nb - 1)
 			close(herefd[doc->i]);
-		if (err == 130)
+		if (err != 0)
 		{
-			g_received_signal = err;
 			return (cl_fd(herefd, index + 1),
-				free(herefd), free(doc), 130);
+				free(herefd), free(doc), pipes->err = err, err);
 		}
 		i++;
 	}
@@ -93,7 +92,7 @@ int	*here_prep(char **split, t_env *env, t_pipes *pipes)
 	{
 		if (has_here(split, i) != 0)
 		{
-			if (create_docs(doc, here_fd, pipes, i) == 130)
+			if (create_docs(doc, here_fd, pipes, i) != 0)
 				return (NULL);
 		}
 		else
