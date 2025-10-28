@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 14:51:45 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/25 13:49:29 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:12:46 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ int	err_check(char **split)
 	return (0);
 }
 
-void	exit_status(int status, char **split, t_env *env)
+void	exit_status(int status, char **og_split, t_env *env, char **split)
 {
 	free_split(split);
+	free_split(og_split);
 	free_env(env);
 	rl_clear_history();
 	exit (status);
@@ -45,7 +46,7 @@ void	exit_status(int status, char **split, t_env *env)
  * @param split tableau de chaines avec les arguments de readline
  * @return 1 si exit est appele sans option sinon return le code specifie
  */
-int	exit_builtin(char **split, t_env *env)
+int	exit_builtin(char **split, t_env *env, char **og_split)
 {
 	int	err;
 
@@ -53,7 +54,7 @@ int	exit_builtin(char **split, t_env *env)
 	if (!split || !split[1])
 	{
 		write(STDOUT_FILENO, "exit\n", 5);
-		exit_status(1, split, env);
+		exit_status(1, og_split, env, split);
 	}
 	else
 	{
@@ -61,7 +62,7 @@ int	exit_builtin(char **split, t_env *env)
 		if (err == 2)
 		{
 			write(STDOUT_FILENO, "exit\n", 5);
-			exit_status(2, split, env);
+			exit_status(2, og_split, env, split);
 		}
 		else if (err == 1)
 			return (1);
@@ -70,6 +71,6 @@ int	exit_builtin(char **split, t_env *env)
 			err = ft_atoi(split[1]) % 256;
 	}
 	write(STDOUT_FILENO, "exit\n", 5);
-	exit_status(err, split, env);
+	exit_status(err, og_split, env, split);
 	return (0);
 }

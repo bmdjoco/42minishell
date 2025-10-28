@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/27 12:26:53 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/28 17:31:26 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_doc
 {
 	char	**og_split;
 	char	*delim;
-	int			i;
+	int		i;
 	t_env	*env_dup;
 }				t_doc;
 
@@ -120,11 +120,13 @@ void	cl_fd(int *here_fd, int index);
 
 int		read_lines(char **envp);
 int		check_syntax_err(char *line, int i);
-int		parse_line(char **split, t_env *env);
+int		parse_line(char **split, t_env *env, char **og_split);
 int		do_pipe(char **split, t_env *env);
 int		nb_of_pipe(char **split);
 int		check_limit(char *s);
 int		child_code(int pids[1024], int nb, int i);
+
+void	apply_code(int err, t_env *env);
 
 /* cd */
 
@@ -132,7 +134,7 @@ int		builtin_cd(char **argv, t_env *env);
 
 /* pwd */
 
-int	builtin_pwd(void);
+int		builtin_pwd(void);
 
 /* minisplit */
 
@@ -180,11 +182,11 @@ char	**get_args(char *s);
 
 /* env */
 
-int	builtin_env(t_env *env, int export, char **split);
+int		builtin_env(t_env *env, int export, char **split);
 
 /* exit */
 
-int	exit_builtin(char **split, t_env *env);
+int		exit_builtin(char **split, t_env *env, char **og_split);
 
 /* signal */
 

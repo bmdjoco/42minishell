@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 16:19:37 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/25 13:46:41 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/27 18:22:30 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static char	*join_path(char **argv, t_env *env)
 	char	*concat;
 	char	*temp;
 
-	if (!strncmp("~", argv[0], 1))
+	if (!strncmp("~", argv[1], 1))
 	{
 		result = get_env_value(env, "HOME");
 		if (!result)
 			return (ft_fprintf(2, "minishell: cd: HOME not set\n"), NULL);
-		concat = ft_substr(argv[0], 1, ft_strlen(argv[0]) - 1);
+		concat = ft_substr(argv[1], 1, ft_strlen(argv[1]) - 1);
 		if (!concat)
 			return (free(result), NULL);
 		temp = ft_strjoin(result, concat);
@@ -33,7 +33,7 @@ static char	*join_path(char **argv, t_env *env)
 		free(concat);
 	}
 	else
-		return (ft_strdup(argv[0]));
+		return (ft_strdup(argv[1]));
 	return (temp);
 }
 
@@ -41,7 +41,7 @@ static char	*get_target_path(char **argv, t_env *env)
 {
 	char	*path;
 
-	if (!argv[0])
+	if (!argv[1])
 	{
 		path = get_env_value(env, "HOME");
 		if (!path)
@@ -88,11 +88,18 @@ int	builtin_cd(char **argv, t_env *env)
 	char	*old_pwd;
 	int		result;
 
-	if (argv && argv[1])
+	if (argv && argv[1] && argv[2])
 		return (ft_putstr_fd("minishell: cd: too many arguments\n", 2), 1);
-	path = get_target_path(argv, env);
+	if (!ft_strcmp("-", argv[1]))
+		path = get_env_value(env, "OLDPWD");
+	else
+		path = get_target_path(argv, env);
 	if (!path)
+	{
+		if (!ft_strcmp("-", argv[1]))
+			ft_fprintf(2, "minishell: cd: OLDPWD not set\n");
 		return (1);
+	}
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
 		return (free(path), perror("minishell: "), 1);

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 14:02:58 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/25 12:11:39 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:37:25 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	sigint_handler(int sig)
 {
 	g_received_signal = 0;
 	signal_handler(sig + 128);
-	ft_putstr_fd("\n", STDOUT_FILENO);
-	rl_replace_line("", 0);
+	ft_putstr_fd("\n", STDERR_FILENO);
 	rl_on_new_line();
+	rl_replace_line("", 0);
 }
 
 void	signal_distributor(void)

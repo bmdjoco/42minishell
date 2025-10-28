@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:59:43 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/26 13:58:51 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/28 11:49:11 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	message(int err, char **argv)
 {
+	if (err == 1)
+		ft_fprintf(2, "TERM environment variable not set.\n");
 	if (err == 126)
 		ft_fprintf(2, "minishell: %s: Permission denied\n", argv[0]);
 	else if (err == 127)

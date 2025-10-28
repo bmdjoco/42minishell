@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 10:38:18 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/25 18:05:42 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:29:30 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	check_export(char *s, char **dest)
 	int	i;
 
 	i = 0;
-	while (s[i] && ft_isalpha(s[i]))
+	while (s[i] && ((i == 0 && (ft_isalpha(s[i]) || s[i] == '_'))
+		|| ((ft_isalnum(s[i]) || s[i] == '_') && i != 0)))
 		i++;
 	if (i == 0)
 		return (ft_fprintf(2,

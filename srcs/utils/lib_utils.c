@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 14:26:14 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/16 15:49:54 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/28 11:29:59 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	free_split(char **split)
 	{
 		if (split[i])
 			free(split[i]);
+		split[i] = NULL;
 		i++;
 	}
 	free(split);

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 13:57:24 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/27 13:32:40 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:57:19 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static int	check_delimiter(char *line, t_doc *doc, int pipe_fd)
 
 	if (!line)
 	{
-		write(2, "\nminishell: warning: here-documentat line ", 42);
-		write(2, "1 delimited by end-of-file (wanted `EOF')\n", 42);
+		ft_fprintf(2, "\nminishell: warning: here-documentat line 1 del");
+		ft_fprintf(2, "imited by end-of-file (wanted `%s')\n", doc->delim);
 		return (1);
 	}
 	if (ft_strncmp(line, doc->delim, ft_strlen(doc->delim)) == 0

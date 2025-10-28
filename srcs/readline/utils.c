@@ -1,45 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doc_utils.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/23 19:13:46 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/28 16:56:46 by miltavar         ###   ########.fr       */
+/*   Created: 2025/10/28 16:16:59 by miltavar          #+#    #+#             */
+/*   Updated: 2025/10/28 17:31:20 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	doc_handler(int sig)
+void	apply_code(int err, t_env *env)
 {
-	g_received_signal = 0;
-	signal_handler(sig + 128);
-}
+	char	*itoaa;
 
-void	doc_distributor(void)
-{
-	signal(SIGINT, doc_handler);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-void	doc_ignore(void)
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-int	dollar(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == '$')
-			return (1);
-		i++;
-	}
-	return (0);
+	itoaa = ft_itoa(err);
+	if (!itoaa)
+		return (perror("minishell: "));
+	set_env_value(&env, "?", itoaa);
+	free(itoaa);
 }

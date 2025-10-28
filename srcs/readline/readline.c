@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/26 14:06:28 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/28 17:31:35 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**split_again(char **split)
 	return (nw_split);
 }
 
-int	parse_line(char **split, t_env *env)
+int	parse_line(char **split, t_env *env, char **og_split)
 {
 	int		return_code;
 
@@ -53,9 +53,9 @@ int	parse_line(char **split, t_env *env)
 	else if (!ft_strcmp(split[0], "export"))
 		return_code = builtin_export(&env, split + 1);
 	else if (!ft_strcmp(split[0], "exit"))
-		return_code = exit_builtin(split, env);
+		return_code = exit_builtin(split, env, og_split);
 	else if (!ft_strcmp(split[0], "cd"))
-		return_code = builtin_cd(split + 1, env);
+		return_code = builtin_cd(split, env);
 	else if (!ft_strcmp(split[0], "echo"))
 		echo(split + 1);
 	else
@@ -88,11 +88,8 @@ int	ignore(char *line)
 int	process_line(char *line, t_env *env)
 {
 	char		**split;
-	char		*itoaa;
 	static int	exit_code = 0;
 
-	1 && (itoaa = ft_itoa(exit_code), set_env_value(&env, "?", itoaa),
-		free(itoaa), 0);
 	if (*line)
 		add_history(line);
 	if (ft_strlen(line) == 0)
@@ -111,7 +108,7 @@ int	process_line(char *line, t_env *env)
 		return (0);
 	}
 	1 && (free(line), exit_code = do_pipe(split, env), free_split(split), 0);
-	return (exit_code);
+	return (apply_code(exit_code, env), exit_code);
 }
 
 /**
@@ -127,22 +124,25 @@ int	read_lines(char **envp)
 
 	env = init_environnement(envp);
 	if (!env)
-		return (1);
-	1 && (ext = 0, signal_distributor(), 0);
+		return (ft_fprintf(2, "minishell: malloc failed\n"), 1);
+	1 && (ext = 0, apply_code(ext, env), signal_distributor(), 0);
 	while (1)
 	{
 		1 && (g_received_signal = 0, line = readline("minishell: "), 0);
-		if (!line)
+		if (g_received_signal == 130)
 		{
-			printf("exit\n");
-			break ;
+			apply_code(130, env);
+			ext = 130;
+			continue ;
 		}
+		if (!line)
+			break ;
 		if (*line == '\0')
 		{
-			1 && (ext = g_received_signal, signal_handler(ext), free(line), 0);
+			free(line);
 			continue ;
 		}
 		1 && (ext = process_line(line, env), signal_handler(ext), 0);
 	}
-	return (rl_clear_history(), free_env(env), ext);
+	return (ft_fprintf(2, "exit\n"), rl_clear_history(), free_env(env), ext);
 }
