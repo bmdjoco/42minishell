@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/28 17:31:35 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/29 12:08:33 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,20 +93,14 @@ int	process_line(char *line, t_env *env)
 	if (*line)
 		add_history(line);
 	if (ft_strlen(line) == 0)
-	{
-		free(line);
-		return (exit_code);
-	}
+		return (free(line), exit_code);
 	if (ignore(line))
 		return (free(line), 0);
 	if (check_syntax_err(line, 0) == -1)
 		return (free(line), 2);
 	split = mini_split(line, env);
 	if (!split)
-	{
-		free(line);
-		return (0);
-	}
+		return (free(line), 0);
 	1 && (free(line), exit_code = do_pipe(split, env), free_split(split), 0);
 	return (apply_code(exit_code, env), exit_code);
 }
@@ -119,30 +113,12 @@ int	process_line(char *line, t_env *env)
 int	read_lines(char **envp)
 {
 	int		ext;
-	char	*line;
 	t_env	*env;
 
 	env = init_environnement(envp);
 	if (!env)
 		return (ft_fprintf(2, "minishell: malloc failed\n"), 1);
 	1 && (ext = 0, apply_code(ext, env), signal_distributor(), 0);
-	while (1)
-	{
-		1 && (g_received_signal = 0, line = readline("minishell: "), 0);
-		if (g_received_signal == 130)
-		{
-			apply_code(130, env);
-			ext = 130;
-			continue ;
-		}
-		if (!line)
-			break ;
-		if (*line == '\0')
-		{
-			free(line);
-			continue ;
-		}
-		1 && (ext = process_line(line, env), signal_handler(ext), 0);
-	}
+	ext = do_loop(env);
 	return (ft_fprintf(2, "exit\n"), rl_clear_history(), free_env(env), ext);
 }

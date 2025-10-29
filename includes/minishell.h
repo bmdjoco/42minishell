@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/28 17:31:26 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/29 11:50:28 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,9 @@ int		do_pipe(char **split, t_env *env);
 int		nb_of_pipe(char **split);
 int		check_limit(char *s);
 int		child_code(int pids[1024], int nb, int i);
+int		do_loop(t_env *env);
+int		process_line(char *line, t_env *env);
+int		is_exit(char *line);
 
 void	apply_code(int err, t_env *env);
 

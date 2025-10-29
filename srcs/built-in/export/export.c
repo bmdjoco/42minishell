@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 10:38:18 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/28 15:29:30 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/29 14:07:59 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	check_export(char *s, char **dest)
 
 	i = 0;
 	while (s[i] && ((i == 0 && (ft_isalpha(s[i]) || s[i] == '_'))
-		|| ((ft_isalnum(s[i]) || s[i] == '_') && i != 0)))
+			|| ((ft_isalnum(s[i]) || s[i] == '_') && i != 0)))
 		i++;
 	if (i == 0)
 		return (ft_fprintf(2,
@@ -76,15 +76,17 @@ int	export_variable(t_env **env, char *s)
 int	builtin_export(t_env **env, char **split)
 {
 	int	i;
+	int	save;
 
 	if (!*split)
 		return (builtin_env(*env, 1, NULL));
 	i = 0;
+	save = 0;
 	while (split[i])
 	{
 		if (export_variable(env, split[i]) == -1)
-			return (1);
+			save = 1;
 		i++;
 	}
-	return (0);
+	return (save);
 }

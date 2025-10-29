@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 13:30:00 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/28 17:03:07 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/29 11:46:52 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,9 @@ int	go_to_cmd(int i, char **split)
 	int	j;
 
 	j = 0;
-	while (split[i + j] && (!ft_strcmp(split[i + j], ">") || !ft_strcmp(split[i + j], "<") || !ft_strcmp(split[i + j], ">>")))
+	while (split[i + j] && (!ft_strcmp(split[i + j], ">")
+			|| !ft_strcmp(split[i + j], "<")
+			|| !ft_strcmp(split[i + j], ">>")))
 		j += 2;
 	return (j);
 }
