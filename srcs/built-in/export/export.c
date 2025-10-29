@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 10:38:18 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/29 14:07:59 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/29 16:41:11 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,14 @@ char	**get_args(char *s)
 int	export_variable(t_env **env, char *s)
 {
 	char	**args;
+	char	*tmp;
 
 	args = get_args(s);
 	if (!args)
 		return (free_split(args), -1);
+	tmp = get_env_value(*env, args[0]);
+	if (!tmp || (tmp && args[2]))
+		unset_var(env, args[0]);
 	set_env_value(env, args[0], args[2]);
 	free_split(args);
 	return (1);
