@@ -6,107 +6,98 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:49:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/28 17:11:01 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/30 13:46:29 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+#include "minishell.h"
 
 int	match_quotes(char *s)
 {
 	int	i;
 
 	i = 0;
-	if (s[i] == '"')
+	if (s[i] == '"' || s[i] == '\'')
 	{
+		char c = s[i];
 		i++;
-		while (s[i] && s[i] != '"')
+		while (s[i] && s[i] != c)
 			i++;
-		if (s[i] == '"')
-			return (i + 1);
-	}
-	else if (s[i] == '\'')
-	{
-		i++;
-		while (s[i] && s[i] != '\'')
-			i++;
-		if (s[i] == '\'')
+		if (s[i] == c)
 			return (i + 1);
 	}
 	return (-1);
 }
 
-int	is_it_good(char *s)
+static int	is_it_good(char *s, int i)
 {
-	int	i;
-
-	i = 0;
-	if (!s[i])
-		return (-1);
 	while (s[i] && is_whitespace(s[i]))
 		i++;
 	if (!s[i])
 		return (-1);
-	if (s[i] == '|' | s[i] == '<' || s[i] == '>')
+	if (s[i] == '<' || s[i] == '>')
 		return (-1);
 	return (1);
 }
 
-static int	check_next(char *s)
+static int	check_redir(char *s, int *i)
 {
-	int	i;
-
-	i = 0;
-	if (s[i] == '>' && !s[i + 1])
+	if (s[*i] == '<' && s[*i + 1] == '<')
+		*i += 2;
+	else if (s[*i] == '>' && s[*i + 1] == '>')
+		*i += 2;
+	else
+		(*i)++;
+	if (is_it_good(s, *i) == -1)
 		return (-1);
-	else if (s[i] == '<' && !s[i + 1])
-		return (-1);
-	else if (s[i] == '<' && s[i + 1] && s[i + 1] != '<')
-		i++;
-	else if (s[i] == '>' && s[i + 1] && s[i + 1] != '>')
-		i++;
-	else if (s[i] == '|' && !s[i + 1])
-		return (-1);
-	else if (s[i] == '|' && s[i + 1] && s[i + 1] != '|')
-		i++;
-	else if (s[i] == '>' && s[i + 1] && s[i + 1] == '>')
-		i = i + 2;
-	else if (s[i] == '<' && s[i + 1] && s[i + 1] == '<')
-		i = i + 2;
-	if (i <= 0)
-		return (-1);
-	if (is_it_good(s + i) == -1)
-		return (-1);
-	return (1);
+	return (0);
 }
 
-int	check_syntax_err(char *line, int i)
+static int	check_pipe(char *s, int *i)
 {
-	int	len;
+	if (s[*i + 1] == '|')
+		return (-1);
+	(*i)++;
+	while (s[*i] && is_whitespace(s[*i]))
+		(*i)++;
+	if (!s[*i])
+		return (-1);
+	if (s[*i] == '|')
+		return (-1);
+	return (0);
+}
 
+int	check_syntax_err(char *line, int i, int len)
+{
+	if (line[0] == '|')
+		return (syntax_msg(line[0]), -1);
 	while (line[i])
 	{
 		if (line[i] == '\'' || line[i] == '"')
 		{
 			len = match_quotes(line + i);
 			if (len == -1)
-				return (ft_fprintf(2, "minishell: syntax error near unexpected"
-						" token '%c'\n", line[i]), -1);
+				return (syntax_msg(line[i]), -1);
 			i += len;
 		}
-		else if (line[i] == '<' || line[i] == '>' || line[i] == '|')
+		else if (line[i] == '<' || line[i] == '>')
 		{
-			len = check_next(line + i);
-			if (len == -1)
-				return (ft_fprintf(2, "minishell: syntax error near unexpected"
-						" token '%c'\n", line[i]), -1);
-			i += len;
+			if (check_redir(line, &i) == -1)
+				return (syntax_msg(line[i]), -1);
+		}
+		else if (line[i] == '|')
+		{
+			if (check_pipe(line, &i) == -1)
+				return (syntax_msg(line[i]), -1);
 		}
 		else
 			i++;
 	}
 	return (0);
 }
+
 
 int	check_limit(char *s)
 {

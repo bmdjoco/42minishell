@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/29 16:33:43 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/30 13:45:31 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../libs/ft_fprintf/ft_fprintf.h"
 
 # include <stdio.h>
+# include <errno.h>
 # include <signal.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -79,7 +80,7 @@ int		do_heredoc(t_doc *doc, int *herefd, t_pipes *pipes);
 int		nb_of_redir(char **split);
 int		reddir_type(char **split, int red);
 int		apply_single_redirect(char *delim, int type);
-int		execute_with_redirections(char **split, t_env *env);
+int		execute_with_redirections(char **split, int index, t_env *env);
 int		process_all_redirections(int nb, char **split);
 int		get_code(pid_t pid);
 
@@ -87,7 +88,7 @@ char	*reddir_file(char **split, int red);
 
 /* Exec */
 
-int		exec_cmd(t_env *env, char **split);
+int		exec_cmd(t_env *env, char **split, char**og_split);
 int		wait_for_child(pid_t pid);
 int		check_limit(char *s);
 int		skip_cmd(char **split, int i);
@@ -102,10 +103,10 @@ void	init_pids(int pids[1024]);
 
 int		*here_prep(char **split, t_env *env, t_pipes *pipes);
 
-char	*correct_path(char **argv, char **envp, int *err);
+char	*correct_path(char **argv, char **envp);
 char	*get_delim(char **split, int index, int index2);
 char	*path_len(char *s);
-char	*final_path(char **argv, char **envp, int *err);
+char	*final_path(char **argv, char **envp);
 char	*expand_doc(char *line, t_env *env);
 
 char	**cmd_split(char **split, int index);
@@ -119,7 +120,7 @@ void	cl_fd(int *here_fd, int index);
 /* Readline */
 
 int		read_lines(char **envp);
-int		check_syntax_err(char *line, int i);
+int		check_syntax_err(char *line, int i, int len);
 int		parse_line(char **split, t_env *env, char **og_split);
 int		do_pipe(char **split, t_env *env);
 int		nb_of_pipe(char **split);
@@ -129,6 +130,7 @@ int		do_loop(t_env *env);
 int		process_line(char *line, t_env *env);
 int		is_exit(char *line);
 
+void	syntax_msg(char c);
 void	apply_code(int err, t_env *env);
 
 /* cd */

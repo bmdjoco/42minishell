@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:48:04 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/28 15:08:09 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/30 14:29:34 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	do_redirections(char **split, int index, t_env *env, t_pipes *pipes)
 	free(pipes);
 	nb = nb_of_redir(split + index);
 	if (nb <= 0)
-		return (execute_with_redirections(split + index, env));
+		return (execute_with_redirections(split, index, env));
 	pid = fork();
 	if (pid == -1)
 		return (perror("minishell: "), 1);
@@ -121,7 +121,7 @@ int	do_redirections(char **split, int index, t_env *env, t_pipes *pipes)
 			free_split(split);
 			exit (1);
 		}
-		exit_code = execute_with_redirections(split + index + go_to_cmd(index,
+		exit_code = execute_with_redirections(split, index + go_to_cmd(index,
 					split), env);
 		1 && (free_split(split), free_env(env), 0);
 		exit (exit_code);

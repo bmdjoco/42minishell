@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 14:51:45 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/28 15:12:46 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/30 12:55:16 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	exit_builtin(char **split, t_env *env, char **og_split)
 	err = 1;
 	if (!split || !split[1])
 	{
-		write(STDOUT_FILENO, "exit\n", 5);
+		write(2, "exit\n", 5);
 		exit_status(1, og_split, env, split);
 	}
 	else
@@ -61,7 +61,7 @@ int	exit_builtin(char **split, t_env *env, char **og_split)
 		err = err_check(split);
 		if (err == 2)
 		{
-			write(STDOUT_FILENO, "exit\n", 5);
+			write(2, "exit\n", 5);
 			exit_status(2, og_split, env, split);
 		}
 		else if (err == 1)
@@ -70,7 +70,7 @@ int	exit_builtin(char **split, t_env *env, char **og_split)
 		if (err < 0 || err > 255)
 			err = ft_atoi(split[1]) % 256;
 	}
-	write(STDOUT_FILENO, "exit\n", 5);
+	write(2, "exit\n", 5);
 	exit_status(err, og_split, env, split);
 	return (0);
 }

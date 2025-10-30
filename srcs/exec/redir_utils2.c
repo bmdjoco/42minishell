@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 13:30:00 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/29 11:46:52 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/30 14:27:38 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ int	apply_single_redirect(char *delim, int type)
 /**
  * @brief Execute la commande avec les redirections actives
  */
-int	execute_with_redirections(char **split, t_env *env)
+int	execute_with_redirections(char **split, int index, t_env *env)
 {
 	char	**nw_split;
 	int		cmd_result;
 
 	cmd_result = 0;
-	nw_split = split_again(split);
+	nw_split = split_again(split + index);
 	if (!nw_split)
 		return (1);
 	cmd_result = parse_line(nw_split, env, split);

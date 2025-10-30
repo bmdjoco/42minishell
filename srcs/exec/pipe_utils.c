@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 11:42:45 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/25 15:38:04 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/30 12:02:51 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,5 @@ int	solo(char **split, t_env *env, int *herefd, t_pipes *pipes)
 		free(herefd);
 		return (get_code(pid));
 	}
-	return (free(herefd), do_redirections(split, 0, env, pipes));
+	return (do_redirections(split, 0, env, pipes));
 }

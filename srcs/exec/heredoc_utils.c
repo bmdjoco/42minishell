@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 15:27:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/27 12:27:28 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/30 15:19:19 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	cl_fd(int *here_fd, int index)
 	if (!here_fd)
 		return ;
 	i = 0;
-	while (i < index)
+	while (i <= index)
 	{
 		if (here_fd[i] != -1)
 			close(here_fd[i]);
@@ -61,8 +61,6 @@ int	create_docs(t_doc *doc, int *herefd, t_pipes *pipes, int index)
 		doc->i = index;
 		err = do_heredoc(doc, herefd, pipes);
 		free(doc->delim);
-		if (i < nb - 1)
-			close(herefd[doc->i]);
 		if (err != 0)
 		{
 			return (cl_fd(herefd, index + 1),

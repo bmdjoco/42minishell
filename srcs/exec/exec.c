@@ -6,38 +6,20 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:59:43 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/28 11:49:11 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/30 12:36:04 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	message(int err, char **argv)
+static int	get_errno(void)
 {
-	if (err == 1)
-		ft_fprintf(2, "TERM environment variable not set.\n");
-	if (err == 126)
-		ft_fprintf(2, "minishell: %s: Permission denied\n", argv[0]);
-	else if (err == 127)
-		ft_fprintf(2, "minishell: %s: No such file or directory\n", argv[0]);
-}
-
-static int	check_folder(char **argv)
-{
-	int	i;
-
-	i = 0;
-	if (!argv[0])
-		return (0);
-	if (argv[0] && argv[1])
-		return (0);
-	while (argv[0][i])
-	{
-		if (argv[0][i] != '/' && argv[0][i] != '.')
-			return (0);
-		i++;
-	}
-	return (1);
+	if (errno == ENOENT)
+		return (127);
+	else if (errno == EACCES)
+		return (126);
+	else
+		return (1);
 }
 
 /**
@@ -46,32 +28,29 @@ static int	check_folder(char **argv)
 *@param split tableau de chaines de la commade a executer
 *@return le code erreur de waitpid
 */
-int	doit(char **argv, char **envp)
+int	doit(char **argv, char **envp, char **og_split, t_env *env)
 {
 	char	*path;
 	pid_t	pid;
-	int		err;
+	int		ext;
 
-	path = final_path(argv, envp, &err);
+	path = final_path(argv, envp);
 	if (!path)
-		return (message(err, argv), err);
+		return (perror("minishell: "), get_errno());
 	pid = fork();
 	if (pid == -1)
 		return (free(path), perror("minishell: "), 1);
 	if (pid == 0)
 	{
 		exec_distributor();
-		if (check_folder(argv))
-		{
-			1 && (free(path), ft_fprintf(2,
-					"minishell: %s: is a directory\n", argv[0]));
-			exit (126);
-		}
-		if (execve(path, argv, envp) == -1)
-			1 && (free(path), perror("minishell:drgerg "), exit (1), 0);
+		execve(path, argv, envp);
+		1 && (free_env(env), free_split(og_split),
+			free(path), free_split(argv),
+			free_split(envp), perror("minishell: "), 0);
+		exit (get_errno());
 	}
-	1 && (doc_ignore(), free(path), err = get_code(pid));
-	return (signal_distributor(), err);
+	1 && (doc_ignore(), free(path), ext = get_code(pid));
+	return (signal_distributor(), ext);
 }
 
 /**
@@ -80,7 +59,7 @@ int	doit(char **argv, char **envp)
 *@param split tableau de chaines de la commade a executer
 *@return 0 en cas de reussite ou -1 si fail
 */
-int	exec_cmd(t_env *env, char **split)
+int	exec_cmd(t_env *env, char **split, char **og_split)
 {
 	char	**env_dup;
 	int		err;
@@ -88,7 +67,7 @@ int	exec_cmd(t_env *env, char **split)
 	env_dup = create_envp(env);
 	if (!env_dup)
 		return (perror("minishell: "), 1);
-	err = doit(split, env_dup);
+	err = doit(split, env_dup, og_split, env);
 	free_split(env_dup);
 	return (err);
 }

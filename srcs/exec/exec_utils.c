@@ -6,13 +6,13 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:55:36 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/28 11:48:17 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/10/30 12:28:43 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*build_and_check(char **paths, char *cmd, int *err)
+char	*build_and_check(char **paths, char *cmd)
 {
 	char	*correct;
 	int		i;
@@ -28,7 +28,7 @@ char	*build_and_check(char **paths, char *cmd, int *err)
 		free(correct);
 		i++;
 	}
-	return (*err = 127, NULL);
+	return (NULL);
 }
 
 char	*path_len(char *s)
@@ -84,7 +84,7 @@ char	**get_path(char **envp)
 	return (paths);
 }
 
-char	*correct_path(char **argv, char **envp, int *err)
+char	*correct_path(char **argv, char **envp)
 {
 	char	**paths;
 	char	*correct;
@@ -101,11 +101,11 @@ char	*correct_path(char **argv, char **envp, int *err)
 	else
 		paths = get_path(envp);
 	if (!paths)
-		return (*err = 1, NULL);
+		return (NULL);
 	temp = ft_strjoin("/", argv[0]);
 	if (!temp)
 		return (free_split(paths), NULL);
-	correct = build_and_check(paths, temp, err);
+	correct = build_and_check(paths, temp);
 	if (!correct)
 		return (free_split(paths), free(temp), NULL);
 	return (free_split(paths), free(temp), correct);
