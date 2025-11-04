@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 13:40:10 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/30 15:21:44 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/04 17:55:00 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,6 @@ int	do_pipe(char **split, t_env *env)
 	pids[pipes->i] = last(split, env, pipes, here_fd);
 	if (pids[pipes->i] == -1)
 		return (free(here_fd), free(pipes), 1);
-	cl_fd(here_fd, pipes->docs);
 	ext = child_code(pids, pipes->nb, pipes->i);
-	return (free(here_fd), free(pipes), ext);
+	return (cl_fd(here_fd, pipes->docs), free(here_fd), free(pipes), ext);
 }

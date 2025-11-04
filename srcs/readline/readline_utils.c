@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:49:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/30 13:46:29 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/04 17:55:40 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 
 int	match_quotes(char *s)
 {
-	int	i;
+	int		i;
+	char	c;
 
 	i = 0;
 	if (s[i] == '"' || s[i] == '\'')
 	{
-		char c = s[i];
+		c = s[i];
 		i++;
 		while (s[i] && s[i] != c)
 			i++;
@@ -95,21 +96,5 @@ int	check_syntax_err(char *line, int i, int len)
 		else
 			i++;
 	}
-	return (0);
-}
-
-
-int	check_limit(char *s)
-{
-	if (!ft_strcmp(s, ">"))
-		return (1);
-	else if (!ft_strcmp(s, "<"))
-		return (1);
-	else if (!ft_strcmp(s, "<<"))
-		return (1);
-	else if (!ft_strcmp(s, ">>"))
-		return (1);
-	else if (!ft_strcmp(s, "|"))
-		return (1);
 	return (0);
 }

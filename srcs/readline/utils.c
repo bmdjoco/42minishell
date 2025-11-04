@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 16:16:59 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/30 13:45:11 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/04 17:55:44 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,19 @@ int	do_loop(t_env *env)
 void	syntax_msg(char c)
 {
 	ft_fprintf(2, "minishell: syntax error near unexpected token `%c'\n", c);
+}
+
+int	check_limit(char *s)
+{
+	if (!ft_strcmp(s, ">"))
+		return (1);
+	else if (!ft_strcmp(s, "<"))
+		return (1);
+	else if (!ft_strcmp(s, "<<"))
+		return (1);
+	else if (!ft_strcmp(s, ">>"))
+		return (1);
+	else if (!ft_strcmp(s, "|"))
+		return (1);
+	return (0);
 }
