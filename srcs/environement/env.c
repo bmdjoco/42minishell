@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:11:41 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/29 16:39:36 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/05 15:13:58 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_env	*new_env_node(char *key, char *val)
 {
 	t_env	*node;
 
-	node = malloc(sizeof(t_env));
+	node = ft_calloc(1, sizeof(t_env));
 	if (!node)
 		return (NULL);
 	node->key = ft_strdup(key);
@@ -69,7 +69,7 @@ t_env	*init_environnement(char **envp)
 		return (NULL);
 	while (envp && envp[++i])
 		if (add_env_node(&head, envp[i]) == -1)
-			return (free_env(head), NULL);
+			return (free_env(&head), NULL);
 	val = get_env_value(head, "SHLVL");
 	if (!val)
 		set_env_value(&head, "SHLVL", "1");

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 14:51:45 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/30 12:55:16 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:44:17 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	exit_status(int status, char **og_split, t_env *env, char **split)
 {
 	free_split(split);
 	free_split(og_split);
-	free_env(env);
+	free_env(&env);
 	rl_clear_history();
 	exit (status);
 }
@@ -54,7 +54,7 @@ int	exit_builtin(char **split, t_env *env, char **og_split)
 	if (!split || !split[1])
 	{
 		write(2, "exit\n", 5);
-		exit_status(1, og_split, env, split);
+		exit_status(0, og_split, env, split);
 	}
 	else
 	{

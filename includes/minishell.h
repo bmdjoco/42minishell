@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/30 13:45:31 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/05 15:26:18 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		add_env_node(t_env **head, char *envp_line);
 
 char	*get_env_value(t_env *env, char *key);
 
-void	free_env(t_env *env);
+void	free_env(t_env **env);
 void	set_env_value(t_env **env, char *key, char *val);
 void	update_existing_env(t_env *env, char *key, char *val);
 

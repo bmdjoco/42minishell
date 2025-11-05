@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:49:44 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/25 18:08:15 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/05 15:26:11 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,21 @@ int	size_of_val(char *str)
  * @brief free en integraliter ou en partis la structure s_env
  * @param env liste de variable environnemental sous forme de structure s_env
  */
-void	free_env(t_env *env)
+void	free_env(t_env **env)
 {
 	t_env	*tmp;
 
-	while (env)
+	if (!env || !*env)
+		return ;
+	while (*env)
 	{
-		tmp = env->next;
-		if (env->key)
-			free(env->key);
-		if (env->val)
-			free(env->val);
-		free(env);
-		env = tmp;
+		tmp = (*env)->next;
+		free((*env)->key);
+		free((*env)->val);
+		free(*env);
+		*env = tmp;
 	}
+	*env = NULL;
 }
 
 /**

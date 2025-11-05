@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 13:57:24 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/30 15:16:09 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:44:51 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	child_process(t_doc *doc, int *pipe_fd)
 	exit_code = read_heredoc_lines(doc, pipe_fd[1]);
 	close(pipe_fd[1]);
 	free(doc->delim);
-	free_env(doc->env_dup);
+	free_env(&doc->env_dup);
 	free(doc);
 	exit (exit_code);
 }

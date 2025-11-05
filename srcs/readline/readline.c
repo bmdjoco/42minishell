@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 10:49:01 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/30 13:30:07 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/05 15:14:53 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,5 @@ int	read_lines(char **envp)
 		return (ft_fprintf(2, "minishell: malloc failed\n"), 1);
 	1 && (ext = 0, apply_code(ext, env), signal_distributor(), 0);
 	ext = do_loop(env);
-	return (ft_fprintf(2, "exit\n"), rl_clear_history(), free_env(env), ext);
+	return (ft_fprintf(2, "exit\n"), rl_clear_history(), free_env(&env), ext);
 }

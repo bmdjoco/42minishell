@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:59:43 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/30 12:36:04 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:44:36 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	doit(char **argv, char **envp, char **og_split, t_env *env)
 	{
 		exec_distributor();
 		execve(path, argv, envp);
-		1 && (free_env(env), free_split(og_split),
+		1 && (free_env(&env), free_split(og_split),
 			free(path), free_split(argv),
 			free_split(envp), perror("minishell: "), 0);
 		exit (get_errno());

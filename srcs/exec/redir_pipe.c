@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 13:40:10 by miltavar          #+#    #+#             */
-/*   Updated: 2025/11/04 17:55:00 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:46:17 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	first(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 		1 && (dup2(pipefd[1], STDOUT_FILENO),
 			close(pipefd[1]), cl_fd(here_fd, pipes->docs),
 			free(here_fd), ext = do_redirections(split, 0, env, pipes),
-			free_split(split), free_env(env), exit (ext), 0);
+			free_split(split), free_env(&env), exit (ext), 0);
 	}
 	close(pipefd[1]);
 	if (here_fd && here_fd[0] != -1)
@@ -60,7 +60,7 @@ int	mid(char **split, t_env *env, t_pipes *pip, int *fds)
 			close(pipefd[1]), close(prevfd),
 			cl_fd(fds, pip->docs), free(fds),
 			ext = do_redirections(split, skip_cmd(split, pip->i),
-				env, pip), free_split(split), free_env(env), exit (ext), 0);
+				env, pip), free_split(split), free_env(&env), exit (ext), 0);
 	}
 	1 && (close(prevfd), close(pipefd[1]));
 	if (fds && fds[pip->i] != -1)
@@ -85,7 +85,7 @@ int	last(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 		1 && (close(pipes->oldfd), cl_fd(here_fd, pipes->docs),
 			free(here_fd), ext = do_redirections(split,
 				skip_cmd(split, pipes->i), env, pipes),
-			free_split(split), free_env(env), exit (ext), 0);
+			free_split(split), free_env(&env), exit (ext), 0);
 	}
 	close(pipes->oldfd);
 	if (here_fd && here_fd[pipes->i] != -1)

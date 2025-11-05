@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 11:43:41 by miltavar          #+#    #+#             */
-/*   Updated: 2025/09/03 11:04:49 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:57:32 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,29 @@
 
 void	unset_var(t_env **env, char *key)
 {
-	t_env	*cur;
+	t_env	*tmp;
 	t_env	*prev;
 
-	cur = *env;
+	if (!env || !*env || !key)
+		return ;
+
+	tmp = *env;
 	prev = NULL;
-	while (cur)
+	while (tmp)
 	{
-		if (ft_strcmp(cur->key, key) == 0)
+		if (!ft_strcmp(tmp->key, key))
 		{
 			if (prev)
-				prev->next = cur->next;
+				prev->next = tmp->next;
 			else
-				*env = cur->next;
-			free(cur->key);
-			free(cur->val);
-			free(cur);
+				*env = tmp->next;
+			free(tmp->key);
+			free(tmp->val);
+			free(tmp);
 			return ;
 		}
-		prev = cur;
-		cur = cur->next;
+		prev = tmp;
+		tmp = tmp->next;
 	}
 }
 

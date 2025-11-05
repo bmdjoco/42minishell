@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 16:16:59 by miltavar          #+#    #+#             */
-/*   Updated: 2025/11/04 17:55:44 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:46:25 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	do_loop(t_env *env)
 			continue ;
 		}
 		if (is_exit(line) == 1)
-			1 && (ft_fprintf(2, "exit\n"), free_env(env), free(line),
+			1 && (ft_fprintf(2, "exit\n"), free_env(&env), free(line),
 				rl_clear_history(), exit(ext), 0);
 		1 && (ext = process_line(line, env), signal_handler(ext), 0);
 	}
