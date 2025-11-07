@@ -70,28 +70,28 @@ FT_FPRINTF		= $(FT_FPRINTF_PATH)/ft_fprintf.a
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT) $(FT_FPRINTF)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(FT_FPRINTF) $(LDFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(FT_FPRINTF) $(LDFLAGS) -o $(NAME)
 	@echo "⚜️​   $(BOLD)$(PURPLE)$(NAME)$(RESET) $(GREEN)est compilé$(RESET) ​⚜️​​"
 
 $(LIBFT):
-	@$(MAKE) $(LIBFT_PATH)
+	$(MAKE) $(LIBFT_PATH)
 
 $(FT_FPRINTF):
-	@$(MAKE) $(FT_FPRINTF_PATH)
+	$(MAKE) $(FT_FPRINTF_PATH)
 
 %.o: %.c includes/minishell.h
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@rm -f $(OBJS) $(LIBFT) $(FT_FPRINTF)
-	@$(MAKE) $(LIBFT_PATH) clean
-	@$(MAKE) $(FT_FPRINTF_PATH) clean
+	rm -f $(OBJS) $(LIBFT) $(FT_FPRINTF)
+	$(MAKE) $(LIBFT_PATH) clean
+	$(MAKE) $(FT_FPRINTF_PATH) clean
 	@echo "$(GRAY)Nettoyage des$(RESET) $(BOLD)fichiers source de minishell$(RESET) $(GRAY)terminé$(RESET) 🚮"
 
 fclean: clean
-	@rm -f $(NAME) $(LIBFT)
-	@$(MAKE) $(LIBFT_PATH) fclean
-	@$(MAKE) $(FT_FPRINTF_PATH) fclean
+	rm -f $(NAME) $(LIBFT)
+	$(MAKE) $(LIBFT_PATH) fclean
+	$(MAKE) $(FT_FPRINTF_PATH) fclean
 	@echo "$(GRAY)Nettoyage de$(RESET) $(BOLD)$(NAME)$(RESET) $(GRAY)terminé$(RESET) 🚮"
 
 re: fclean all
