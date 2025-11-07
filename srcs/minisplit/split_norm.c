@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 13:12:05 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/24 15:12:19 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:16:45 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char	*write_word(t_env *env, char *s, int i)
 	j = get_real_word_size(env, s, i);
 	word = ft_calloc(j + 1, sizeof(char));
 	if (!word)
-		return (perror("minishell: "), NULL);
+		return (perror("minishell"), NULL);
 	j = 0;
 	if (s[i] && (s[i] == '>' || s[i] == '<' || s[i] == '|'))
 		return (write_operators(s, &i, word));

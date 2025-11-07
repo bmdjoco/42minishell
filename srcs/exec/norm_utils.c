@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 14:10:56 by miltavar          #+#    #+#             */
-/*   Updated: 2025/11/05 15:14:43 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:15:32 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	pipe_norm(int pids[1024], t_pipes **pipes, char **split)
 	init_pids(pids);
 	*pipes = ft_calloc(1, sizeof(t_pipes));
 	if (!*pipes)
-		return (perror("minishell: "), 1);
+		return (perror("minishell"), 1);
 	(*pipes)->i = 0;
 	(*pipes)->docs = nb_of_docs(split);
 	(*pipes)->nb = nb_of_pipe(split);

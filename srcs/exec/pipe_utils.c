@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 11:42:45 by miltavar          #+#    #+#             */
-/*   Updated: 2025/11/05 15:04:32 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:14:55 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	solo(char **split, t_env *env, int *herefd, t_pipes *pipes)
 		return (free(herefd), do_redirections(split, 0, env, pipes));
 	pid = fork();
 	if (pid == -1)
-		return (free(pipes), perror("minishell: "), -1);
+		return (free(pipes), perror("minishell"), -1);
 	if (pid == 0)
 	{
 		if (herefd && herefd[0] != -1)

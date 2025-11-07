@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 13:57:24 by miltavar          #+#    #+#             */
-/*   Updated: 2025/11/05 14:44:51 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:15:46 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ int	do_heredoc(t_doc *doc, int *herefd, t_pipes *pipes)
 	int		exit_code;
 
 	if (pipe(pipe_fd) == -1)
-		return (perror("minishell: pipe"), -1);
+		return (perror("minishell"), -1);
 	pid = fork();
 	if (pid == -1)
-		return (perror("minishell: "), close(pipe_fd[0]), close(pipe_fd[1]));
+		return (perror("minishell"), close(pipe_fd[0]), close(pipe_fd[1]));
 	if (pid == 0)
 	{
 		1 && (doc_distributor(), free_split(doc->og_split), 0);

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:49:44 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/11/07 12:32:53 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:15:20 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	set_env_value(t_env **env, char *key, char *val)
 			tmp = tmp->next;
 		new = new_env_node(key, val);
 		if (!new)
-			return (perror("minishell: "));
+			return (perror("minishell"));
 		tmp->next = new;
 		return ;
 	}

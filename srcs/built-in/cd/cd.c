@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 16:19:37 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/10/27 18:22:30 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:15:16 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	update_pwd_vars(t_env **env, char *old_pwd)
 	set_env_value(env, "OLDPWD", old_pwd);
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
-		return (perror("minishell: "), 1);
+		return (perror("minishell"), 1);
 	set_env_value(env, "PWD", new_pwd);
 	free(new_pwd);
 	return (0);
@@ -74,7 +74,7 @@ static int	change_directory(char *path, t_env **env, char *old_pwd)
 	if (chdir(path) == 0)
 		return (update_pwd_vars(env, old_pwd));
 	else
-		return (perror("minishell: "), 1);
+		return (perror("minishell"), 1);
 }
 
 /**
@@ -102,7 +102,7 @@ int	builtin_cd(char **argv, t_env *env)
 	}
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
-		return (free(path), perror("minishell: "), 1);
+		return (free(path), perror("minishell"), 1);
 	result = change_directory(path, &env, old_pwd);
 	free(old_pwd);
 	free(path);

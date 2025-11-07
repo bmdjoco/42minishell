@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:11:41 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/11/07 11:33:17 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:15:28 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_env	*new_env_node(char *key, char *val)
 		return (NULL);
 	node->key = ft_strdup(key);
 	if (!node->key)
-		return (perror("minishell: "), free(node), NULL);
+		return (perror("minishell"), free(node), NULL);
 	if (!val)
 		node->val = NULL;
 	else
@@ -41,7 +41,7 @@ int	init_empty_env(t_env **head)
 
 	str = getcwd(NULL, 0);
 	if (!str)
-		return (perror("minishell: "), -1);
+		return (perror("minishell"), -1);
 	temp = ft_strjoin("PWD=", str);
 	free(str);
 	if (!temp)

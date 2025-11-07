@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 16:16:59 by miltavar          #+#    #+#             */
-/*   Updated: 2025/11/05 14:46:25 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:16:52 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	apply_code(int err, t_env *env)
 
 	itoaa = ft_itoa(err);
 	if (!itoaa)
-		return (perror("minishell: "));
+		return (perror("minishell"));
 	set_env_value(&env, "?", itoaa);
 	free(itoaa);
 }

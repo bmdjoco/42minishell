@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 12:06:48 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/24 15:04:19 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:16:37 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	size_of_envval(t_env *env, char *s, char *dest)
 		i++;
 	key = ft_substr(s, 0, i);
 	if (!key)
-		return (perror("minishell: "), -1);
+		return (perror("minishell"), -1);
 	val = get_env_value(env, key);
 	if (!val)
 		return (free(key), 0);

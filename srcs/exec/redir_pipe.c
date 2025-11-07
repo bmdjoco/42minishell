@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 13:40:10 by miltavar          #+#    #+#             */
-/*   Updated: 2025/11/07 11:20:32 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:16:01 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	first(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 	int		ext;
 
 	if (pipe(pipefd) == -1)
-		return (perror("minishell: "), -1);
+		return (perror("minishell"), -1);
 	pid = fork();
 	if (pid == -1)
-		return (perror("minishell: "), close(pipefd[0]), close(pipefd[1]), -1);
+		return (perror("minishell"), close(pipefd[0]), close(pipefd[1]), -1);
 	if (pid == 0)
 	{
 		close(pipefd[0]);
@@ -49,7 +49,7 @@ int	mid(char **split, t_env *env, t_pipes *pip, int *fds)
 
 	prevfd = pip->oldfd;
 	if (pipe_fork(pipefd, &pid) == -1)
-		return (perror("minishell: "), close(prevfd), -1);
+		return (perror("minishell"), close(prevfd), -1);
 	if (pid == 0)
 	{
 		if (fds && fds[pip->i] != -1)
@@ -75,7 +75,7 @@ int	last(char **split, t_env *env, t_pipes *pipes, int *here_fd)
 
 	pid = fork();
 	if (pid == -1)
-		return (perror("minishell: "), close(pipes->oldfd), -1);
+		return (perror("minishell"), close(pipes->oldfd), -1);
 	if (pid == 0)
 	{
 		if (here_fd && here_fd[pipes->i] != -1)

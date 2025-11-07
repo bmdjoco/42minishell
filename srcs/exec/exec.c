@@ -6,11 +6,16 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 10:59:43 by miltavar          #+#    #+#             */
-/*   Updated: 2025/11/05 14:44:36 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:07:48 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static void	print_127(char *s)
+{
+	ft_fprintf(2, "minishell: %s: No such file or directory\n", s);
+}
 
 static int	get_errno(void)
 {
@@ -36,17 +41,21 @@ int	doit(char **argv, char **envp, char **og_split, t_env *env)
 
 	path = final_path(argv, envp);
 	if (!path)
-		return (perror("minishell: "), get_errno());
+	{
+		if (errno != 0)
+			return (perror("minishell"), get_errno());
+		else
+			return (print_127(argv[0]), 127);
+	}
 	pid = fork();
 	if (pid == -1)
-		return (free(path), perror("minishell: "), 1);
+		return (free(path), perror("minishell"), 1);
 	if (pid == 0)
 	{
-		exec_distributor();
-		execve(path, argv, envp);
+		1 && (exec_distributor(), execve(path, argv, envp));
 		1 && (free_env(&env), free_split(og_split),
 			free(path), free_split(argv),
-			free_split(envp), perror("minishell: "), 0);
+			free_split(envp), perror("minishell"), 0);
 		exit (get_errno());
 	}
 	1 && (doc_ignore(), free(path), ext = get_code(pid));
@@ -66,7 +75,7 @@ int	exec_cmd(t_env *env, char **split, char **og_split)
 
 	env_dup = create_envp(env);
 	if (!env_dup)
-		return (perror("minishell: "), 1);
+		return (1);
 	err = doit(split, env_dup, og_split, env);
 	free_split(env_dup);
 	return (err);
