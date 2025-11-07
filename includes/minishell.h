@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 12:07:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/11/07 11:46:54 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 12:48:06 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ int		child_code(int pids[1024], int nb, int i);
 int		do_loop(t_env *env);
 int		process_line(char *line, t_env *env);
 int		is_exit(char *line);
+int		only_whitespace(char *s);
 
 void	syntax_msg(char c);
 void	apply_code(int err, t_env *env);

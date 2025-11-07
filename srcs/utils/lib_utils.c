@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 14:26:14 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/28 11:29:59 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 12:47:43 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,17 @@ void	free_split(char **split)
 		i++;
 	}
 	free(split);
+}
+
+int	only_whitespace(char *s)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+	{
+		if (!is_whitespace(s[i]))
+			return (0);
+	}
+	return (1);
 }

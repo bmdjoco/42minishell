@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 15:27:28 by miltavar          #+#    #+#             */
-/*   Updated: 2025/11/05 15:14:35 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 12:43:57 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	create_docs(t_doc *doc, int *herefd, t_pipes *pipes, int index)
 		free(doc->delim);
 		if (err != 0)
 		{
-			return (cl_fd(herefd, index + 1),
+			return (cl_fd(herefd, index),
 				free(herefd), free(doc), pipes->err = err, err);
 		}
 		i++;
