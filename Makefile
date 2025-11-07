@@ -6,7 +6,7 @@
 #    By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/20 12:03:56 by miltavar          #+#    #+#              #
-#    Updated: 2025/11/05 15:24:55 by miltavar         ###   ########.fr        #
+#    Updated: 2025/11/07 11:10:39 by miltavar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ MAKE = make -s -C
 SRCS = srcs/main.c \
 		srcs/environement/env.c \
 		srcs/environement/env_utils.c \
-		srcs/environement/utils.c \
 		srcs/minisplit/mini_split.c \
 		srcs/minisplit/split_norm.c \
 		srcs/minisplit/split_size.c \

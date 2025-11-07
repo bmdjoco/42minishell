@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:49:44 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/11/05 15:26:11 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 12:32:53 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@ void	free_env(t_env **env)
 	while (*env)
 	{
 		tmp = (*env)->next;
-		free((*env)->key);
-		free((*env)->val);
+		if ((*env)->key)
+			free((*env)->key);
+		if ((*env)->val)
+			free((*env)->val);
 		free(*env);
 		*env = tmp;
 	}
@@ -108,9 +110,10 @@ void	set_env_value(t_env **env, char *key, char *val)
 {
 	t_env	*tmp;
 	t_env	*new;
+	t_env	*check;
 	char	*value;
 
-	if (!*env)
+	if (!env || !*env || !key)
 		return ;
 	tmp = *env;
 	value = get_env_value(*env, key);
@@ -124,6 +127,10 @@ void	set_env_value(t_env **env, char *key, char *val)
 		tmp->next = new;
 		return ;
 	}
-	free(value);
+	1 && (free(value), check = *env);
+	while (check && ft_strcmp(check->key, key))
+		check = check->next;
+	if (!check)
+		return ;
 	update_existing_env(*env, key, val);
 }

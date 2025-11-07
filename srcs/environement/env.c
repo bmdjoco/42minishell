@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 13:11:41 by bdjoco            #+#    #+#             */
-/*   Updated: 2025/11/05 15:13:58 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 11:33:17 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,15 +118,14 @@ void	update_existing_env(t_env *env, char *key, char *val)
 	tmp = env;
 	while (tmp)
 	{
-		if (!ft_strcmp(tmp->key, key))
+		if (tmp->key && !ft_strcmp(tmp->key, key))
 		{
 			if (val)
 			{
-				if (tmp->val)
-					free(tmp->val);
+				free(tmp->val);
 				tmp->val = ft_strdup(val);
 				if (!tmp->val)
-					return (perror("minishell: "));
+					perror("minishell");
 			}
 			return ;
 		}

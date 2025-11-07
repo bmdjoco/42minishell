@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 12:27:33 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/30 12:28:13 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 12:33:20 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,25 +101,40 @@ int	get_size(t_env *env)
 char	**create_envp(t_env *env)
 {
 	char	**envpdup;
-	int		i;
+	t_env	*tmp;
 	int		size;
+	int		i;
+	char	*line;
 
-	if (!env)
-		return (NULL);
-	size = get_size(env);
-	if (size <= 0)
-		return (NULL);
-	envpdup = ft_calloc(size + 1, 8);
-	if (!envpdup)
-		return (NULL);
-	i = 0;
-	while (i < size)
+	size = 0;
+	tmp = env;
+	while (tmp)
 	{
-		envpdup[i] = grab_line(env, i);
-		if (!envpdup[i])
-			return (free_split(envpdup), NULL);
-		i++;
+		if (tmp->key && tmp->val)
+			size++;
+		tmp = tmp->next;
 	}
-	envpdup[i] = NULL;
-	return (envpdup);
+	if (size == 0)
+		return (NULL);
+	envpdup = ft_calloc(size + 1, sizeof(char *));
+	if (!envpdup)
+		return (perror("minishell"), NULL);
+	tmp = env;
+	i = 0;
+	while (tmp)
+	{
+		if (tmp->key && tmp->val)
+		{
+			line = ft_strjoin(tmp->key, "=");
+			if (!line)
+				return (free_split(envpdup), NULL);
+			envpdup[i] = ft_strjoin(line, tmp->val);
+			free(line);
+			if (!envpdup[i])
+				return (free_split(envpdup), NULL);
+			i++;
+		}
+		tmp = tmp->next;
+	}
+	return (envpdup[i] = NULL, envpdup);
 }

@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 13:38:19 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/28 15:39:46 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 12:23:03 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ static void	print_env(t_env *env)
 
 	while (env)
 	{
-		if (!env->val && ft_strcmp("?", env->key) != 0)
+		if (!env->key && !env->val)
+			;
+		else if (!env->val && ft_strcmp("?", env->key) != 0)
 		{
 			len = ft_strlen(env->key);
 			write(STDOUT_FILENO, env->key, len);
@@ -43,7 +45,9 @@ static void	print_export(t_env *env)
 
 	while (env)
 	{
-		if (!env->val && ft_strcmp("?", env->key) != 0)
+		if (!env->key && !env->val)
+			;
+		else if (!env->val && ft_strcmp("?", env->key) != 0)
 		{
 			len = ft_strlen(env->key);
 			write(STDOUT_FILENO, "export ", 7);

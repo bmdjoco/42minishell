@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 10:38:18 by miltavar          #+#    #+#             */
-/*   Updated: 2025/10/29 16:43:38 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 11:48:03 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	export_variable(t_env **env, char *s)
 		return (free_split(args), -1);
 	tmp = get_env_value(*env, args[0]);
 	if (!tmp || (tmp && args[2]))
-		unset_var(env, args[0]);
+		unset_var(*env, args[0]);
 	free(tmp);
 	set_env_value(env, args[0], args[2]);
 	free_split(args);

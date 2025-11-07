@@ -6,36 +6,32 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 11:43:41 by miltavar          #+#    #+#             */
-/*   Updated: 2025/11/05 14:57:32 by miltavar         ###   ########.fr       */
+/*   Updated: 2025/11/07 12:30:44 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	unset_var(t_env **env, char *key)
+void	unset_var(t_env *env, char *key)
 {
 	t_env	*tmp;
-	t_env	*prev;
 
-	if (!env || !*env || !key)
+	if (!env || !key)
 		return ;
-
-	tmp = *env;
-	prev = NULL;
+	tmp = env;
 	while (tmp)
 	{
-		if (!ft_strcmp(tmp->key, key))
+		if (tmp->key && !ft_strcmp(tmp->key, key))
 		{
-			if (prev)
-				prev->next = tmp->next;
-			else
-				*env = tmp->next;
 			free(tmp->key);
-			free(tmp->val);
-			free(tmp);
+			tmp->key = NULL;
+			if (tmp->val)
+			{
+				free(tmp->val);
+				tmp->val = NULL;
+			}
 			return ;
 		}
-		prev = tmp;
 		tmp = tmp->next;
 	}
 }
@@ -54,7 +50,7 @@ void	unset(t_env	**env, char **split)
 		return ;
 	while (split[i])
 	{
-		unset_var(env, split[i]);
+		unset_var(*env, split[i]);
 		i++;
 	}
 }
