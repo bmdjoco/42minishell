@@ -6,7 +6,7 @@
 /*   By: miltavar <miltavar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 14:34:49 by miltavar          #+#    #+#             */
-/*   Updated: 2025/05/05 17:05:43 by miltavar         ###   ########.fr       */
+/*   Updated: 2026/03/14 15:03:17 by miltavar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static size_t	size_calc(char const *s1, char const *set)
 	if (j == i)
 		return (0);
 	j--;
-	while (check_char(set, s1[j]) && j >= 0)
+	while (check_char(set, s1[j]) && j)
 		j--;
 	j++;
 	return (j - i);
